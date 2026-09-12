@@ -338,7 +338,7 @@
           <p class="home-footer__brand-desc">طراحی و توسعه محصولات دیجیتال برای استارتاپ‌ها و شرکت‌های پیشرو — از ایده تا تجربه‌ای که کاربران عاشقش می‌شوند.</p>
           <div class="home-footer__location">
             <span class="home-footer__location-icon" aria-hidden="true">📍</span>
-            <span>تهران، خیابان آزادی، کارخانه نوآوری</span>
+            <span data-studio="address-short">تهران، یوسف‌آباد، جهان‌آرا، کوچه ۴۳</span>
           </div>
         </div>
         <div class="home-footer__links-col">
@@ -355,12 +355,12 @@
         <div class="home-footer__links-col">
           <h3 class="home-footer__heading">خدمات ما</h3>
           <nav class="home-footer__links">
-            <a href="service.html" class="home-footer__link">طراحی محصول</a>
-            <a href="service.html" class="home-footer__link">طراحی UI/UX</a>
-            <a href="service.html" class="home-footer__link">توسعه وب مدرن</a>
-            <a href="service.html" class="home-footer__link">توسعه اپلیکیشن موبایل</a>
-            <a href="service.html" class="home-footer__link">راه‌اندازی MVP</a>
-            <a href="service.html" class="home-footer__link">یکپارچه‌سازی هوش مصنوعی</a>
+            <a href="/service/product/" class="home-footer__link">طراحی محصول</a>
+            <a href="/service/ui-ux/" class="home-footer__link">طراحی UI/UX</a>
+            <a href="/service/web/" class="home-footer__link">توسعه وب مدرن</a>
+            <a href="/service/mobile/" class="home-footer__link">توسعه اپلیکیشن موبایل</a>
+            <a href="/service/mvp/" class="home-footer__link">راه‌اندازی MVP</a>
+            <a href="/service/ai/" class="home-footer__link">یکپارچه‌سازی هوش مصنوعی</a>
           </nav>
         </div>
         <div class="home-footer__newsletter-col">
@@ -373,11 +373,8 @@
               <button type="submit" class="btn btn--primary">عضویت</button>
             </div>
           </form>
-          <div class="home-footer__social">
-            <a href="#" class="home-footer__social-link" aria-label="اینستاگرام">IG</a>
-            <a href="#" class="home-footer__social-link" aria-label="توییتر">X</a>
-            <a href="#" class="home-footer__social-link" aria-label="لینکدین">LI</a>
-            <a href="#" class="home-footer__social-link" aria-label="تلگرام">TG</a>
+          <div class="home-footer__social" data-studio="social" data-studio-social-class="home-footer__social-link">
+            <a href="https://www.instagram.com/hashstudio.ir/" class="home-footer__social-link" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer">IG</a>
           </div>
         </div>
       </div>
@@ -388,6 +385,8 @@
     </div>
   </footer>
 
+  <script src="js/studio-info.js"></script>
+  <script src="js/studio-chrome.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

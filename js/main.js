@@ -11,35 +11,42 @@
     }, { passive: true });
   }
 
+  function setNavOpen(isOpen) {
+    if (!toggle || !nav) return;
+    nav.classList.toggle('is-open', isOpen);
+    toggle.classList.toggle('is-open', isOpen);
+    document.body.classList.toggle('nav-open', isOpen);
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    toggle.setAttribute('aria-label', isOpen ? 'بستن منو' : 'باز کردن منو');
+  }
+
   if (toggle && nav) {
     toggle.addEventListener('click', function () {
-      const isOpen = nav.classList.toggle('is-open');
-      toggle.classList.toggle('is-open', isOpen);
-      toggle.setAttribute('aria-expanded', String(isOpen));
+      setNavOpen(!nav.classList.contains('is-open'));
     });
 
     document.addEventListener('click', function (e) {
-      if (!nav.contains(e.target) && !toggle.contains(e.target) && nav.classList.contains('is-open')) {
-        nav.classList.remove('is-open');
-        toggle.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
+      if (!nav.classList.contains('is-open')) return;
+      if (nav.contains(e.target) || toggle.contains(e.target)) return;
+      setNavOpen(false);
     });
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && nav.classList.contains('is-open')) {
-        nav.classList.remove('is-open');
-        toggle.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
+        setNavOpen(false);
       }
     });
 
     nav.querySelectorAll('.site-header__link, .home-header__link').forEach(function (link) {
       link.addEventListener('click', function () {
-        nav.classList.remove('is-open');
-        toggle.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
+        setNavOpen(false);
       });
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.matchMedia('(min-width: 64.01rem)').matches) {
+        setNavOpen(false);
+      }
     });
   }
 })();

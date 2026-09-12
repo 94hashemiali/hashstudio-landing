@@ -3,50 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="صفحه مورد نظر یافت نشد - هش استودیو">
-  <title>۴۰۴ - صفحه یافت نشد | Hash Studio</title>
+  <meta name="description" content="صفحه مورد نظر یافت نشد — استودیو هش">
+  <title>۴۰۴ | استودیو هش</title>
+  <base href="/">
   <link rel="icon" href="assets/images/home/logo.png" type="image/png">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/pages.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/not-found.css">
 </head>
-<body>
+<body class="home-page not-found-page">
 
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="index.html" class="site-header__logo">
-        <img src="assets/images/home/logo.png" alt="لوگوی هش استودیو" width="40" height="40">
-        <span class="site-header__logo-text">استودیو هش</span>
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
+      <a href="contact.html" class="top-bar__btn">شروع همکاری</a>
+    </div>
+  </div>
+
+  <header class="home-header" id="site-header">
+    <div class="container home-header__inner">
+      <a href="index.html" class="home-header__logo">
+        <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+        <span class="home-header__logo-text">استودیو هش</span>
       </a>
-      <nav class="site-header__nav" aria-label="منوی اصلی">
-        <a href="index.html" class="site-header__link">خانه</a>
-        <a href="services.html" class="site-header__link">خدمات</a>
-        <a href="projects.html" class="site-header__link">پروژه‌ها</a>
-        <a href="about.html" class="site-header__link">درباره ما</a>
-        <a href="blog.html" class="site-header__link">بلاگ</a>
+
+      <nav class="home-header__nav" id="main-nav" aria-label="منوی اصلی">
+        <a href="index.html" class="home-header__link">خانه</a>
+        <a href="services.html" class="home-header__link">خدمات</a>
+        <a href="projects.html" class="home-header__link">پروژه‌ها</a>
+        <a href="about.html" class="home-header__link">درباره ما</a>
+        <a href="blog.html" class="home-header__link">بلاگ</a>
+        <a href="contact.html" class="home-header__link">تماس با ما</a>
       </nav>
-      <div class="site-header__actions">
-        <a href="contact.html" class="btn btn--primary">تماس با ما</a>
-        <button class="site-header__toggle" aria-label="باز کردن منو" aria-expanded="false">
-          <span></span><span></span><span></span>
+
+      <div class="home-header__actions">
+        <a href="contact.html" class="btn btn--primary btn--header">شروع همکاری</a>
+        <a href="contact.html" class="home-header__profile" aria-label="پروفایل کاربر">
+          <img src="assets/icons/profile.svg" alt="" width="39" height="39">
+        </a>
+        <button class="home-header__toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="main-nav">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </div>
     </div>
   </header>
 
-  <main>
-    <section class="not-found">
-      <img class="not-found__visual" src="assets/images/home/logo.png" alt="" aria-hidden="true" width="192" height="192">
-      <div class="not-found__code">۴۰۴</div>
-      <h1 class="not-found__title">صفحه مورد نظر یافت نشد</h1>
-      <p class="not-found__desc">متأسفانه صفحه‌ای که به دنبال آن هستید وجود ندارد یا منتقل شده است.</p>
-      <a href="index.html" class="btn btn--primary btn--lg">بازگشت به خانه</a>
+  <main class="nf-main">
+    <div class="nf-decor" aria-hidden="true">
+      <svg class="nf-decor__item nf-decor__cloud--1" viewBox="0 0 54 24" fill="none">
+        <path d="M19 22h22.7c3.2 0 6.1-.8 8.3-2.2 2.3-1.4 3.5-3.3 3.5-5.3s-1.3-3.9-3.5-5.3C47.8 7.8 44.8 7 41.7 7h-4.8C35.9 4.9 34 3.1 31.4 1.6 28.8.2 25.6-.8 22.2-1.1 18.8-1.5 15.3-.9 12.1-.1 8.9.7 6.1 2 4 3.8 1.9 5.5.7 7.6.4 9.7c-.3 2.2.3 4.3 1.9 6.3C3.9 18.1 6.3 19.7 9.2 20.8 12.2 22 15.6 22.6 19 22z" stroke="#EADFC9" stroke-width="2" stroke-linecap="round" transform="translate(0 1)"/>
+      </svg>
+      <svg class="nf-decor__item nf-decor__star--1" viewBox="0 0 16 16" fill="none">
+        <path d="M8 1.3l1.5 3.1 3.4.5-2.5 2.4.6 3.4L8 9.1 4.9 10.7l.6-3.4L3 4.9l3.4-.5L8 1.3z" stroke="#17252B" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <svg class="nf-decor__item nf-decor__star--2" viewBox="0 0 20 20" fill="none">
+        <path d="M10 1.5l1.9 4 4.4.6-3.2 3.1.8 4.3L10 11.4 6.1 13.5l.8-4.3L3.7 6.1l4.4-.6L10 1.5z" stroke="#FFB818" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+      <svg class="nf-decor__item nf-decor__cloud--2" viewBox="0 0 54 24" fill="none">
+        <path d="M19 22h22.7c3.2 0 6.1-.8 8.3-2.2 2.3-1.4 3.5-3.3 3.5-5.3s-1.3-3.9-3.5-5.3C47.8 7.8 44.8 7 41.7 7h-4.8C35.9 4.9 34 3.1 31.4 1.6 28.8.2 25.6-.8 22.2-1.1 18.8-1.5 15.3-.9 12.1-.1 8.9.7 6.1 2 4 3.8 1.9 5.5.7 7.6.4 9.7c-.3 2.2.3 4.3 1.9 6.3C3.9 18.1 6.3 19.7 9.2 20.8 12.2 22 15.6 22.6 19 22z" stroke="#EADFC9" stroke-width="2" stroke-linecap="round" transform="translate(0 1)"/>
+      </svg>
+      <svg class="nf-decor__item nf-decor__star--3" viewBox="0 0 20 20" fill="none">
+        <path d="M10 1.5l1.9 4 4.4.6-3.2 3.1.8 4.3L10 11.4 6.1 13.5l.8-4.3L3.7 6.1l4.4-.6L10 1.5z" stroke="#FFB818" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <section class="nf-stage" aria-labelledby="nf-title">
+      <div class="nf-frame">
+        <img src="assets/images/404/illustration.png" alt="" width="400" height="400">
+      </div>
+
+      <span class="nf-badge">خطای ۴۰۴</span>
+      <h1 class="nf-title" id="nf-title">فکر کنم مسیر رو اشتباه اومدیم!</h1>
+      <p class="nf-desc">صفحه‌ای که دنبالش می‌گردید وجود ندارد یا جابه‌جا شده.</p>
+
+      <div class="nf-actions">
+        <a href="index.html" class="nf-btn nf-btn--primary">
+          <img src="assets/icons/404/home.svg" alt="" width="18" height="18">
+          بازگشت به خانه
+        </a>
+        <a href="projects.html" class="nf-btn nf-btn--ghost">مشاهده پروژه‌ها</a>
+      </div>
     </section>
   </main>
+
+  <footer class="nf-footer">
+    <div class="nf-footer__inner">
+      <div class="nf-footer__grid">
+        <div class="nf-footer__brand">
+          <div class="nf-footer__brand-row">
+            <span class="nf-mark nf-mark--yellow" aria-hidden="true">#</span>
+            <span class="nf-footer__brand-name">استودیو هش</span>
+          </div>
+          <p class="nf-footer__brand-desc">طراحی تجربه کاربری، رابط کاربری و برندینگ برای محصولات دیجیتال — با رویکردی مینیمال و هدفمند.</p>
+        </div>
+
+        <div>
+          <h2 class="nf-footer__heading">لینک‌های سریع</h2>
+          <nav class="nf-footer__links" aria-label="لینک‌های سریع">
+            <a class="nf-footer__link" href="index.html">خانه</a>
+            <a class="nf-footer__link" href="projects.html">پروژه‌ها</a>
+            <a class="nf-footer__link" href="services.html">خدمات</a>
+            <a class="nf-footer__link" href="contact.html">تماس</a>
+          </nav>
+        </div>
+
+        <div>
+          <h2 class="nf-footer__heading">خدمات</h2>
+          <nav class="nf-footer__links" aria-label="خدمات">
+            <a class="nf-footer__link" href="services.html">طراحی UI/UX</a>
+            <a class="nf-footer__link" href="services.html">برندینگ</a>
+            <a class="nf-footer__link" href="services.html">وب‌سایت</a>
+            <a class="nf-footer__link" href="services.html">اپلیکیشن موبایل</a>
+          </nav>
+        </div>
+
+        <div>
+          <h2 class="nf-footer__heading">خبرنامه</h2>
+          <p class="nf-footer__news-desc">از پروژه‌های جدید و آپدیت‌های استودیو باخبر شوید.</p>
+          <form class="nf-footer__form" action="#" method="post">
+            <div class="nf-footer__input-wrap">
+              <label class="visually-hidden" for="nf-newsletter-email">ایمیل</label>
+              <input id="nf-newsletter-email" class="nf-footer__input" type="email" name="email" placeholder="ایمیل شما" required>
+            </div>
+            <button type="submit" class="nf-footer__submit">ثبت‌نام</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="nf-footer__bottom">
+        <div class="nf-footer__social">
+          <a href="https://www.instagram.com/hashstudio.ir/" target="_blank" rel="noopener noreferrer">اینستاگرام</a>
+          <a href="#" aria-label="لینکدین">لینکدین</a>
+          <a href="#" aria-label="توییتر">توییتر</a>
+        </div>
+        <span>© ۱۴۰۵ استودیو هش — تمام حقوق محفوظ است.</span>
+      </div>
+    </div>
+  </footer>
 
   <script src="js/main.js"></script>
 </body>

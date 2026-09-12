@@ -3,156 +3,482 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="خدمات هش استودیو - طراحی UI/UX، توسعه وب، برندینگ و مشاوره دیجیتال">
-  <title>خدمات | Hash Studio</title>
+  <meta name="description" content="خدمات استودیو هش — طراحی محصول، UI/UX، توسعه وب و موبایل، MVP، هوش مصنوعی، سئو و مشاوره">
+  <title>خدمات | استودیو هش</title>
   <link rel="icon" href="assets/images/home/logo.png" type="image/png">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/pages.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/services.css">
 </head>
-<body>
+<body class="home-page services-page">
 
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="index.html" class="site-header__logo">
-        <img src="assets/images/home/logo.png" alt="لوگوی هش استودیو" width="40" height="40">
-        <span class="site-header__logo-text">استودیو هش</span>
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
+      <a href="contact.html" class="top-bar__btn">شروع همکاری</a>
+    </div>
+  </div>
+
+  <header class="home-header" id="site-header">
+    <div class="container home-header__inner">
+      <a href="index.html" class="home-header__logo">
+        <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+        <span class="home-header__logo-text">استودیو هش</span>
       </a>
-      <nav class="site-header__nav" aria-label="منوی اصلی">
-        <a href="index.html" class="site-header__link">خانه</a>
-        <a href="services.html" class="site-header__link is-active">خدمات</a>
-        <a href="projects.html" class="site-header__link">پروژه‌ها</a>
-        <a href="about.html" class="site-header__link">درباره ما</a>
-        <a href="blog.html" class="site-header__link">بلاگ</a>
+
+      <nav class="home-header__nav" id="main-nav" aria-label="منوی اصلی">
+        <a href="index.html" class="home-header__link">خانه</a>
+        <a href="services.html" class="home-header__link is-active">خدمات</a>
+        <a href="projects.html" class="home-header__link">پروژه‌ها</a>
+        <a href="about.html" class="home-header__link">درباره ما</a>
+        <a href="blog.html" class="home-header__link">بلاگ</a>
+        <a href="contact.html" class="home-header__link">تماس با ما</a>
       </nav>
-      <div class="site-header__actions">
-        <a href="contact.html" class="btn btn--primary">تماس با ما</a>
-        <button class="site-header__toggle" aria-label="باز کردن منو" aria-expanded="false">
-          <span></span><span></span><span></span>
+
+      <div class="home-header__actions">
+        <a href="contact.html" class="btn btn--primary btn--header">شروع همکاری</a>
+        <a href="contact.html" class="home-header__profile" aria-label="پروفایل کاربر">
+          <img src="assets/icons/profile.svg" alt="" width="39" height="39">
+        </a>
+        <button class="home-header__toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="main-nav">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="page-hero">
+    <!-- Hero — desgin/services-desktop.svg y≈200–560 -->
+    <section class="svc-hero">
       <div class="container">
-        <nav class="breadcrumb" aria-label="مسیر">
+        <nav class="svc-breadcrumb" aria-label="مسیر">
           <a href="index.html">خانه</a>
-          <span class="breadcrumb__sep">/</span>
-          <span>خدمات</span>
+          <span class="svc-breadcrumb__sep" aria-hidden="true">‹</span>
+          <span class="svc-breadcrumb__current">خدمات ما</span>
         </nav>
-        <h1 class="page-hero__title">خدمات ما</h1>
-        <p class="page-hero__desc">راهکارهای جامع دیجیتال برای رشد و موفقیت کسب‌وکار شما</p>
+        <h1 class="svc-hero__title">راهکارهایی عمیق برای ساخت <span>محصولات ماندگار</span></h1>
+        <p class="svc-hero__lead">ما در استودیو هش صرفاً کارهای اجرایی و روزمره انجام نمی‌دهیم. خدمات ما در جهت خلق ارزش‌های واقعی کسب‌وکار شما و رفع دغدغه‌های فنی به شکلی پایدار و مقیاس‌پذیر بازطراحی شده است.</p>
       </div>
     </section>
 
-    <section class="section">
+    <!-- 8 service cards — 2×4, 608×430 -->
+    <section class="svc-listing" id="listing">
       <div class="container">
-        <div class="grid grid--3">
-          <article class="service-card">
-            <div class="service-card__icon">🎨</div>
-            <h2 class="service-card__title">طراحی UI/UX</h2>
-            <p class="service-card__desc">طراحی رابط کاربری زیبا و تجربه کاربری بی‌نقص. از wireframe تا prototype نهایی.</p>
-            <a href="service.html" class="service-card__link">اطلاعات بیشتر ←</a>
+        <div class="section-head">
+          <span class="badge badge--section">خدمات استودیو</span>
+          <h2 class="section-head__title">از طراحی تا توسعه کامل فنی در کنار شما</h2>
+        </div>
+
+        <div class="svc-grid">
+          <a href="/service/product/" class="svc-card" id="product">
+            <div class="svc-card__icon" aria-hidden="true">
+              <img src="assets/icons/services/product-design.svg" alt="" width="24" height="24">
+            </div>
+            <h3 class="svc-card__title">طراحی محصول دیجیتال</h3>
+            <p class="svc-card__desc">تعیین دقیق استراتژی کلی محصول، استخراج نقشه راه، ارزیابی نمونه‌های رقیب، ساخت فرضیه‌ها و مستندسازی دقیق محصول با در نظر گرفتن اهداف بیزینس.</p>
+            <hr class="svc-card__rule">
+            <ul class="svc-card__list">
+              <li>مستندسازی و کشف ابعاد محصول (PRD)</li>
+              <li>تحلیل استراتژی و اهداف بیزینس</li>
+              <li>ترسیم نقشه راه توسعه و MVP</li>
+              <li>ارزیابی رقبا و مدل‌های قیمت‌گذاری</li>
+            </ul>
+            <span class="svc-card__cta">جزئیات این خدمت
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </a>
+
+          <a href="/service/ui-ux/" class="svc-card" id="ui-ux">
+            <div class="svc-card__icon" aria-hidden="true">
+              <img src="assets/icons/services/ui-ux.svg" alt="" width="24" height="24">
+            </div>
+            <h3 class="svc-card__title">طراحی تجربه و رابط کاربری (UI/UX)</h3>
+            <p class="svc-card__desc">طراحی کاربرپسند با استفاده از الگوهای مدرن بصری. تضمین کاربری بی‌نقص، سرعت بالای ناوبری و ایجاد احساس بصری لوکس همراه با تجربه کاربری روان.</p>
+            <hr class="svc-card__rule">
+            <ul class="svc-card__list">
+              <li>طراحی Wireframe و مسیرهای کاربری (User Flow)</li>
+              <li>پروتوتایپ‌های تعاملی و تست کاربر نهایی</li>
+              <li>طراحی دیزاین سیستم اختصاصی (Figma)</li>
+              <li>طراحی ریسپانسیو وب و اپلیکیشن</li>
+            </ul>
+            <span class="svc-card__cta">جزئیات این خدمت
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </a>
+
+          <a href="/service/web/" class="svc-card" id="web">
+            <div class="svc-card__icon" aria-hidden="true">
+              <img src="assets/icons/services/web-dev.svg" alt="" width="24" height="24">
+            </div>
+            <h3 class="svc-card__title">توسعه وب‌سایت‌های مدرن</h3>
+            <p class="svc-card__desc">کدنویسی فرانت‌اند چابک با فریمورک‌های مطرحی چون Next.js و React، متصل به سیستم‌های بک‌اند پایدار، امن و بسیار مقیاس‌پذیر برای پشتیبانی از کاربران نامحدود.</p>
+            <hr class="svc-card__rule">
+            <ul class="svc-card__list">
+              <li>توسعه وب تک‌صفحه‌ای و پورتال‌های بزرگ</li>
+              <li>یکپارچه‌سازی با سرویس‌ها و وب‌سرویس‌های شخص ثالث</li>
+              <li>کدنویسی بهینه‌شده جهت سرعت بالای بارگذاری</li>
+              <li>بک‌اندهای پویا با Django و Node.js</li>
+            </ul>
+            <span class="svc-card__cta">جزئیات این خدمت
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </a>
+
+          <a href="/service/mobile/" class="svc-card" id="mobile">
+            <div class="svc-card__icon" aria-hidden="true">
+              <img src="assets/icons/services/mobile.svg" alt="" width="24" height="24">
+            </div>
+            <h3 class="svc-card__title">توسعه اپلیکیشن‌های موبایل</h3>
+            <p class="svc-card__desc">ساخت پلتفرم‌های تعاملی و پرسرعت موبایل بر بستر تکنولوژی‌های React Native و Flutter به صورت کاملاً نیتیو برای فروشگاه‌های اپ استور و گوگل‌پلی.</p>
+            <hr class="svc-card__rule">
+            <ul class="svc-card__list">
+              <li>اپلیکیشن‌های چند سکویی (Cross-Platform)</li>
+              <li>پرداخت‌های درون‌برنامه‌ای و کیف‌پول دیجیتال</li>
+              <li>ارسال نوتیفیکیشن‌های تعاملی زمان‌بندی‌شده</li>
+              <li>کدنویسی تمیز با کارایی و انیمیشن‌های روان</li>
+            </ul>
+            <span class="svc-card__cta">جزئیات این خدمت
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </a>
+
+          <a href="/service/mvp/" class="svc-card" id="mvp">
+            <div class="svc-card__icon" aria-hidden="true">
+              <img src="assets/icons/services/mvp.svg" alt="" width="24" height="24">
+            </div>
+            <h3 class="svc-card__title">طراحی و راه‌اندازی سریع MVP</h3>
+            <p class="svc-card__desc">بهترین راه برای اعتبارسنجی ایده با توسعه ویژگی‌های اصلی و حیاتی در سریع‌ترین زمان ممکن برای ورود سریع به بازار و جذب سرمایه.</p>
+            <hr class="svc-card__rule">
+            <ul class="svc-card__list">
+              <li>تمرکز بر بخش‌ها و ویژگی‌های حیاتی محصول</li>
+              <li>کاهش هزینه‌های غیرضروری اولیه</li>
+              <li>راه‌اندازی در بازه زمانی ۶ الی ۱۲ هفته‌ای</li>
+              <li>جمع‌آوری بازخورد زودهنگام از کاربران واقعی</li>
+            </ul>
+            <span class="svc-card__cta">جزئیات این خدمت
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </a>
+
+          <a href="/service/ai/" class="svc-card" id="ai">
+            <div class="svc-card__icon" aria-hidden="true">
+              <img src="assets/icons/services/ai.svg" alt="" width="24" height="24">
+            </div>
+            <h3 class="svc-card__title">یکپارچه‌سازی هوش مصنوعی</h3>
+            <p class="svc-card__desc">استفاده از آخرین متدهای پردازش هوشمند و اتصال مدل‌های هوش مصنوعی (LLMs) به وب‌سایت و ابزارهای محصول شما جهت خودکارسازی هوشمند فرآیندها.</p>
+            <hr class="svc-card__rule">
+            <ul class="svc-card__list">
+              <li>پیاده‌سازی چت‌بات‌های مجهز به هوش مصنوعی</li>
+              <li>شخصی‌سازی الگوریتم‌های پیشنهاد محصول</li>
+              <li>پردازش و طبقه‌بندی هوشمند داده‌های متنی و تصویری</li>
+              <li>اتصال پیشرفته به API مدل‌های مطرح بازار</li>
+            </ul>
+            <span class="svc-card__cta">جزئیات این خدمت
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </a>
+
+          <a href="/service/seo/" class="svc-card" id="seo">
+            <div class="svc-card__icon" aria-hidden="true">
+              <img src="assets/icons/services/seo.svg" alt="" width="24" height="24">
+            </div>
+            <h3 class="svc-card__title">دیجیتال مارکتینگ و سئو</h3>
+            <p class="svc-card__desc">ارتقای جایگاه برند شما در موتورهای جستجو با هدف افزایش ترافیک ارگانیک ورودی، ساخت هویت متمایز برند و افزایش نرخ تبدیل کاربران جدید.</p>
+            <hr class="svc-card__rule">
+            <ul class="svc-card__list">
+              <li>بهینه‌سازی کدهای فرانت‌اند جهت سئو تکنیکال</li>
+              <li>تحقیق همه‌جانبه کلمات کلیدی هدفمند حوزه فعالیت</li>
+              <li>طراحی استراتژی کمپین‌های تبلیغاتی آنلاین</li>
+              <li>افزایش ارگانیک کاربران فعال محصول</li>
+            </ul>
+            <span class="svc-card__cta">جزئیات این خدمت
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </a>
+
+          <a href="/service/consulting/" class="svc-card" id="consulting">
+            <div class="svc-card__icon" aria-hidden="true">
+              <img src="assets/icons/services/consulting.svg" alt="" width="24" height="24">
+            </div>
+            <h3 class="svc-card__title">مشاوره محصول و بهبود کسب‌وکار</h3>
+            <p class="svc-card__desc">ارزیابی عمیق متریک‌های بازاریابی و فنی، بهینه‌سازی قیف فروش و بهبود مدل‌های درآمدی با هدف کاهش ریزش کاربران و افزایش نرخ بقای محصول.</p>
+            <hr class="svc-card__rule">
+            <ul class="svc-card__list">
+              <li>تحلیل متریک‌های فعال‌سازی و ریزش (Churn)</li>
+              <li>مشاوره در زمینه خلق ارزش و مدل درآمدی</li>
+              <li>بهینه‌سازی جریان پرداخت و قیف خرید</li>
+              <li>ارتقاء بهره‌وری عملیاتی سیستم‌های نرم‌افزاری</li>
+            </ul>
+            <span class="svc-card__cta">جزئیات این خدمت
+              <svg width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process — y≈2760, 7 steps -->
+    <section class="svc-process" id="process">
+      <div class="container">
+        <div class="section-head">
+          <span class="badge badge--section">فرآیند کار ما</span>
+          <h2 class="section-head__title">قدم به قدم با شما تا تحقق اهداف</h2>
+        </div>
+        <div class="process-steps">
+          <article class="process-step is-active">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۱</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">تحقیق و کشف</h3>
+              <p class="process-step__desc">شناخت کامل بازار و کاربر</p>
+            </div>
           </article>
-          <article class="service-card">
-            <div class="service-card__icon">💻</div>
-            <h2 class="service-card__title">توسعه وب</h2>
-            <p class="service-card__desc">ساخت وب‌سایت‌ها و اپلیکیشن‌های وب مدرن با تکنولوژی‌های روز دنیا.</p>
-            <a href="service.html" class="service-card__link">اطلاعات بیشتر ←</a>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۲</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">استراتژی</h3>
+              <p class="process-step__desc">تعریف شفاف مسیر ساخت</p>
+            </div>
           </article>
-          <article class="service-card">
-            <div class="service-card__icon">✨</div>
-            <h2 class="service-card__title">برندینگ</h2>
-            <p class="service-card__desc">خلق هویت بصری منحصربه‌فرد شامل لوگو، راهنمای برند و collateral.</p>
-            <a href="service.html" class="service-card__link">اطلاعات بیشتر ←</a>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۳</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">معماری اطلاعات</h3>
+              <p class="process-step__desc">پی‌ریزی ساختارهای اولیه</p>
+            </div>
           </article>
-          <article class="service-card">
-            <div class="service-card__icon">📱</div>
-            <h2 class="service-card__title">طراحی اپلیکیشن</h2>
-            <p class="service-card__desc">طراحی و توسعه اپلیکیشن‌های موبایل iOS و Android.</p>
-            <a href="service.html" class="service-card__link">اطلاعات بیشتر ←</a>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۴</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">طراحی بصری</h3>
+              <p class="process-step__desc">خلق رابط‌های چشم‌نواز</p>
+            </div>
           </article>
-          <article class="service-card">
-            <div class="service-card__icon">📊</div>
-            <h2 class="service-card__title">مشاوره دیجیتال</h2>
-            <p class="service-card__desc">تحلیل و مشاوره برای بهبود حضور دیجیتال و استراتژی آنلاین.</p>
-            <a href="service.html" class="service-card__link">اطلاعات بیشتر ←</a>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۵</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">توسعه کد</h3>
+              <p class="process-step__desc">کدنویسی استاندارد و بهینه</p>
+            </div>
           </article>
-          <article class="service-card">
-            <div class="service-card__icon">🚀</div>
-            <h2 class="service-card__title">سئو و بازاریابی</h2>
-            <p class="service-card__desc">بهینه‌سازی موتورهای جستجو و استراتژی‌های بازاریابی دیجیتال.</p>
-            <a href="service.html" class="service-card__link">اطلاعات بیشتر ←</a>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۶</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">تست و لانچ</h3>
+              <p class="process-step__desc">کنترل نهایی کیفیت</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۷</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">رشد مستمر</h3>
+              <p class="process-step__desc">پشتیبانی و توسعه مداوم</p>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <!-- Related projects — y≈3318 -->
+    <section class="svc-related" id="related">
       <div class="container">
-        <div class="cta-banner">
-          <div>
-            <h2 class="cta-banner__title">نیاز به مشاوره دارید؟</h2>
-            <p class="cta-banner__desc">با تیم ما تماس بگیرید تا بهترین راهکار را برای شما پیشنهاد دهیم.</p>
+        <div class="section-head">
+          <span class="badge badge--section">پروژه‌های مرتبط</span>
+          <h2 class="section-head__title">نمونه‌هایی از کاربردی بودن تخصص ما</h2>
+        </div>
+        <div class="svc-related-grid">
+          <a href="/project/zarafe/" class="svc-project svc-project--navy">
+            <div class="svc-project__media">
+              <div class="site-preview">
+                <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/zarafe-pixel.webp" alt="زرافه" width="1280" height="720" loading="lazy"></div>
+                <img class="site-preview__shot" src="assets/images/home/projects/zarafe-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
+              </div>
+            </div>
+            <div class="svc-project__body">
+              <div class="svc-project__meta">۱۴۰۳ • Fintech</div>
+              <h3 class="svc-project__title">زرافه — پلتفرم معامله طلا</h3>
+              <div class="svc-project__tags">
+                <span class="svc-project__tag">فین‌تک</span>
+                <span class="svc-project__tag">توسعه وب</span>
+                <span class="svc-project__tag">طراحی محصول</span>
+              </div>
+            </div>
+          </a>
+          <a href="/project/shogir/" class="svc-project svc-project--purple">
+            <div class="svc-project__media">
+              <div class="site-preview">
+                <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/shogir-pixel.webp" alt="شوگیر" width="1280" height="720" loading="lazy"></div>
+                <img class="site-preview__shot" src="assets/images/home/projects/shogir-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
+              </div>
+            </div>
+            <div class="svc-project__body">
+              <div class="svc-project__meta">۱۴۰۳ • Travel Platform</div>
+              <h3 class="svc-project__title">شوگیر — سوپراپ سفر قشم</h3>
+              <div class="svc-project__tags">
+                <span class="svc-project__tag">گردشگری</span>
+                <span class="svc-project__tag">PWA</span>
+                <span class="svc-project__tag">طراحی محصول</span>
+              </div>
+            </div>
+          </a>
+          <a href="/project/vanilly/" class="svc-project svc-project--brown">
+            <div class="svc-project__media">
+              <div class="site-preview">
+                <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/vanilly-pixel.webp" alt="وانیلی" width="1280" height="720" loading="lazy"></div>
+                <img class="site-preview__shot" src="assets/images/home/projects/vanilly-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
+              </div>
+            </div>
+            <div class="svc-project__body">
+              <div class="svc-project__meta">۱۴۰۲ • E-Commerce</div>
+              <h3 class="svc-project__title">وانیلی — فروشگاه آرایشی</h3>
+              <div class="svc-project__tags">
+                <span class="svc-project__tag">خرده‌فروشی</span>
+                <span class="svc-project__tag">توسعه کامل</span>
+                <span class="svc-project__tag">طراحی UI/UX</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="svc-related__more">
+          <a href="projects.html" class="btn btn--outline btn--lg">مشاهده همه پروژه‌ها</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ — y≈4268 -->
+    <section class="svc-faq" id="faq">
+      <div class="container">
+        <div class="section-head section-head--start">
+          <span class="badge badge--section">پاسخ به سؤالات متداول</span>
+          <h2 class="section-head__title">شاید این موارد دغدغه شما هم باشد</h2>
+        </div>
+        <div class="svc-faq__layout">
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary class="faq-item__question">
+                <span class="faq-item__label">تضمین کیفیت کدهای خروجی و پشتیبانی به چه صورت است؟</span>
+                <span class="faq-item__icon" aria-hidden="true"></span>
+              </summary>
+              <p class="faq-item__answer">تمامی کدهای توسعه‌یافته در استودیو هش بر مبنای آخرین الگوهای طراحی استاندارد نوشته شده و دارای ضمانت کیفیت هستند. پس از اتمام پروژه، از ۳ تا ۱۲ ماه پشتیبانی فنی رایگان جهت رفع ایرادات احتمالی و مانیتورینگ کارایی در نظر گرفته می‌شود.</p>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-item__question">
+                <span class="faq-item__label">مشارکت استودیو هش در فرآیند نگهداری و مقیاس‌پذیری محصول چقدر است؟</span>
+                <span class="faq-item__icon" aria-hidden="true"></span>
+              </summary>
+              <p class="faq-item__answer">بعد از لانچ کنار محصول می‌مانیم: پایش عملکرد، رفع بدهی فنی، و توسعه تدریجی ویژگی‌ها بر اساس قرارداد نگهداری. مقیاس‌پذیری از معماری اولیه دیده می‌شود تا رشد کاربر غافلگیر نکند.</p>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-item__question">
+                <span class="faq-item__label">آیا کدهای پروژه با مالکیت کامل و سورس‌کد تحویل کارفرما می‌شود؟</span>
+                <span class="faq-item__icon" aria-hidden="true"></span>
+              </summary>
+              <p class="faq-item__answer">بله. پس از تسویه، سورس‌کد، دسترسی مخزن و مستندات استقرار به کارفرما منتقل می‌شود. مالکیت فکری محصول متعلق به شماست مگر در قرارداد خلاف آن ذکر شده باشد.</p>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-item__question">
+                <span class="faq-item__label">تفاوت فرآیند توسعه چابک (Agile) در استودیو شما با دیگر شرکت‌ها چیست؟</span>
+                <span class="faq-item__icon" aria-hidden="true"></span>
+              </summary>
+              <p class="faq-item__answer">اسپرینت‌های کوتاه با خروجی قابل‌دیدن، تصمیم محصولی مشترک، و یک تیم طراحی‌به‌علاوه مهندسی — نه تحویل یک‌جای انتهای پروژه. اولویت با ارزش کسب‌وکار است، نه حجم فیچر.</p>
+            </details>
           </div>
-          <a href="contact.html" class="btn btn--primary btn--lg">تماس با ما</a>
+          <div class="svc-faq__art" aria-hidden="true">
+            <img src="assets/images/home/why-us-illustration.svg" alt="" width="288" height="288">
+          </div>
         </div>
+      </div>
+    </section>
+
+    <section class="home-final-cta">
+      <div class="container">
+        <article class="home-final-cta__card">
+          <h2 class="home-final-cta__title">ایده‌ی شما، محصول بعدی ماست؟</h2>
+          <p class="home-final-cta__desc">اگر ایده‌ای در سر دارید یا به دنبال تیمی هستید که همراه شما یک محصول موفق بسازد، ما آماده‌ایم با هم درباره‌اش صحبت کنیم.</p>
+          <div class="home-final-cta__actions">
+            <a href="contact.html" class="btn btn--primary btn--lg">شروع همکاری</a>
+            <a href="projects.html" class="btn btn--outline btn--lg">مشاهده پروژه‌ها</a>
+          </div>
+        </article>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="home-footer">
     <div class="container">
-      <div class="site-footer__grid">
-        <div class="site-footer__brand">
-          <img src="assets/images/home/logo.png" alt="لوگوی هش استودیو" width="40" height="40">
-          <div class="site-footer__brand-name">استودیو هش</div>
-          <p class="site-footer__brand-desc">آژانس خلاقیت دیجیتال — ساخت تجربه‌های دیجیتال معنادار برای برندهای پیشرو.</p>
-          <div class="site-footer__social">
-            <a href="#" class="site-footer__social-link" aria-label="اینستاگرام">IG</a>
-            <a href="#" class="site-footer__social-link" aria-label="لینکدین">LI</a>
-            <a href="#" class="site-footer__social-link" aria-label="توییتر">TW</a>
+      <div class="home-footer__grid">
+        <div class="home-footer__brand">
+          <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+          <div class="home-footer__brand-name">استودیو هش</div>
+          <p class="home-footer__brand-desc">طراحی و توسعه محصولات دیجیتال برای استارتاپ‌ها و شرکت‌های پیشرو — از ایده تا تجربه‌ای که کاربران عاشقش می‌شوند.</p>
+          <div class="home-footer__location">
+            <span class="home-footer__location-icon" aria-hidden="true">📍</span>
+            <span data-studio="address-short">تهران، یوسف‌آباد، جهان‌آرا، کوچه ۴۳</span>
           </div>
         </div>
-        <div>
-          <h3 class="site-footer__heading">لینک‌های سریع</h3>
-          <nav class="site-footer__links">
-            <a href="index.html" class="site-footer__link">خانه</a>
-            <a href="services.html" class="site-footer__link">خدمات</a>
-            <a href="projects.html" class="site-footer__link">پروژه‌ها</a>
-            <a href="about.html" class="site-footer__link">درباره ما</a>
-            <a href="blog.html" class="site-footer__link">بلاگ</a>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">دسترسی سریع</h3>
+          <nav class="home-footer__links" aria-label="لینک‌های فوتر">
+            <a href="index.html" class="home-footer__link">خانه اصلی</a>
+            <a href="projects.html" class="home-footer__link">پروژه‌ها و نمونه‌کارها</a>
+            <a href="about.html" class="home-footer__link">درباره ما</a>
+            <a href="blog.html" class="home-footer__link">وبلاگ تخصصی</a>
+            <a href="contact.html" class="home-footer__link">تماس با ما</a>
+            <a href="contact.html" class="home-footer__link">فرصت‌های همکاری</a>
           </nav>
         </div>
-        <div>
-          <h3 class="site-footer__heading">خدمات</h3>
-          <nav class="site-footer__links">
-            <a href="service.html" class="site-footer__link">طراحی UI/UX</a>
-            <a href="service.html" class="site-footer__link">توسعه وب</a>
-            <a href="service.html" class="site-footer__link">برندینگ</a>
-            <a href="service.html" class="site-footer__link">مشاوره دیجیتال</a>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">خدمات ما</h3>
+          <nav class="home-footer__links">
+            <a href="/service/product/" class="home-footer__link">طراحی محصول</a>
+            <a href="/service/ui-ux/" class="home-footer__link">طراحی UI/UX</a>
+            <a href="/service/web/" class="home-footer__link">توسعه وب مدرن</a>
+            <a href="/service/mobile/" class="home-footer__link">توسعه اپلیکیشن موبایل</a>
+            <a href="/service/mvp/" class="home-footer__link">راه‌اندازی MVP</a>
+            <a href="/service/ai/" class="home-footer__link">یکپارچه‌سازی هوش مصنوعی</a>
           </nav>
         </div>
-        <div>
-          <h3 class="site-footer__heading">تماس با ما</h3>
-          <div class="site-footer__contact-item"><span>📍</span><span>تهران، خیابان ولیعصر، پلاک ۱۲۳</span></div>
-          <div class="site-footer__contact-item"><span>📧</span><span>info@hashstudio.ir</span></div>
-          <div class="site-footer__contact-item"><span>📞</span><span>۰۲۱-۱۲۳۴۵۶۷۸</span></div>
+        <div class="home-footer__newsletter-col">
+          <h3 class="home-footer__heading">خبرنامه استودیو هش</h3>
+          <p class="home-footer__newsletter-desc">جدیدترین مطالب علمی، تجربه‌ها و مقاله‌های محصولی را مستقیم در ایمیل خود دریافت کنید.</p>
+          <form class="home-footer__newsletter" action="#" method="post">
+            <div class="home-footer__newsletter-row">
+              <label for="footer-newsletter-email" class="visually-hidden">ایمیل</label>
+              <input id="footer-newsletter-email" class="home-footer__newsletter-input" type="email" name="email" placeholder="ایمیل شما" required>
+              <button type="submit" class="btn btn--primary">عضویت</button>
+            </div>
+          </form>
+          <div class="home-footer__social" data-studio="social" data-studio-social-class="home-footer__social-link">
+            <a href="https://www.instagram.com/hashstudio.ir/" class="home-footer__social-link" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer">IG</a>
+          </div>
         </div>
       </div>
-      <div class="site-footer__bottom">
-        <span>© ۱۴۰۵ Hash Studio. تمامی حقوق محفوظ است.</span>
-        <span>طراحی و توسعه توسط هش استودیو</span>
+      <div class="home-footer__bottom">
+        <span>تمامی حقوق مادی و معنوی محفوظ است © ۱۴۰۵ استودیو هش</span>
+        <span>طراحی و توسعه با ■ در استودیو هش</span>
       </div>
     </div>
   </footer>
 
+  <script src="js/studio-info.js"></script>
+  <script src="js/studio-chrome.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

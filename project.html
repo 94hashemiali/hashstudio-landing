@@ -3,190 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="جزئیات پروژه فروشگاه آنلاین نوین - هش استودیو">
-  <title>فروشگاه آنلاین نوین | Hash Studio</title>
-  <link rel="icon" href="assets/images/home/logo.png" type="image/png">
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/pages.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <title>پروژه | استودیو هش</title>
+  <script>
+    (function () {
+      function clean(value) {
+        return String(value || '').replace(/^\/+|\/+$/g, '').trim();
+      }
+      var slug = null;
+      try {
+        slug = clean(new URLSearchParams(location.search).get('slug'));
+      } catch (err) {}
+      if (!slug) {
+        var hash = (location.hash || '').replace(/^#/, '');
+        if (hash.indexOf('slug=') === 0) slug = clean(hash.slice(5));
+        else if (hash && hash.indexOf('=') === -1) slug = clean(hash);
+      }
+      location.replace(slug ? '/project/' + encodeURIComponent(slug) + '/' : '/projects.html');
+    })();
+  </script>
 </head>
 <body>
-
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="index.html" class="site-header__logo">
-        <img src="assets/images/home/logo.png" alt="لوگوی هش استودیو" width="40" height="40">
-        <span class="site-header__logo-text">استودیو هش</span>
-      </a>
-      <nav class="site-header__nav" aria-label="منوی اصلی">
-        <a href="index.html" class="site-header__link">خانه</a>
-        <a href="services.html" class="site-header__link">خدمات</a>
-        <a href="projects.html" class="site-header__link is-active">پروژه‌ها</a>
-        <a href="about.html" class="site-header__link">درباره ما</a>
-        <a href="blog.html" class="site-header__link">بلاگ</a>
-      </nav>
-      <div class="site-header__actions">
-        <a href="contact.html" class="btn btn--primary">تماس با ما</a>
-        <button class="site-header__toggle" aria-label="باز کردن منو" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="page-hero">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="مسیر">
-          <a href="index.html">خانه</a>
-          <span class="breadcrumb__sep">/</span>
-          <a href="projects.html">پروژه‌ها</a>
-          <span class="breadcrumb__sep">/</span>
-          <span>فروشگاه آنلاین نوین</span>
-        </nav>
-        <div class="card__meta mb-4">
-          <span class="tag">UI/UX Design</span>
-          <span class="tag tag--green">توسعه وب</span>
-        </div>
-        <h1 class="page-hero__title">فروشگاه آنلاین نوین</h1>
-        <p class="page-hero__desc">طراحی و توسعه فروشگاه اینترنتی با تجربه خرید یکپارچه و مدرن</p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="project-gallery">
-          <div class="project-gallery__main">
-            <img src="assets/images/placeholder-project.svg" alt="نمای اصلی پروژه">
-          </div>
-          <div class="project-gallery__thumbs">
-            <div class="project-gallery__thumb">
-              <img src="assets/images/placeholder-project.svg" alt="نمای موبایل">
-            </div>
-            <div class="project-gallery__thumb">
-              <img src="assets/images/placeholder-project.svg" alt="صفحه محصول">
-            </div>
-          </div>
-        </div>
-
-        <div class="project-info">
-          <div>
-            <div class="project-info__label">مشتری</div>
-            <div class="project-info__value">شرکت نوین</div>
-          </div>
-          <div>
-            <div class="project-info__label">سال</div>
-            <div class="project-info__value">۱۴۰۴</div>
-          </div>
-          <div>
-            <div class="project-info__label">خدمات</div>
-            <div class="project-info__value">UI/UX + توسعه</div>
-          </div>
-        </div>
-
-        <div class="split-layout">
-          <div>
-            <h2 class="text-h2 mb-4">درباره پروژه</h2>
-            <p class="text-body-lg text-muted mb-4">
-              فروشگاه آنلاین نوین یک پلتفرم تجارت الکترونیک کامل است که با هدف ارائه تجربه خرید ساده و لذت‌بخش طراحی شده است.
-            </p>
-            <p class="text-body-lg text-muted">
-              تیم ما از مرحله تحقیق کاربر تا پیاده‌سازی نهایی، تمام جنبه‌های این پروژه را پوشش داد. نتیجه، افزایش ۴۰٪ نرخ تبدیل و رضایت بالای کاربران بود.
-            </p>
-          </div>
-          <div>
-            <h2 class="text-h2 mb-4">چالش‌ها و راه‌حل</h2>
-            <ul class="feature-list">
-              <li class="feature-item">
-                <span class="feature-item__icon">🎯</span>
-                <div>
-                  <h4 class="feature-item__title">تجربه خرید یکپارچه</h4>
-                  <p class="feature-item__desc">طراحی flow خرید ساده با حداقل مرحله</p>
-                </div>
-              </li>
-              <li class="feature-item">
-                <span class="feature-item__icon">📱</span>
-                <div>
-                  <h4 class="feature-item__title">Mobile First</h4>
-                  <p class="feature-item__desc">بهینه‌سازی کامل برای موبایل</p>
-                </div>
-              </li>
-              <li class="feature-item">
-                <span class="feature-item__icon">⚡</span>
-                <div>
-                  <h4 class="feature-item__title">عملکرد بالا</h4>
-                  <p class="feature-item__desc">بارگذاری سریع با بهینه‌سازی تصاویر</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="cta-banner">
-          <div>
-            <h2 class="cta-banner__title">پروژه مشابه دارید؟</h2>
-            <p class="cta-banner__desc">با ما تماس بگیرید تا درباره پروژه شما صحبت کنیم.</p>
-          </div>
-          <a href="contact.html" class="btn btn--primary btn--lg">شروع پروژه</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="site-footer__grid">
-        <div class="site-footer__brand">
-          <img src="assets/images/home/logo.png" alt="لوگوی هش استودیو" width="40" height="40">
-          <div class="site-footer__brand-name">استودیو هش</div>
-          <p class="site-footer__brand-desc">آژانس خلاقیت دیجیتال — ساخت تجربه‌های دیجیتال معنادار برای برندهای پیشرو.</p>
-          <div class="site-footer__social">
-            <a href="#" class="site-footer__social-link" aria-label="اینستاگرام">IG</a>
-            <a href="#" class="site-footer__social-link" aria-label="لینکدین">LI</a>
-            <a href="#" class="site-footer__social-link" aria-label="توییتر">TW</a>
-          </div>
-        </div>
-        <div>
-          <h3 class="site-footer__heading">لینک‌های سریع</h3>
-          <nav class="site-footer__links">
-            <a href="index.html" class="site-footer__link">خانه</a>
-            <a href="services.html" class="site-footer__link">خدمات</a>
-            <a href="projects.html" class="site-footer__link">پروژه‌ها</a>
-            <a href="about.html" class="site-footer__link">درباره ما</a>
-            <a href="blog.html" class="site-footer__link">بلاگ</a>
-          </nav>
-        </div>
-        <div>
-          <h3 class="site-footer__heading">خدمات</h3>
-          <nav class="site-footer__links">
-            <a href="service.html" class="site-footer__link">طراحی UI/UX</a>
-            <a href="service.html" class="site-footer__link">توسعه وب</a>
-            <a href="service.html" class="site-footer__link">برندینگ</a>
-            <a href="service.html" class="site-footer__link">مشاوره دیجیتال</a>
-          </nav>
-        </div>
-        <div>
-          <h3 class="site-footer__heading">تماس با ما</h3>
-          <div class="site-footer__contact-item"><span>📍</span><span>تهران، خیابان ولیعصر، پلاک ۱۲۳</span></div>
-          <div class="site-footer__contact-item"><span>📧</span><span>info@hashstudio.ir</span></div>
-          <div class="site-footer__contact-item"><span>📞</span><span>۰۲۱-۱۲۳۴۵۶۷۸</span></div>
-        </div>
-      </div>
-      <div class="site-footer__bottom">
-        <span>© ۱۴۰۵ Hash Studio. تمامی حقوق محفوظ است.</span>
-        <span>طراحی و توسعه توسط هش استودیو</span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
+  <p><a href="/projects.html">انتقال به پروژه‌ها…</a></p>
 </body>
 </html>

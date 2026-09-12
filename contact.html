@@ -3,160 +3,310 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="تماس با هش استودیو - درخواست مشاوره و شروع پروژه">
-  <title>تماس با ما | Hash Studio</title>
+  <meta name="description" content="تماس با استودیو هش — مشاوره رایگان و شروع همکاری برای ساخت محصول دیجیتال">
+  <title>تماس با ما | استودیو هش</title>
   <link rel="icon" href="assets/images/home/logo.png" type="image/png">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/pages.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/contact.css">
 </head>
-<body>
+<body class="home-page contact-page">
 
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="index.html" class="site-header__logo">
-        <img src="assets/images/home/logo.png" alt="لوگوی هش استودیو" width="40" height="40">
-        <span class="site-header__logo-text">استودیو هش</span>
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
+      <a href="contact.html" class="top-bar__btn">شروع همکاری</a>
+    </div>
+  </div>
+
+  <header class="home-header" id="site-header">
+    <div class="container home-header__inner">
+      <a href="index.html" class="home-header__logo">
+        <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+        <span class="home-header__logo-text">استودیو هش</span>
       </a>
-      <nav class="site-header__nav" aria-label="منوی اصلی">
-        <a href="index.html" class="site-header__link">خانه</a>
-        <a href="services.html" class="site-header__link">خدمات</a>
-        <a href="projects.html" class="site-header__link">پروژه‌ها</a>
-        <a href="about.html" class="site-header__link">درباره ما</a>
-        <a href="blog.html" class="site-header__link">بلاگ</a>
+
+      <nav class="home-header__nav" id="main-nav" aria-label="منوی اصلی">
+        <a href="index.html" class="home-header__link">خانه</a>
+        <a href="services.html" class="home-header__link">خدمات</a>
+        <a href="projects.html" class="home-header__link">پروژه‌ها</a>
+        <a href="about.html" class="home-header__link">درباره ما</a>
+        <a href="blog.html" class="home-header__link">بلاگ</a>
+        <a href="contact.html" class="home-header__link is-active">تماس با ما</a>
       </nav>
-      <div class="site-header__actions">
-        <a href="contact.html" class="btn btn--primary">تماس با ما</a>
-        <button class="site-header__toggle" aria-label="باز کردن منو" aria-expanded="false">
-          <span></span><span></span><span></span>
+
+      <div class="home-header__actions">
+        <a href="contact.html" class="btn btn--primary btn--header">شروع همکاری</a>
+        <a href="contact.html" class="home-header__profile" aria-label="پروفایل کاربر">
+          <img src="assets/icons/profile.svg" alt="" width="39" height="39">
+        </a>
+        <button class="home-header__toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="main-nav">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="page-hero">
+    <!-- Hero — desgin/contact-desktop.svg y≈118–560 -->
+    <section class="ct-hero">
       <div class="container">
-        <nav class="breadcrumb" aria-label="مسیر">
+        <span class="ct-hero__badge">مشاوره و شروع یک کار هیجان‌انگیز</span>
+        <nav class="ct-breadcrumb" aria-label="مسیر">
           <a href="index.html">خانه</a>
-          <span class="breadcrumb__sep">/</span>
-          <span>تماس با ما</span>
+          <span class="ct-breadcrumb__sep" aria-hidden="true">‹</span>
+          <span class="ct-breadcrumb__current">تماس با ما</span>
         </nav>
-        <h1 class="page-hero__title">تماس با ما</h1>
-        <p class="page-hero__desc">پروژه بعدی خود را با ما شروع کنید. مشتاق شنیدن ایده‌های شما هستیم.</p>
+        <h1 class="ct-hero__title">درباره محصولی که می‌خواهید بسازید، حرف بزنیم.</h1>
+        <p class="ct-hero__lead">فرم را پر کنید یا از راه‌های تماس کنار صفحه استفاده کنید — معمولاً ظرف ۲۴ تا ۴۸ ساعت برای هماهنگی جلسه اولیه پاسخ می‌دهیم.</p>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container contact-layout">
-        <div class="contact-info">
-          <h2 class="text-h2 mb-6">اطلاعات تماس</h2>
-          <div class="contact-info__item">
-            <div class="contact-info__icon">📍</div>
-            <div>
-              <div class="contact-info__label">آدرس</div>
-              <div class="contact-info__value">تهران، خیابان ولیعصر، پلاک ۱۲۳</div>
+    <!-- Info + form — y≈606–1720 -->
+    <section class="ct-main" id="form">
+      <div class="container">
+        <div class="ct-layout">
+          <aside class="ct-info" aria-labelledby="ct-info-title">
+            <h2 class="ct-info__title" id="ct-info-title">اطلاعات تماس</h2>
+            <p class="ct-info__lead">خوشحال می‌شویم صدای شما را بشنویم یا پذیرای شما در فضای استودیو باشیم.</p>
+
+            <div class="ct-info__list">
+              <div class="ct-info__item">
+                <div class="ct-info__icon" aria-hidden="true">
+                  <img src="assets/icons/contact/email.svg" alt="" width="20" height="20">
+                </div>
+                <div>
+                  <div class="ct-info__label">ایمیل مستقیم</div>
+                  <div class="ct-info__value"><a href="mailto:info@hashstudio.ir" data-studio="email">info@hashstudio.ir</a></div>
+                </div>
+              </div>
+              <div class="ct-info__item">
+                <div class="ct-info__icon" aria-hidden="true">
+                  <img src="assets/icons/contact/phone.svg" alt="" width="20" height="20">
+                </div>
+                <div>
+                  <div class="ct-info__label">شماره تماس</div>
+                  <div class="ct-info__value ct-info__value--stack" data-studio="phones">
+                    <a href="tel:+989123351961">۰۹۱۲۳۳۵۱۹۶۱</a>
+                    <a href="tel:+989106966095">۰۹۱۰۶۹۶۶۰۹۵</a>
+                  </div>
+                </div>
+              </div>
+              <div class="ct-info__item">
+                <div class="ct-info__icon" aria-hidden="true">
+                  <img src="assets/icons/contact/pin.svg" alt="" width="20" height="20">
+                </div>
+                <div>
+                  <div class="ct-info__label">نشانی استودیو</div>
+                  <div class="ct-info__value" data-studio="address">تهران، یوسف‌آباد، خیابان جهان‌آرا، کوچه ۴۳، پلاک ۳۰، واحد ۲</div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="contact-info__item">
-            <div class="contact-info__icon">📧</div>
-            <div>
-              <div class="contact-info__label">ایمیل</div>
-              <div class="contact-info__value">info@hashstudio.ir</div>
+
+            <div class="ct-info__hours">
+              <div class="ct-info__label">ساعات کاری ما</div>
+              <div class="ct-info__value">شنبه تا چهارشنبه ۹:۰۰ الی ۱۸:۰۰</div>
             </div>
-          </div>
-          <div class="contact-info__item">
-            <div class="contact-info__icon">📞</div>
-            <div>
-              <div class="contact-info__label">تلفن</div>
-              <div class="contact-info__value">۰۲۱-۱۲۳۴۵۶۷۸</div>
+
+            <div class="ct-info__social" data-studio="social" data-studio-social-class="ct-info__social-link">
+              <a href="https://www.instagram.com/hashstudio.ir/" class="ct-info__social-link" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer">IG</a>
             </div>
-          </div>
-          <div class="contact-info__item">
-            <div class="contact-info__icon">🕐</div>
-            <div>
-              <div class="contact-info__label">ساعات کاری</div>
-              <div class="contact-info__value">شنبه تا پنج‌شنبه، ۹ تا ۱۸</div>
+
+            <div class="ct-info__art">
+              <div class="ct-info__art-frame">
+                <img src="assets/images/contact/desk-pixel.png" alt="" width="220" height="140" loading="lazy">
+              </div>
+              <p class="ct-info__art-caption">یک پیام از میز کار</p>
             </div>
+          </aside>
+
+          <div class="ct-form-card">
+            <h2 class="ct-form-card__title">جزئیات پروژه شما</h2>
+            <form id="contact-form" class="ct-form" novalidate>
+              <div class="ct-form__row">
+                <div class="ct-form__field">
+                  <label class="ct-form__label" for="name">نام و نام خانوادگی</label>
+                  <input class="ct-form__input" type="text" id="name" name="name" placeholder="نام خود را وارد کنید" required autocomplete="name">
+                </div>
+                <div class="ct-form__field">
+                  <label class="ct-form__label" for="phone">شماره تماس</label>
+                  <input class="ct-form__input" type="tel" id="phone" name="phone" placeholder="مثلا ۰۹۱۲۳۴۵۶۷۸۹" required autocomplete="tel">
+                </div>
+              </div>
+
+              <div class="ct-form__row">
+                <div class="ct-form__field">
+                  <label class="ct-form__label" for="email">ایمیل</label>
+                  <input class="ct-form__input" type="email" id="email" name="email" placeholder="example@domain.com" required autocomplete="email">
+                </div>
+                <div class="ct-form__field">
+                  <label class="ct-form__label" for="company">نام شرکت / استارتاپ</label>
+                  <input class="ct-form__input" type="text" id="company" name="company" placeholder="نام کسب‌وکارتان" autocomplete="organization">
+                </div>
+              </div>
+
+              <div class="ct-form__row">
+                <div class="ct-form__field">
+                  <label class="ct-form__label" for="project-type">نوع پروژه</label>
+                  <select class="ct-form__select" id="project-type" name="projectType" required>
+                    <option value="" disabled selected>وب‌سایت، اپلیکیشن، MVP...</option>
+                    <option value="website">وب‌سایت</option>
+                    <option value="app">اپلیکیشن موبایل</option>
+                    <option value="mvp">MVP</option>
+                    <option value="product">طراحی محصول</option>
+                    <option value="ai">هوش مصنوعی</option>
+                    <option value="other">سایر</option>
+                  </select>
+                </div>
+                <div class="ct-form__field">
+                  <label class="ct-form__label" for="budget">بودجه تقریبی</label>
+                  <select class="ct-form__select" id="budget" name="budget" required>
+                    <option value="" disabled selected>بازه بودجه را انتخاب کنید</option>
+                    <option value="under-100">کمتر از ۱۰۰ میلیون</option>
+                    <option value="100-300">۱۰۰ تا ۳۰۰ میلیون</option>
+                    <option value="300-700">۳۰۰ تا ۷۰۰ میلیون</option>
+                    <option value="700-plus">بیش از ۷۰۰ میلیون</option>
+                    <option value="unsure">هنوز مشخص نیست</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="ct-form__field">
+                <label class="ct-form__label" for="timeline">زمان‌بندی مورد نظر برای شروع</label>
+                <select class="ct-form__select" id="timeline" name="timeline" required>
+                  <option value="" disabled selected>زمان مورد انتظار خود را انتخاب کنید</option>
+                  <option value="asap">در اسرع وقت</option>
+                  <option value="1-month">حدود یک ماه آینده</option>
+                  <option value="1-3-months">۱ تا ۳ ماه آینده</option>
+                  <option value="exploring">فعلاً در حال بررسی هستم</option>
+                </select>
+              </div>
+
+              <div class="ct-form__field">
+                <label class="ct-form__label" for="message">توضیحات پروژه</label>
+                <textarea class="ct-form__textarea" id="message" name="message" placeholder="کمی درباره ایده، فیچرهای کلیدی و اهداف محصولتان بنویسید..." required></textarea>
+              </div>
+
+              <div class="ct-upload" id="ct-upload" role="button" tabindex="0" aria-controls="attachment">
+                <input type="file" id="attachment" name="attachment" accept=".pdf,.zip,.png,.jpg,.jpeg" hidden>
+                <span class="ct-upload__icon" aria-hidden="true">
+                  <img src="assets/icons/contact/clip.svg" alt="" width="20" height="20">
+                </span>
+                <span class="ct-upload__text">یا فایل را اینجا رها کنید — <span class="ct-upload__link">آپلود فایل پروپوزال یا مستندات</span></span>
+                <span class="ct-upload__hint">حداکثر حجم فایل ۱۰ مگابایت (PDF, ZIP, PNG)</span>
+                <span class="ct-upload__file" id="ct-upload-name" hidden></span>
+              </div>
+
+              <button type="submit" class="ct-form__submit">ارسال درخواست همکاری</button>
+            </form>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="contact-form-wrap">
-          <h2 class="text-h2 mb-6">ارسال پیام</h2>
-          <form id="contact-form" novalidate>
-            <div class="form-group">
-              <label class="form-label" for="name">نام و نام خانوادگی</label>
-              <input class="form-input" type="text" id="name" name="name" placeholder="نام خود را وارد کنید" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="email">ایمیل</label>
-              <input class="form-input" type="email" id="email" name="email" placeholder="example@email.com" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="subject">موضوع</label>
-              <input class="form-input" type="text" id="subject" name="subject" placeholder="موضوع پیام" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="message">پیام</label>
-              <textarea class="form-textarea" id="message" name="message" placeholder="پیام خود را بنویسید..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">ارسال پیام</button>
-          </form>
+    <!-- FAQ — y≈1784–2580 -->
+    <section class="ct-faq" id="faq">
+      <div class="container">
+        <div class="ct-faq__head">
+          <span class="ct-faq__badge">پاسخ به سوالات رایج همکاری</span>
+          <h2 class="ct-faq__title">سؤالاتی که معمولاً در آغاز همکاری پیش می‌آید</h2>
+        </div>
+        <div class="faq-list ct-faq__list">
+          <details class="faq-item" open>
+            <summary class="faq-item__question">
+              <span class="faq-item__label">فرآیند بررسی اولیه پروژه‌ها چقدر طول می‌کشد؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">معمولاً ظرف ۲۴ تا ۴۸ ساعت درخواست را بررسی می‌کنیم و برای جلسه مشاوره آنلاین کوتاه وقت می‌گذاریم تا دامنه کار و مسیر بعدی روشن شود.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              <span class="faq-item__label">آیا برای عقد قرارداد نیاز به حضور فیزیکی است؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">خیر. مذاکره، بررسی نیازمندی‌ها و امضای قرارداد به‌صورت کاملاً دیجیتال و آنلاین انجام می‌شود؛ حضور حضوری فقط در صورت تمایل شماست.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              <span class="faq-item__label">پشتیبانی محصولات پس از لانچ به چه صورت است؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">هر پروژه دوره پشتیبانی فنی پیش‌فرض دارد. در صورت نیاز می‌توانید قرارداد نگهداری و توسعه مستمر را هم جداگانه فعال کنید.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              <span class="faq-item__label">آیا قبل از شروع کار قرارداد حفظ محرمانگی (NDA) امضا می‌شود؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">بله. پیش از تبادل داده‌ها و جزئیات حساس محصول، NDA رسمی امضا می‌شود تا اطلاعات کسب‌وکار شما محرمانه بماند.</p>
+          </details>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="home-footer">
     <div class="container">
-      <div class="site-footer__grid">
-        <div class="site-footer__brand">
-          <img src="assets/images/home/logo.png" alt="لوگوی هش استودیو" width="40" height="40">
-          <div class="site-footer__brand-name">استودیو هش</div>
-          <p class="site-footer__brand-desc">آژانس خلاقیت دیجیتال — ساخت تجربه‌های دیجیتال معنادار برای برندهای پیشرو.</p>
-          <div class="site-footer__social">
-            <a href="#" class="site-footer__social-link" aria-label="اینستاگرام">IG</a>
-            <a href="#" class="site-footer__social-link" aria-label="لینکدین">LI</a>
-            <a href="#" class="site-footer__social-link" aria-label="توییتر">TW</a>
+      <div class="home-footer__grid">
+        <div class="home-footer__brand">
+          <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+          <div class="home-footer__brand-name">استودیو هش</div>
+          <p class="home-footer__brand-desc">طراحی و توسعه محصولات دیجیتال برای استارتاپ‌ها و شرکت‌های پیشرو — از ایده تا تجربه‌ای که کاربران عاشقش می‌شوند.</p>
+          <div class="home-footer__location">
+            <span class="home-footer__location-icon" aria-hidden="true">📍</span>
+            <span data-studio="address-short">تهران، یوسف‌آباد، جهان‌آرا، کوچه ۴۳</span>
           </div>
         </div>
-        <div>
-          <h3 class="site-footer__heading">لینک‌های سریع</h3>
-          <nav class="site-footer__links">
-            <a href="index.html" class="site-footer__link">خانه</a>
-            <a href="services.html" class="site-footer__link">خدمات</a>
-            <a href="projects.html" class="site-footer__link">پروژه‌ها</a>
-            <a href="about.html" class="site-footer__link">درباره ما</a>
-            <a href="blog.html" class="site-footer__link">بلاگ</a>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">دسترسی سریع</h3>
+          <nav class="home-footer__links" aria-label="لینک‌های فوتر">
+            <a href="index.html" class="home-footer__link">خانه اصلی</a>
+            <a href="projects.html" class="home-footer__link">پروژه‌ها و نمونه‌کارها</a>
+            <a href="about.html" class="home-footer__link">درباره ما</a>
+            <a href="blog.html" class="home-footer__link">وبلاگ تخصصی</a>
+            <a href="contact.html" class="home-footer__link">تماس با ما</a>
+            <a href="contact.html" class="home-footer__link">فرصت‌های همکاری</a>
           </nav>
         </div>
-        <div>
-          <h3 class="site-footer__heading">خدمات</h3>
-          <nav class="site-footer__links">
-            <a href="service.html" class="site-footer__link">طراحی UI/UX</a>
-            <a href="service.html" class="site-footer__link">توسعه وب</a>
-            <a href="service.html" class="site-footer__link">برندینگ</a>
-            <a href="service.html" class="site-footer__link">مشاوره دیجیتال</a>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">خدمات ما</h3>
+          <nav class="home-footer__links">
+            <a href="/service/product/" class="home-footer__link">طراحی محصول</a>
+            <a href="/service/ui-ux/" class="home-footer__link">طراحی UI/UX</a>
+            <a href="/service/web/" class="home-footer__link">توسعه وب مدرن</a>
+            <a href="/service/mobile/" class="home-footer__link">توسعه اپلیکیشن موبایل</a>
+            <a href="/service/mvp/" class="home-footer__link">راه‌اندازی MVP</a>
+            <a href="/service/ai/" class="home-footer__link">یکپارچه‌سازی هوش مصنوعی</a>
           </nav>
         </div>
-        <div>
-          <h3 class="site-footer__heading">تماس با ما</h3>
-          <div class="site-footer__contact-item"><span>📍</span><span>تهران، خیابان ولیعصر، پلاک ۱۲۳</span></div>
-          <div class="site-footer__contact-item"><span>📧</span><span>info@hashstudio.ir</span></div>
-          <div class="site-footer__contact-item"><span>📞</span><span>۰۲۱-۱۲۳۴۵۶۷۸</span></div>
+        <div class="home-footer__newsletter-col">
+          <h3 class="home-footer__heading">خبرنامه استودیو هش</h3>
+          <p class="home-footer__newsletter-desc">جدیدترین مطالب علمی، تجربه‌ها و مقاله‌های محصولی را مستقیم در ایمیل خود دریافت کنید.</p>
+          <form class="home-footer__newsletter" action="#" method="post">
+            <div class="home-footer__newsletter-row">
+              <label for="footer-newsletter-email" class="visually-hidden">ایمیل</label>
+              <input id="footer-newsletter-email" class="home-footer__newsletter-input" type="email" name="email" placeholder="ایمیل شما" required>
+              <button type="submit" class="btn btn--primary">عضویت</button>
+            </div>
+          </form>
+          <div class="home-footer__social" data-studio="social" data-studio-social-class="home-footer__social-link">
+            <a href="https://www.instagram.com/hashstudio.ir/" class="home-footer__social-link" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer">IG</a>
+          </div>
         </div>
       </div>
-      <div class="site-footer__bottom">
-        <span>© ۱۴۰۵ Hash Studio. تمامی حقوق محفوظ است.</span>
-        <span>طراحی و توسعه توسط هش استودیو</span>
+      <div class="home-footer__bottom">
+        <span>تمامی حقوق مادی و معنوی محفوظ است © ۱۴۰۵ استودیو هش</span>
+        <span>طراحی و توسعه با ■ در استودیو هش</span>
       </div>
     </div>
   </footer>
 
+  <script src="js/studio-info.js"></script>
+  <script src="js/studio-chrome.js"></script>
   <script src="js/main.js"></script>
   <script src="js/contact.js"></script>
 </body>

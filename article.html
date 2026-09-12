@@ -3,150 +3,217 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="روندهای طراحی UI در سال ۲۰۲۶ - بلاگ هش استودیو">
-  <title>روندهای طراحی UI در سال ۲۰۲۶ | Hash Studio</title>
+  <meta name="description" content="مقاله تخصصی استودیو هش درباره ساخت محصول دیجیتال">
+  <title>مقاله | استودیو هش</title>
   <link rel="icon" href="assets/images/home/logo.png" type="image/png">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/pages.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/article.css">
 </head>
-<body>
+<body class="home-page article-page">
 
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="index.html" class="site-header__logo">
-        <img src="assets/images/home/logo.png" alt="لوگوی هش استودیو" width="40" height="40">
-        <span class="site-header__logo-text">استودیو هش</span>
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
+      <a href="contact.html" class="top-bar__btn">شروع همکاری</a>
+    </div>
+  </div>
+
+  <header class="home-header" id="site-header">
+    <div class="container home-header__inner">
+      <a href="index.html" class="home-header__logo">
+        <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+        <span class="home-header__logo-text">استودیو هش</span>
       </a>
-      <nav class="site-header__nav" aria-label="منوی اصلی">
-        <a href="index.html" class="site-header__link">خانه</a>
-        <a href="services.html" class="site-header__link">خدمات</a>
-        <a href="projects.html" class="site-header__link">پروژه‌ها</a>
-        <a href="about.html" class="site-header__link">درباره ما</a>
-        <a href="blog.html" class="site-header__link is-active">بلاگ</a>
+
+      <nav class="home-header__nav" id="main-nav" aria-label="منوی اصلی">
+        <a href="index.html" class="home-header__link">خانه</a>
+        <a href="services.html" class="home-header__link">خدمات</a>
+        <a href="projects.html" class="home-header__link">پروژه‌ها</a>
+        <a href="about.html" class="home-header__link">درباره ما</a>
+        <a href="blog.html" class="home-header__link is-active">بلاگ</a>
+        <a href="contact.html" class="home-header__link">تماس با ما</a>
       </nav>
-      <div class="site-header__actions">
-        <a href="contact.html" class="btn btn--primary">تماس با ما</a>
-        <button class="site-header__toggle" aria-label="باز کردن منو" aria-expanded="false">
-          <span></span><span></span><span></span>
+
+      <div class="home-header__actions">
+        <a href="contact.html" class="btn btn--primary btn--header">شروع همکاری</a>
+        <a href="contact.html" class="home-header__profile" aria-label="پروفایل کاربر">
+          <img src="assets/icons/profile.svg" alt="" width="39" height="39">
+        </a>
+        <button class="home-header__toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="main-nav">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </div>
     </div>
   </header>
 
   <main>
-    <article>
-      <header class="article-header">
-        <div class="container">
-          <nav class="breadcrumb" aria-label="مسیر">
-            <a href="index.html">خانه</a>
-            <span class="breadcrumb__sep">/</span>
-            <a href="blog.html">بلاگ</a>
-            <span class="breadcrumb__sep">/</span>
-            <span>روندهای طراحی UI</span>
-          </nav>
-          <div class="article-header__image">
-            <img src="assets/images/placeholder-blog.svg" alt="تصویر شاخص مقاله">
+    <section class="article-hero">
+      <div class="container">
+        <nav class="article-breadcrumb" aria-label="مسیر">
+          <a href="index.html">خانه</a>
+          <span class="article-breadcrumb__sep" aria-hidden="true">›</span>
+          <a href="blog.html">وبلاگ</a>
+          <span class="article-breadcrumb__sep" aria-hidden="true">›</span>
+          <a class="article-breadcrumb__current" data-field="crumb-tag" href="blog.html">طراحی محصول</a>
+        </nav>
+
+        <span class="article-hero__tag" data-field="tag">طراحی محصول</span>
+        <h1 class="article-hero__title" data-field="title">چگونه یک محصول دیجیتال موفق بسازیم: راهنمای جامع استودیو هش</h1>
+
+        <div class="article-hero__meta">
+          <div class="article-hero__author">
+            <img class="article-hero__avatar" data-field="avatar" src="assets/images/article/author.webp" alt="" width="52" height="52">
+            <div>
+              <div class="article-hero__author-name" data-field="author-name">علی محمدی</div>
+              <div class="article-hero__author-role" data-field="author-role">بنیان‌گذار و مدیر محصول استودیو هش</div>
+            </div>
           </div>
-          <div class="article-header__meta">
-            <span class="tag">طراحی</span>
-            <span class="text-caption">۱۵ مرداد ۱۴۰۵</span>
-            <span class="text-caption">· ۵ دقیقه مطالعه</span>
+          <div class="article-hero__stats">
+            <time data-field="date">۱۲ مرداد ۱۴۰۳</time>
+            <span class="article-hero__dot" aria-hidden="true"></span>
+            <span data-field="read">زمان مطالعه: ۸ دقیقه</span>
           </div>
-          <h1 class="text-h1">روندهای طراحی UI در سال ۲۰۲۶</h1>
         </div>
-      </header>
 
-      <div class="container article-body">
-        <p>
-          طراحی رابط کاربری هر سال با ترندهای جدیدی همراه است. در این مقاله به مهم‌ترین روندهای طراحی UI در سال ۲۰۲۶ می‌پردازیم که می‌توانند بر تجربه کاربری محصولات دیجیتال تأثیر بگذارند.
-        </p>
-
-        <h2>۱. طراحی مینیمال با عمق</h2>
-        <p>
-          مینیمالیسم همچنان محبوب است، اما امسال با استفاده از سایه‌های نرم، گرادیان‌های ظریف و لایه‌بندی، عمق بیشتری به رابط‌ها اضافه می‌شود. این رویکرد بدون شلوغی، حس سه‌بعدی و تعاملی بودن را القا می‌کند.
-        </p>
-
-        <h2>۲. تایپوگرافی جسورانه</h2>
-        <p>
-          فونت‌های بزرگ و bold به عنوان عنصر اصلی طراحی استفاده می‌شوند. تایپوگرافی دیگر فقط برای خواندن متن نیست، بلکه خود یک عنصر بصری قدرتمند است.
-        </p>
-
-        <h3>نکات کلیدی:</h3>
-        <ul>
-          <li>استفاده از فونت‌های variable برای انعطاف بیشتر</li>
-          <li>ترکیب فونت‌های serif و sans-serif</li>
-          <li>سلسله‌مراتب بصری واضح با اندازه‌های متفاوت</li>
-        </ul>
-
-        <h2>۳. رنگ‌های طبیعی و گرم</h2>
-        <p>
-          پالت‌های رنگی الهام‌گرفته از طبیعت — خاکی، سبز، کرم و طلایی — جایگزین رنگ‌های نئون و سرد شده‌اند. این رنگ‌ها حس آرامش و اعتماد را در کاربر ایجاد می‌کنند.
-        </p>
-
-        <h2>۴. میکرواینتراکشن‌های معنادار</h2>
-        <p>
-          انیمیشن‌ها دیگر فقط برای زیبایی نیستند. هر میکرواینتراکشن باید هدف مشخصی داشته باشد: راهنمایی کاربر، تأیید عملیات یا ایجاد لذت بصری. کمتر اما بهتر، شعار امسال است.
-        </p>
-
-        <h2>نتیجه‌گیری</h2>
-        <p>
-          روندهای طراحی UI در ۲۰۲۶ بر تجربه کاربری معنادار، زیبایی‌شناسی گرم و تعاملات هوشمند تمرکز دارند. مهم‌ترین نکته این است که ترندها را با نیازهای واقعی کاربران و هویت برند ترکیب کنید.
-        </p>
+        <div class="article-hero__media">
+          <img data-field="hero" src="assets/images/article/hero.webp" alt="" width="1239" height="519" loading="eager">
+        </div>
       </div>
-    </article>
+    </section>
+
+    <section class="article-main">
+      <div class="container">
+        <div class="article-layout">
+          <article class="article-content">
+            <p class="article-lead" data-field="lead"></p>
+            <div data-list="body"></div>
+          </article>
+
+          <aside class="article-aside">
+            <nav class="article-toc" aria-label="سرفصل‌های مقاله">
+              <h2 class="article-toc__title">سرفصل‌های این مقاله</h2>
+              <ol class="article-toc__list" data-list="toc"></ol>
+            </nav>
+            <div class="article-share">
+              <h2 class="article-share__title">ارسال این مطلب برای دیگران</h2>
+              <div class="article-share__row">
+                <a class="article-share__btn" href="#" aria-label="لینکدین"><img src="assets/icons/article/linkedin.svg" alt="" width="18" height="18"></a>
+                <a class="article-share__btn" href="#" aria-label="توییتر"><img src="assets/icons/article/x.svg" alt="" width="18" height="18"></a>
+                <a class="article-share__btn" href="#" aria-label="اشتراک"><img src="assets/icons/article/share.svg" alt="" width="18" height="18"></a>
+                <a class="article-share__btn" href="#" aria-label="وب"><img src="assets/icons/article/web.svg" alt="" width="18" height="18"></a>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <aside class="article-author" aria-label="درباره نویسنده">
+          <img class="article-author__avatar" data-field="avatar-big" src="assets/images/article/author.webp" alt="" width="156" height="156">
+          <div>
+            <h2 class="article-author__title" data-field="author-about">درباره علی محمدی</h2>
+            <p class="article-author__bio" data-field="author-bio"></p>
+            <div class="article-author__row">
+              <div class="article-author__social">
+                <a href="https://www.instagram.com/hashstudio.ir/" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer"><img src="assets/icons/article/instagram.svg" alt="" width="18" height="18"></a>
+                <a class="article-author__social-li" href="#" aria-label="لینکدین"><img src="assets/icons/article/linkedin.svg" alt="" width="18" height="18"></a>
+                <a class="article-author__social-x" href="#" aria-label="توییتر"><img src="assets/icons/article/x.svg" alt="" width="18" height="18"></a>
+              </div>
+              <a class="article-author__more" data-field="author-more" href="blog.html">مشاهده مقالات بیشتر علی</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="article-related" aria-labelledby="article-related-title">
+      <div class="container">
+        <span class="article-related__badge">دانستنی‌های بیشتر</span>
+        <h2 class="article-related__heading" id="article-related-title">مطالعه مقالات مرتبط</h2>
+        <div class="article-related__grid" data-list="related"></div>
+      </div>
+    </section>
+
+    <section class="article-newsletter" aria-labelledby="article-newsletter-title">
+      <div class="container">
+        <div class="article-newsletter__card">
+          <div class="article-newsletter__content">
+            <h2 class="article-newsletter__title" id="article-newsletter-title">جدیدترین مطالب را در ایمیل خود دریافت کنید</h2>
+            <p class="article-newsletter__desc">هر دو هفته یک‌بار، مجموعه‌ای گزینش‌شده از مقالات طراحی، چالش‌های مهندسی و تجربیات محصولی را مستقیماً برای شما ارسال می‌کنیم. بدون اسپم.</p>
+            <form class="article-newsletter__form" id="article-newsletter-form">
+              <label class="visually-hidden" for="article-newsletter-email">ایمیل کاری</label>
+              <input id="article-newsletter-email" class="article-newsletter__input" type="email" name="email" placeholder="ایمیل کاری شما..." required>
+              <button type="submit" class="article-newsletter__submit">عضویت در خبرنامه</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="home-footer">
     <div class="container">
-      <div class="site-footer__grid">
-        <div class="site-footer__brand">
-          <img src="assets/images/home/logo.png" alt="لوگوی هش استودیو" width="40" height="40">
-          <div class="site-footer__brand-name">استودیو هش</div>
-          <p class="site-footer__brand-desc">آژانس خلاقیت دیجیتال — ساخت تجربه‌های دیجیتال معنادار برای برندهای پیشرو.</p>
-          <div class="site-footer__social">
-            <a href="#" class="site-footer__social-link" aria-label="اینستاگرام">IG</a>
-            <a href="#" class="site-footer__social-link" aria-label="لینکدین">LI</a>
-            <a href="#" class="site-footer__social-link" aria-label="توییتر">TW</a>
+      <div class="home-footer__grid">
+        <div class="home-footer__brand">
+          <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+          <div class="home-footer__brand-name">استودیو هش</div>
+          <p class="home-footer__brand-desc">طراحی و توسعه محصولات دیجیتال برای استارتاپ‌ها و شرکت‌های پیشرو — از ایده تا تجربه‌ای که کاربران عاشقش می‌شوند.</p>
+          <div class="home-footer__location">
+            <span class="home-footer__location-icon" aria-hidden="true">📍</span>
+            <span data-studio="address-short">تهران، یوسف‌آباد، جهان‌آرا، کوچه ۴۳</span>
           </div>
         </div>
-        <div>
-          <h3 class="site-footer__heading">لینک‌های سریع</h3>
-          <nav class="site-footer__links">
-            <a href="index.html" class="site-footer__link">خانه</a>
-            <a href="services.html" class="site-footer__link">خدمات</a>
-            <a href="projects.html" class="site-footer__link">پروژه‌ها</a>
-            <a href="about.html" class="site-footer__link">درباره ما</a>
-            <a href="blog.html" class="site-footer__link">بلاگ</a>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">دسترسی سریع</h3>
+          <nav class="home-footer__links" aria-label="لینک‌های فوتر">
+            <a href="index.html" class="home-footer__link">خانه اصلی</a>
+            <a href="projects.html" class="home-footer__link">پروژه‌ها و نمونه‌کارها</a>
+            <a href="about.html" class="home-footer__link">درباره ما</a>
+            <a href="blog.html" class="home-footer__link">وبلاگ تخصصی</a>
+            <a href="contact.html" class="home-footer__link">تماس با ما</a>
+            <a href="contact.html" class="home-footer__link">فرصت‌های همکاری</a>
           </nav>
         </div>
-        <div>
-          <h3 class="site-footer__heading">خدمات</h3>
-          <nav class="site-footer__links">
-            <a href="service.html" class="site-footer__link">طراحی UI/UX</a>
-            <a href="service.html" class="site-footer__link">توسعه وب</a>
-            <a href="service.html" class="site-footer__link">برندینگ</a>
-            <a href="service.html" class="site-footer__link">مشاوره دیجیتال</a>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">خدمات ما</h3>
+          <nav class="home-footer__links">
+            <a href="/service/product/" class="home-footer__link">طراحی محصول</a>
+            <a href="/service/ui-ux/" class="home-footer__link">طراحی UI/UX</a>
+            <a href="/service/web/" class="home-footer__link">توسعه وب مدرن</a>
+            <a href="/service/mobile/" class="home-footer__link">توسعه اپلیکیشن موبایل</a>
+            <a href="/service/mvp/" class="home-footer__link">راه‌اندازی MVP</a>
+            <a href="/service/ai/" class="home-footer__link">یکپارچه‌سازی هوش مصنوعی</a>
           </nav>
         </div>
-        <div>
-          <h3 class="site-footer__heading">تماس با ما</h3>
-          <div class="site-footer__contact-item"><span>📍</span><span>تهران، خیابان ولیعصر، پلاک ۱۲۳</span></div>
-          <div class="site-footer__contact-item"><span>📧</span><span>info@hashstudio.ir</span></div>
-          <div class="site-footer__contact-item"><span>📞</span><span>۰۲۱-۱۲۳۴۵۶۷۸</span></div>
+        <div class="home-footer__newsletter-col">
+          <h3 class="home-footer__heading">خبرنامه استودیو هش</h3>
+          <p class="home-footer__newsletter-desc">جدیدترین مطالب علمی، تجربه‌ها و مقاله‌های محصولی را مستقیم در ایمیل خود دریافت کنید.</p>
+          <form class="home-footer__newsletter" action="#" method="post">
+            <div class="home-footer__newsletter-row">
+              <label for="footer-newsletter-email" class="visually-hidden">ایمیل</label>
+              <input id="footer-newsletter-email" class="home-footer__newsletter-input" type="email" name="email" placeholder="ایمیل شما" required>
+              <button type="submit" class="btn btn--primary">عضویت</button>
+            </div>
+          </form>
+          <div class="home-footer__social" data-studio="social" data-studio-social-class="home-footer__social-link">
+            <a href="https://www.instagram.com/hashstudio.ir/" class="home-footer__social-link" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer">IG</a>
+          </div>
         </div>
       </div>
-      <div class="site-footer__bottom">
-        <span>© ۱۴۰۵ Hash Studio. تمامی حقوق محفوظ است.</span>
-        <span>طراحی و توسعه توسط هش استودیو</span>
+      <div class="home-footer__bottom">
+        <span>تمامی حقوق مادی و معنوی محفوظ است © ۱۴۰۵ استودیو هش</span>
+        <span>طراحی و توسعه با ■ در استودیو هش</span>
       </div>
     </div>
   </footer>
 
+  <script src="js/studio-info.js"></script>
+  <script src="js/studio-chrome.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/articles-data.js"></script>
+  <script src="js/article.js"></script>
 </body>
 </html>
