@@ -36,7 +36,7 @@ def run(label: str, script: str) -> None:
 def main() -> None:
     print("Hash Studio build", flush=True)
     run("validate content", "validate-content.py")
-    run("generate static articles", "build-content.py")
+    run("generate static content (articles/projects/services)", "build-content.py")
     run("generate sitemap", "generate-sitemap.py")
     run("validate site", "validate-site.py")
     print("\n✓ Build succeeded", flush=True)

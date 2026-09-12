@@ -43,6 +43,36 @@ def main() -> int:
         errors.append("duplicate project slugs in projects-data.js")
 
     service_set = {p.name for p in (ROOT / "service").iterdir() if p.is_dir()}
+    services_js = (ROOT / "js/services-data.js").read_text(encoding="utf-8")
+    service_data_slugs = js_quoted_slugs(services_js, r"^\s+slug:\s*'([a-z0-9-]+)',\s*$")
+    if len(service_data_slugs) != len(set(service_data_slugs)):
+        errors.append("duplicate service slugs in services-data.js")
+    for slug in sorted(set(service_data_slugs) - service_set):
+        errors.append(f"services-data slug missing folder: service/{slug}/")
+    for slug in sorted(service_set - set(service_data_slugs)):
+        errors.append(f"service folder missing services-data entry: {slug}")
+
+    # Required project fields (top-level authored)
+    for slug in sorted(project_set):
+        idx = projects_js.find(f"slug: '{slug}'")
+        if idx < 0:
+            errors.append(f"project {slug}: not found in projects-data.js")
+            continue
+        window = projects_js[idx : idx + 1200]
+        for needle in ("name:", "title:", "lead:", "industry:", "services:"):
+            if needle not in window:
+                errors.append(f"project {slug}: missing {needle.rstrip(':')}")
+
+    # Required service fields
+    for slug in sorted(set(service_data_slugs)):
+        idx = services_js.find(f"slug: '{slug}'")
+        if idx < 0:
+            errors.append(f"service {slug}: not found in services-data.js")
+            continue
+        window = services_js[idx : idx + 1500]
+        for needle in ("name:", "lead:", "titleLead:", "heroImage:"):
+            if needle not in window:
+                errors.append(f"service {slug}: missing {needle.rstrip(':')}")
 
     # Required fields on each article object
     for slug in sorted(article_set):
