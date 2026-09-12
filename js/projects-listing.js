@@ -177,7 +177,7 @@
           '<div class="proj-card__body">' +
           '<div class="proj-card__meta">' +
           '<span class="proj-card__category">' +
-          escapeHtml(m.category) +
+          escapeHtml(p.industry || m.category) +
           '</span>' +
           '<span class="proj-card__year">' +
           escapeHtml(p.year || '') +

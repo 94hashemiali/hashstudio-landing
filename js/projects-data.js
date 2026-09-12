@@ -1398,11 +1398,11 @@
   PROJECTS.forEach(function (project, index) {
     var base = 'assets/images/home/projects/' + project.slug;
     project.nextSlug = PROJECTS[(index + 1) % PROJECTS.length].slug;
+    project.prevSlug = PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length].slug;
     project.images = {
       hero: base + '-shot.webp',
       pixel: base + '-pixel.webp',
       skeleton: base + '-skeleton.svg',
-      // multi-section live shots (fallback to hero/pixel if missing at runtime)
       sections: [
         { src: base + '-s1.webp', alt: 'هیرو و بالای صفحه ' + project.name },
         { src: base + '-s2.webp', alt: 'بخش میانی محصول ' + project.name },
@@ -1410,12 +1410,33 @@
         { src: base + '-s4.webp', alt: 'صفحه یا نمای دیگر ' + project.name }
       ]
     };
-    /* Keep TYPE/SPACING only when a project explicitly defines them — no generic fake tokens. */
     if (!project.designSystem.type) project.designSystem.type = [];
     if (!project.designSystem.spacing) project.designSystem.spacing = [];
     if (!project.client) project.client = project.name;
     if (!project.role) project.role = project.services;
+    if (!project.serviceSlugs || !project.serviceSlugs.length) {
+      project.serviceSlugs = inferServiceSlugs(
+        [project.services, project.role].filter(Boolean).join(' ')
+      );
+    }
   });
+
+  function inferServiceSlugs(services) {
+    var s = String(services || '');
+    var out = [];
+    function add(slug) {
+      if (out.indexOf(slug) === -1) out.push(slug);
+    }
+    if (/محصول|product|پرتال/i.test(s)) add('product');
+    if (/UI\/?UX|تجربه کاربری|رابط کاربری|\bUI\b/i.test(s)) add('ui-ux');
+    if (/وب|web|فروشگاه|پرتال|سایت|توسعه/i.test(s)) add('web');
+    if (/موبایل|اپ|PWA|mobile/i.test(s)) add('mobile');
+    if (/MVP|mvp/i.test(s)) add('mvp');
+    if (/هوش|AI|\bai\b/i.test(s)) add('ai');
+    if (/سئو|SEO|seo/i.test(s)) add('seo');
+    if (/مشاوره|consult/i.test(s)) add('consulting');
+    return out;
+  }
 
   // User-supplied section shots (desgin/{slug}/ → assets/.../{slug}-sN.webp)
   (function applyManualSectionShots() {

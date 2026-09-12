@@ -745,6 +745,132 @@
   object-position: top center;
 }
 
+.pd-service-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.pd-service-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-dark);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  transition: border-color var(--transition), transform var(--transition), background var(--transition);
+}
+
+.pd-service-link:hover {
+  border-color: var(--color-primary);
+  background: var(--color-badge);
+  transform: translateY(-1px);
+}
+
+.pd-service-link:focus-visible,
+.pd-pager__link:focus-visible,
+.pd-pager__home:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.pd-pager {
+  padding-block: 1.5rem 2.5rem;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.pd-pager__inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.pd-pager__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: var(--color-dark);
+  min-width: 0;
+}
+
+.pd-pager__link--next {
+  text-align: end;
+  justify-self: end;
+}
+
+.pd-pager__dir {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-secondary);
+}
+
+.pd-pager__name {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pd-pager__home {
+  justify-self: center;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-dark);
+  text-decoration: none;
+  background: var(--color-surface);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.pd-pager__home:hover,
+.pd-pager__link:hover .pd-pager__name {
+  color: var(--color-dark);
+}
+
+.pd-pager__home:hover {
+  border-color: var(--color-primary);
+  background: var(--color-badge);
+}
+
+.pd-pager__link[hidden] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 48rem) {
+  .pd-pager__inner {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .pd-pager__home {
+    order: -1;
+    justify-self: stretch;
+    text-align: center;
+  }
+
+  .pd-pager__link,
+  .pd-pager__link--next {
+    justify-self: stretch;
+    text-align: start;
+  }
+
+  .pd-pager__link[hidden] {
+    display: none;
+  }
+}
+
 /* Motion */
 .pd-reveal-ready {
   opacity: 0;

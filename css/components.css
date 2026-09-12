@@ -201,10 +201,15 @@
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-medium);
   border-radius: var(--radius-lg);
-  transition: background-color var(--transition), color var(--transition), border-color var(--transition), opacity var(--transition);
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition), opacity var(--transition), transform var(--transition), box-shadow var(--transition);
   white-space: nowrap;
   cursor: pointer;
   border: 2px solid transparent;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 .btn--primary {
@@ -214,6 +219,17 @@
 
 .btn--primary:hover {
   background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn--primary:hover {
+    transition: none;
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 .btn--secondary {

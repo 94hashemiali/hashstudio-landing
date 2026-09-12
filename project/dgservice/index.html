@@ -23,14 +23,14 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="css/project.css?v=13">
+  <link rel="stylesheet" href="css/project.css?v=14">
 </head>
 <body class="home-page project-page" data-slug="dgservice">
 
   <div class="top-bar">
     <div class="container top-bar__inner">
       <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
-      <a href="contact.html" class="top-bar__btn">شروع همکاری</a>
+      <a href="contact.html" class="top-bar__btn">شروع پروژه</a>
     </div>
   </div>
 
@@ -51,7 +51,7 @@
       </nav>
 
       <div class="home-header__actions">
-        <a href="contact.html" class="btn btn--primary btn--header">شروع همکاری</a>
+        <a href="contact.html" class="btn btn--primary btn--header">شروع پروژه</a>
         <a href="contact.html" class="home-header__profile" aria-label="تماس با ما">
           <img src="assets/icons/profile.svg" alt="" width="39" height="39">
         </a>
@@ -84,7 +84,7 @@
           <p class="pd-hero__lead" data-field="lead"></p>
           <div class="pd-hero__actions">
             <a class="btn btn--primary btn--lg" data-field="live-link" href="#" target="_blank" rel="noopener noreferrer">مشاهده وب‌سایت</a>
-            <a class="btn btn--outline btn--lg" href="contact.html">شروع یک پروژه</a>
+            <a class="btn btn--outline btn--lg" href="contact.html">شروع پروژه</a>
           </div>
         </div>
         <figure class="pd-hero__media">
@@ -263,14 +263,24 @@
       </div>
     </section>
 
+    <section class="pd-section pd-section--cream" data-block="service-links">
+      <div class="container">
+        <div class="section-head section-head--start">
+          <span class="badge badge--section">خدمات مرتبط</span>
+          <h2 class="section-head__title">این پروژه با کدام قابلیت‌های استودیو ساخته شد؟</h2>
+        </div>
+        <div class="pd-service-links" data-list="service-links"></div>
+      </div>
+    </section>
+
     <section class="home-final-cta">
       <div class="container">
         <article class="home-final-cta__card">
-          <h2 class="home-final-cta__title">پروژه بعدی شما می‌تواند از همین‌جا شروع شود.</h2>
-          <p class="home-final-cta__desc">از کشف مسئله تا طراحی و توسعه محصول دیجیتال — آماده‌ایم درباره ایده شما صحبت کنیم.</p>
+          <h2 class="home-final-cta__title">پروژه بعدی شما را شروع کنیم؟</h2>
+          <p class="home-final-cta__desc">از کشف مسئله تا طراحی و توسعه محصول دیجیتال — آماده گفت‌وگو درباره ایده شما هستیم.</p>
           <div class="home-final-cta__actions">
-            <a href="contact.html" class="btn btn--primary btn--lg">شروع یک پروژه</a>
-            <a href="contact.html" class="btn btn--outline btn--lg">با ما صحبت کنید</a>
+            <a href="contact.html" class="btn btn--primary btn--lg">شروع پروژه</a>
+            <a href="projects.html" class="btn btn--outline btn--lg">بازگشت به پروژه‌ها</a>
           </div>
         </article>
       </div>
@@ -285,6 +295,20 @@
         <div class="pd-related__grid" data-list="related"></div>
       </div>
     </section>
+
+    <nav class="pd-pager" aria-label="ناوبری پروژه‌ها">
+      <div class="container pd-pager__inner">
+        <a class="pd-pager__link pd-pager__link--prev" data-field="prev-link" href="projects.html">
+          <span class="pd-pager__dir">← پروژه قبلی</span>
+          <span class="pd-pager__name" data-field="prev-name"></span>
+        </a>
+        <a class="pd-pager__home" href="projects.html">همه پروژه‌ها</a>
+        <a class="pd-pager__link pd-pager__link--next" data-field="next-link" href="projects.html">
+          <span class="pd-pager__dir">پروژه بعدی →</span>
+          <span class="pd-pager__name" data-field="next-name"></span>
+        </a>
+      </div>
+    </nav>
 
     <section class="pd-next" data-block="next">
       <div class="container">
@@ -361,8 +385,8 @@
     </div>
   </footer>
 
-  <script src="js/projects-data.js?v=13" charset="utf-8"></script>
-  <script src="js/project.js?v=13" charset="utf-8"></script>
+  <script src="js/projects-data.js?v=14" charset="utf-8"></script>
+  <script src="js/project.js?v=14" charset="utf-8"></script>
   <script src="js/main.js?v=4" charset="utf-8"></script>
   <script src="/js/studio-info.js"></script>
   <script src="/js/studio-chrome.js"></script>

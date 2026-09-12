@@ -47,6 +47,18 @@
   }
 
   var next = map[project.nextSlug];
+  var prev = map[project.prevSlug];
+
+  var SERVICE_CATALOG = {
+    product: { name: 'طراحی محصول', href: '/service/product/' },
+    'ui-ux': { name: 'طراحی UI/UX', href: '/service/ui-ux/' },
+    web: { name: 'توسعه وب', href: '/service/web/' },
+    mobile: { name: 'توسعه موبایل', href: '/service/mobile/' },
+    mvp: { name: 'راه‌اندازی MVP', href: '/service/mvp/' },
+    ai: { name: 'هوش مصنوعی', href: '/service/ai/' },
+    seo: { name: 'سئو و رشد', href: '/service/seo/' },
+    consulting: { name: 'مشاوره محصول', href: '/service/consulting/' }
+  };
 
   function text(selector, value) {
     if (value == null) return;
@@ -358,8 +370,9 @@
   hideIfEmpty('[data-block="closing"]', !!(project.closing && project.closing.body));
 
   if (next) {
-    var nextLink = root.querySelector('[data-field="next-link"]');
-    if (nextLink) nextLink.href = '/project/' + encodeURIComponent(next.slug) + '/';
+    root.querySelectorAll('[data-field="next-link"]').forEach(function (nextLink) {
+      nextLink.href = '/project/' + encodeURIComponent(next.slug) + '/';
+    });
     text('[data-field="next-industry"]', next.industry);
     text('[data-field="next-name"]', next.name);
     text('[data-field="next-lead"]', next.lead);
@@ -374,9 +387,36 @@
     hideIfEmpty('[data-block="next"]', false);
   }
 
+  if (prev) {
+    root.querySelectorAll('[data-field="prev-link"]').forEach(function (prevLink) {
+      prevLink.href = '/project/' + encodeURIComponent(prev.slug) + '/';
+      prevLink.hidden = false;
+    });
+    text('[data-field="prev-name"]', prev.name);
+  } else {
+    root.querySelectorAll('[data-field="prev-link"]').forEach(function (prevLink) {
+      prevLink.hidden = true;
+    });
+  }
+
+  var serviceSlugs = project.serviceSlugs || [];
+  html('[data-list="service-links"]', serviceSlugs.map(function (slug) {
+    var svc = SERVICE_CATALOG[slug];
+    if (!svc) return '';
+    return '<a class="pd-service-link" href="' + escapeHtml(svc.href) + '">' +
+      escapeHtml(svc.name) + '</a>';
+  }).join(''));
+  hideIfEmpty('[data-block="service-links"]', serviceSlugs.length > 0);
+
   var related = list.filter(function (item) {
     return item.slug !== project.slug;
-  }).slice(0, 3);
+  });
+  related.sort(function (a, b) {
+    var aScore = a.industry === project.industry ? 1 : 0;
+    var bScore = b.industry === project.industry ? 1 : 0;
+    return bScore - aScore;
+  });
+  related = related.slice(0, 3);
 
   html('[data-list="related"]', related.map(function (item) {
     var href = '/project/' + encodeURIComponent(item.slug) + '/';

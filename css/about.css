@@ -280,6 +280,21 @@
   gap: 1.5625rem;
 }
 
+.about-team-grid--lead {
+  grid-template-columns: repeat(2, minmax(0, 18rem));
+  justify-content: center;
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+.about-team-grid--lead .about-team-card {
+  min-height: auto;
+}
+
+.about-team-grid--lead .about-team-card__role {
+  margin-bottom: 0;
+}
+
 .about-team-card {
   display: flex;
   flex-direction: column;
