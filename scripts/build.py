@@ -3,7 +3,7 @@
 
 Steps:
   1. validate content (relationships + required fields)
-  2. generate static article pages + articles-index.js
+  2. generate static articles + projects + services (+ articles-index.js)
   3. generate sitemap.xml
   4. validate generated HTML / SEO / assets
 

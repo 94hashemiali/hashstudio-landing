@@ -474,15 +474,15 @@ def render_project(
             <span class="pd-breadcrumb__sep" aria-hidden="true">‹</span>
             <a href="projects.html">پروژه‌ها</a>
             <span class="pd-breadcrumb__sep" aria-hidden="true">‹</span>
-            <span data-field="name">{escape_html(name)}</span>
+            <span>{escape_html(name)}</span>
           </nav>
-          <p class="pd-hero__brand" data-field="brand">{escape_html(name)}</p>
+          <p class="pd-hero__brand">{escape_html(name)}</p>
           <div class="pd-hero__chips" aria-label="دسته‌بندی پروژه">
-            <span class="pd-hero__chip" data-field="industry">{escape_html(project.get("industry") or "")}</span>
-            <span class="pd-hero__chip" data-field="services">{escape_html(project.get("services") or "")}</span>
+            <span class="pd-hero__chip">{escape_html(project.get("industry") or "")}</span>
+            <span class="pd-hero__chip">{escape_html(project.get("services") or "")}</span>
           </div>
-          <h1 class="pd-hero__title" data-field="title">{escape_html(title)}</h1>
-          <p class="pd-hero__lead" data-field="lead">{escape_html(lead)}</p>
+          <h1 class="pd-hero__title">{escape_html(title)}</h1>
+          <p class="pd-hero__lead">{escape_html(lead)}</p>
           <div class="pd-hero__actions">
             {live_btn}
             <a class="btn btn--outline btn--lg" href="contact.html" data-cta="start-project" data-cta-location="project-hero">شروع پروژه</a>
@@ -505,9 +505,9 @@ def render_project(
     <section class="pd-section pd-section--cream" id="pd-summary" data-block="summary" data-toc="خلاصه"{_hidden(show_summary)}>
       <div class="container pd-split">
         <div class="pd-split__copy">
-          <span class="badge badge--section" data-field="summary-badge">{escape_html(summary.get("badge") or "")}</span>
-          <h2 class="pd-section__title" data-field="summary-heading">{escape_html(summary.get("heading") or "")}</h2>
-          <p class="pd-section__body" data-field="summary-body">{escape_html(summary.get("body") or "")}</p>
+          <span class="badge badge--section">{escape_html(summary.get("badge") or "")}</span>
+          <h2 class="pd-section__title">{escape_html(summary.get("heading") or "")}</h2>
+          <p class="pd-section__body">{escape_html(summary.get("body") or "")}</p>
         </div>
         <div data-block="early-metrics"{_hidden(show_early)}><p class="pd-early__caption">اعداد محصول — از خود پروژه، نه KPI استودیو</p><ul class="pd-early" data-list="earlyMetrics">{early_html}</ul></div>
       </div>
@@ -520,8 +520,8 @@ def render_project(
         </figure>
         <div class="pd-split__copy">
           <span class="badge badge--section">مسئله چه بود؟</span>
-          <h2 class="pd-section__title" data-field="challenge-heading">{escape_html(challenge.get("heading") or "")}</h2>
-          <p class="pd-section__body" data-field="challenge-body">{escape_html(challenge.get("body") or "")}</p>
+          <h2 class="pd-section__title">{escape_html(challenge.get("heading") or "")}</h2>
+          <p class="pd-section__body">{escape_html(challenge.get("body") or "")}</p>
           <h3 class="pd-section__sub">اهداف استراتژیک</h3>
           <ul class="pd-goals" data-list="goals">{goals_html}</ul>
         </div>
@@ -539,8 +539,8 @@ def render_project(
       <div class="container pd-split pd-split--visual pd-split--flip" style="margin-top:2.5rem">
         <div class="pd-split__copy">
           <span class="badge badge--section">تحقیق و استراتژی</span>
-          <h2 class="pd-section__title" data-field="research-heading">{escape_html(research.get("heading") or "")}</h2>
-          <p class="pd-section__body" data-field="research-sub">{escape_html(research.get("sub") or "")}</p>
+          <h2 class="pd-section__title">{escape_html(research.get("heading") or "")}</h2>
+          <p class="pd-section__body">{escape_html(research.get("sub") or "")}</p>
           <h3 class="pd-section__sub">یافته‌های کلیدی</h3>
           <ul class="pd-findings" data-list="findings">{findings_html}</ul>
         </div>
@@ -559,7 +559,7 @@ def render_project(
       <div class="container">
         <div class="section-head section-head--start">
           <span class="badge badge--section">UX و محصول</span>
-          <h2 class="section-head__title" data-field="ux-heading">{escape_html(ux.get("heading") or "")}</h2>
+          <h2 class="section-head__title">{escape_html(ux.get("heading") or "")}</h2>
         </div>
         <div class="pd-ux" data-list="ux">{ux_html}</div>
       </div>
@@ -569,8 +569,8 @@ def render_project(
       <div class="container">
         <div class="section-head section-head--start">
           <span class="badge badge--section">جزئیات رابط</span>
-          <h2 class="section-head__title" data-field="ds-heading">{escape_html(design_system.get("heading") or "")}</h2>
-          <p class="section-head__desc" data-field="ds-body">{escape_html(design_system.get("body") or "")}</p>
+          <h2 class="section-head__title">{escape_html(design_system.get("heading") or "")}</h2>
+          <p class="section-head__desc">{escape_html(design_system.get("body") or "")}</p>
         </div>
         <div class="pd-ds">{ds_html}</div>
       </div>
@@ -591,8 +591,8 @@ def render_project(
       <div class="container">
         <div class="section-head section-head--start">
           <span class="badge badge--section">پیاده‌سازی فنی</span>
-          <h2 class="section-head__title" data-field="tech-heading">{escape_html(tech.get("heading") or "")}</h2>
-          <p class="section-head__desc" data-field="tech-body">{escape_html(tech.get("body") or "")}</p>
+          <h2 class="section-head__title">{escape_html(tech.get("heading") or "")}</h2>
+          <p class="section-head__desc">{escape_html(tech.get("body") or "")}</p>
         </div>
         <div class="pd-arch" aria-label="معماری فنی سیستم">
           <p class="pd-arch__caption">چگونه ساختیم</p>
@@ -605,9 +605,9 @@ def render_project(
     <section class="pd-section pd-section--white" id="pd-outcome" data-block="outcome" data-toc="نتیجه"{_hidden(show_outcome)}>
       <div class="container">
         <div class="pd-outcome-head" data-block="outcome-copy"{_hidden(bool(outcome.get("body")))}>
-          <span class="badge badge--section" data-field="outcome-badge">{escape_html(outcome_badge)}</span>
-          <h2 class="pd-section__title" data-field="outcome-heading">{escape_html(outcome_heading)}</h2>
-          <p class="pd-section__body" data-field="outcome-body">{escape_html(outcome_body)}</p>
+          <span class="badge badge--section">{escape_html(outcome_badge)}</span>
+          <h2 class="pd-section__title">{escape_html(outcome_heading)}</h2>
+          <p class="pd-section__body">{escape_html(outcome_body)}</p>
         </div>
         <p class="pd-outcome__caption">نشانه‌های محصول و خروجی طراحی — نه شاخص مالی تأییدنشده</p>
         <ul class="pd-kpis" data-list="kpis">{kpis_html}</ul>
@@ -618,11 +618,11 @@ def render_project(
       <div class="container">
         <blockquote class="pd-quote">
           <p class="pd-quote__eyebrow">درس محصول از این پروژه</p>
-          <p class="pd-quote__text" data-field="quote-text">{escape_html(quote.get("text") or "")}</p>
+          <p class="pd-quote__text">{escape_html(quote.get("text") or "")}</p>
           <footer class="pd-quote__footer">
             <div>
-              <cite class="pd-quote__role" data-field="quote-role">{escape_html(quote.get("role") or "")}</cite>
-              <span class="pd-quote__org" data-field="quote-org">{escape_html(quote.get("org") or "")}</span>
+              <cite class="pd-quote__role">{escape_html(quote.get("role") or "")}</cite>
+              <span class="pd-quote__org">{escape_html(quote.get("org") or "")}</span>
             </div>
           </footer>
         </blockquote>
@@ -632,8 +632,8 @@ def render_project(
     <section class="pd-section pd-section--dark" data-block="closing"{_hidden(show_closing)}>
       <div class="container">
         <article class="pd-closing">
-          <h2 class="pd-closing__title" data-field="closing-heading">{escape_html(closing.get("heading") or "")}</h2>
-          <p class="pd-closing__body" data-field="closing-body">{escape_html(closing.get("body") or "")}</p>
+          <h2 class="pd-closing__title">{escape_html(closing.get("heading") or "")}</h2>
+          <p class="pd-closing__body">{escape_html(closing.get("body") or "")}</p>
         </article>
       </div>
     </section>
@@ -685,12 +685,12 @@ def render_project(
       <div class="container pd-pager__inner">
         <a class="pd-pager__link pd-pager__link--prev" data-field="prev-link" href="{prev_href}"{_hidden(bool(prev))}>
           <span class="pd-pager__dir">← پروژه قبلی</span>
-          <span class="pd-pager__name" data-field="prev-name">{escape_html(prev_name or "")}</span>
+          <span class="pd-pager__name">{escape_html(prev_name or "")}</span>
         </a>
         <a class="pd-pager__home" href="projects.html">همه پروژه‌ها</a>
         <a class="pd-pager__link pd-pager__link--next" data-field="next-link" href="{next_href}">
           <span class="pd-pager__dir">پروژه بعدی →</span>
-          <span class="pd-pager__name" data-field="next-name">{escape_html(next_name or "")}</span>
+          <span class="pd-pager__name">{escape_html(next_name or "")}</span>
         </a>
       </div>
     </nav>
@@ -700,9 +700,9 @@ def render_project(
         <a class="pd-next__card" data-field="next-link" href="{next_href}">
           <div class="pd-next__copy">
             <span class="pd-next__label">پروژه بعدی</span>
-            <span class="pd-next__pill" data-field="next-industry">{escape_html(next_industry or "")}</span>
-            <h2 class="pd-next__title" data-field="next-name">{escape_html(next_name or "")}</h2>
-            <p class="pd-next__desc" data-field="next-lead">{escape_html(next_lead or "")}</p>
+            <span class="pd-next__pill">{escape_html(next_industry or "")}</span>
+            <h2 class="pd-next__title">{escape_html(next_name or "")}</h2>
+            <p class="pd-next__desc">{escape_html(next_lead or "")}</p>
           </div>
           <figure class="pd-next__media">
             <img data-field="next-img" src="{_attr(next_img)}" alt="{_attr(next_name or "")}" width="640" height="360" loading="lazy" decoding="async">

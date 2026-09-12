@@ -342,16 +342,16 @@ def render_service(
             <span class="sd-breadcrumb__sep" aria-hidden="true">‹</span>
             <a href="services.html">خدمات</a>
             <span class="sd-breadcrumb__sep" aria-hidden="true">‹</span>
-            <span class="sd-breadcrumb__current" data-field="name">{escape_html(name)}</span>
+            <span class="sd-breadcrumb__current">{escape_html(name)}</span>
           </nav>
           <span class="badge badge--section">سرویس تخصصی استودیو هش</span>
           <h1 class="sd-hero__title">
-            <span data-field="title-lead">{escape_html(svc.get("titleLead") or "")}</span>
-            <span class="sd-hero__accent" data-field="title-accent">{escape_html(svc.get("titleAccent") or "")}</span>
+            <span>{escape_html(svc.get("titleLead") or "")}</span>
+            <span class="sd-hero__accent">{escape_html(svc.get("titleAccent") or "")}</span>
           </h1>
-          <p class="sd-hero__lead" data-field="lead">{escape_html(page_desc)}</p>
+          <p class="sd-hero__lead">{escape_html(page_desc)}</p>
           <div class="sd-hero__actions">
-            <a href="contact.html" class="btn btn--primary btn--lg" data-field="cta-primary">{escape_html(svc.get("ctaPrimary") or "شروع پروژه")}</a>
+            <a href="contact.html" class="btn btn--primary btn--lg">{escape_html(svc.get("ctaPrimary") or "شروع پروژه")}</a>
             <a href="projects.html" class="btn btn--outline btn--lg">نمونه‌کارها</a>
           </div>
         </div>
@@ -365,8 +365,8 @@ def render_service(
       <div class="container">
         <article class="sd-overview">
           <div class="sd-overview__copy">
-            <h2 class="sd-overview__title" data-field="overview-title">{escape_html(svc.get("overviewTitle") or "")}</h2>
-            <p class="sd-overview__body" data-field="overview-body">{escape_html(svc.get("overviewBody") or "")}</p>
+            <h2 class="sd-overview__title">{escape_html(svc.get("overviewTitle") or "")}</h2>
+            <p class="sd-overview__body">{escape_html(svc.get("overviewBody") or "")}</p>
           </div>
           <ul class="sd-stats" data-list="stats">{stats_html}</ul>
         </article>
@@ -376,8 +376,8 @@ def render_service(
     <section class="sd-section sd-section--white">
       <div class="container">
         <div class="section-head">
-          <span class="badge badge--section" data-field="pain-badge">{escape_html(svc.get("painBadge") or "")}</span>
-          <h2 class="section-head__title" data-field="pain-title">{escape_html(svc.get("painTitle") or "")}</h2>
+          <span class="badge badge--section">{escape_html(svc.get("painBadge") or "")}</span>
+          <h2 class="section-head__title">{escape_html(svc.get("painTitle") or "")}</h2>
         </div>
         <ul class="sd-pains" data-list="pains">{pains_html}</ul>
       </div>
@@ -386,13 +386,13 @@ def render_service(
     <section class="sd-section">
       <div class="container sd-split">
         <div class="sd-panel">
-          <h2 class="sd-panel__title" data-field="del-title">{escape_html(svc.get("deliverablesTitle") or "")}</h2>
-          <p class="sd-panel__sub" data-field="del-sub">{escape_html(svc.get("deliverablesSub") or "")}</p>
+          <h2 class="sd-panel__title">{escape_html(svc.get("deliverablesTitle") or "")}</h2>
+          <p class="sd-panel__sub">{escape_html(svc.get("deliverablesSub") or "")}</p>
           <ul class="sd-checks" data-list="deliverables">{deliverables_html}</ul>
         </div>
         <div class="sd-panel">
-          <h2 class="sd-panel__title" data-field="cap-title">{escape_html(svc.get("capabilitiesTitle") or "")}</h2>
-          <p class="sd-panel__sub" data-field="cap-sub">{escape_html(svc.get("capabilitiesSub") or "")}</p>
+          <h2 class="sd-panel__title">{escape_html(svc.get("capabilitiesTitle") or "")}</h2>
+          <p class="sd-panel__sub">{escape_html(svc.get("capabilitiesSub") or "")}</p>
           <ul class="sd-caps" data-list="capabilities">{capabilities_html}</ul>
         </div>
       </div>
@@ -401,8 +401,8 @@ def render_service(
     <section class="sd-section sd-section--white">
       <div class="container">
         <div class="section-head section-head--start">
-          <span class="badge badge--section" data-field="process-badge">{escape_html(svc.get("processBadge") or "")}</span>
-          <h2 class="section-head__title" data-field="process-title">{escape_html(svc.get("processTitle") or "")}</h2>
+          <span class="badge badge--section">{escape_html(svc.get("processBadge") or "")}</span>
+          <h2 class="section-head__title">{escape_html(svc.get("processTitle") or "")}</h2>
         </div>
         <ol class="sd-steps" data-list="steps">{steps_html}</ol>
       </div>
@@ -411,8 +411,8 @@ def render_service(
     <section class="sd-section">
       <div class="container">
         <div class="section-head">
-          <span class="badge badge--section" data-field="tools-badge">{escape_html(svc.get("toolsBadge") or "")}</span>
-          <h2 class="section-head__title" data-field="tools-title">{escape_html(svc.get("toolsTitle") or "")}</h2>
+          <span class="badge badge--section">{escape_html(svc.get("toolsBadge") or "")}</span>
+          <h2 class="section-head__title">{escape_html(svc.get("toolsTitle") or "")}</h2>
         </div>
         <ul class="sd-tools" data-list="tools">{tools_html}</ul>
       </div>
@@ -421,8 +421,8 @@ def render_service(
     <section class="sd-section sd-section--white">
       <div class="container">
         <div class="section-head">
-          <span class="badge badge--section" data-field="cases-badge">{escape_html(svc.get("casesBadge") or "")}</span>
-          <h2 class="section-head__title" data-field="cases-title">{escape_html(svc.get("casesTitle") or "")}</h2>
+          <span class="badge badge--section">{escape_html(svc.get("casesBadge") or "")}</span>
+          <h2 class="section-head__title">{escape_html(svc.get("casesTitle") or "")}</h2>
         </div>
         <div class="sd-cases" data-list="cases">{cases_html}</div>
       </div>
@@ -442,7 +442,7 @@ def render_service(
       <div class="container">
         <div class="section-head section-head--start">
           <span class="badge badge--section">پاسخ به دغدغه‌های شما</span>
-          <h2 class="section-head__title" data-field="faq-title">{escape_html(svc.get("faqTitle") or "")}</h2>
+          <h2 class="section-head__title">{escape_html(svc.get("faqTitle") or "")}</h2>
         </div>
         <div class="faq-list sd-faq" data-list="faqs">{faqs_html}</div>
       </div>
@@ -451,8 +451,8 @@ def render_service(
     <section class="home-final-cta">
       <div class="container">
         <article class="home-final-cta__card">
-          <h2 class="home-final-cta__title" data-field="cta-title">{escape_html(svc.get("ctaTitle") or "")}</h2>
-          <p class="home-final-cta__desc" data-field="cta-body">{escape_html(svc.get("ctaBody") or "")}</p>
+          <h2 class="home-final-cta__title">{escape_html(svc.get("ctaTitle") or "")}</h2>
+          <p class="home-final-cta__desc">{escape_html(svc.get("ctaBody") or "")}</p>
           <div class="home-final-cta__actions">
             <a href="contact.html" class="btn btn--primary btn--lg">درباره پروژه شما صحبت کنیم</a>
             <a href="projects.html" class="btn btn--outline btn--lg">مشاهده پروژه‌ها</a>
