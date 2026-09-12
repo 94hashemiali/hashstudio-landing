@@ -123,7 +123,8 @@
   var canonical = 'https://hashstudio.ir' + pagePath;
   var pageTitle = project.name + ' | پروژه طراحی و توسعه | استودیو هش';
   var pageDesc = project.lead || (project.summary && project.summary.body) || '';
-  var heroSrc = project.images && project.images.hero;
+  var images = project.images || {};
+  var heroSrc = images.hero;
   var ogImage = absoluteUrl(heroSrc);
 
   document.title = pageTitle;
@@ -195,36 +196,38 @@
   text('[data-field="client"]', project.client || project.name);
   text('[data-field="role"]', project.role || project.services);
   text('[data-field="platform"]', project.platform || '');
-  text('[data-field="summary-badge"]', project.summary.badge);
-  text('[data-field="summary-heading"]', project.summary.heading);
-  text('[data-field="summary-body"]', project.summary.body);
-  text('[data-field="challenge-heading"]', project.challenge.heading);
-  text('[data-field="challenge-body"]', project.challenge.body);
-  text('[data-field="research-heading"]', project.research.heading);
-  text('[data-field="research-sub"]', project.research.sub);
-  text('[data-field="ux-heading"]', project.ux.heading);
-  text('[data-field="ds-heading"]', project.designSystem.heading);
-  text('[data-field="ds-body"]', project.designSystem.body);
-  text('[data-field="tech-heading"]', project.tech.heading);
-  text('[data-field="tech-body"]', project.tech.body);
-  text('[data-field="quote-text"]', project.quote.text);
-  text('[data-field="quote-role"]', project.quote.role);
-  text('[data-field="quote-org"]', project.quote.org);
 
-  if (project.outcome) {
+  var summary = project.summary || {};
+  var challenge = project.challenge || {};
+  var research = project.research || {};
+  var ux = project.ux || {};
+  var designSystem = project.designSystem || {};
+  var tech = project.tech || {};
+  var quote = project.quote || {};
+
+  text('[data-field="summary-badge"]', summary.badge);
+  text('[data-field="summary-heading"]', summary.heading);
+  text('[data-field="summary-body"]', summary.body);
+  text('[data-field="challenge-heading"]', challenge.heading);
+  text('[data-field="challenge-body"]', challenge.body);
+  text('[data-field="research-heading"]', research.heading);
+  text('[data-field="research-sub"]', research.sub);
+  text('[data-field="ux-heading"]', ux.heading);
+  text('[data-field="ds-heading"]', designSystem.heading);
+  text('[data-field="ds-body"]', designSystem.body);
+  text('[data-field="tech-heading"]', tech.heading);
+  text('[data-field="tech-body"]', tech.body);
+  text('[data-field="quote-text"]', quote.text);
+  text('[data-field="quote-role"]', quote.role);
+  text('[data-field="quote-org"]', quote.org);
+
+  if (project.outcome && project.outcome.body) {
     text('[data-field="outcome-badge"]', project.outcome.badge || 'نتیجه پروژه');
     text('[data-field="outcome-heading"]', project.outcome.heading || 'خروجی پروژه');
-    text('[data-field="outcome-body"]', project.outcome.body || '');
-  } else {
-    text('[data-field="outcome-badge"]', 'نتایج پایانی');
-    text('[data-field="outcome-heading"]', 'خروجی پروژه');
-  }
-  var outcomeBody = root.querySelector('[data-field="outcome-body"]');
-  if (outcomeBody && !String(outcomeBody.textContent || '').trim()) {
-    outcomeBody.hidden = true;
+    text('[data-field="outcome-body"]', project.outcome.body);
   }
 
-  if (project.closing) {
+  if (project.closing && project.closing.body) {
     text('[data-field="closing-heading"]', project.closing.heading);
     text('[data-field="closing-body"]', project.closing.body);
   }
@@ -251,7 +254,7 @@
 
   var challengeImg = root.querySelector('[data-field="challenge-img"]');
   if (challengeImg) {
-    challengeImg.src = project.images.challenge || project.images.pixel;
+    challengeImg.src = images.challenge || images.pixel;
     challengeImg.alt = 'فضای محصول ' + project.name;
     challengeImg.loading = 'lazy';
     challengeImg.decoding = 'async';
@@ -259,7 +262,7 @@
 
   var researchImg = root.querySelector('[data-field="research-img"]');
   if (researchImg) {
-    researchImg.src = project.images.research || project.images.skeleton;
+    researchImg.src = images.research || images.skeleton;
     researchImg.alt = 'جزئیات تجربه ' + project.name;
     researchImg.loading = 'lazy';
     researchImg.decoding = 'async';
@@ -267,11 +270,11 @@
 
   var featureImg = root.querySelector('[data-field="feature-img"]');
   if (featureImg) {
-    var featureSrc = (project.images.sections && project.images.sections[1] && project.images.sections[1].src)
-      || project.images.pixel
+    var featureSrc = (images.sections && images.sections[1] && images.sections[1].src)
+      || images.pixel
       || heroSrc;
     featureImg.src = featureSrc;
-    featureImg.alt = (project.images.sections && project.images.sections[1] && project.images.sections[1].alt)
+    featureImg.alt = (images.sections && images.sections[1] && images.sections[1].alt)
       || ('پیش‌نمایش محصول ' + project.name);
     featureImg.loading = 'lazy';
     featureImg.decoding = 'async';
@@ -282,30 +285,30 @@
       '</div><div class="pd-early__label">' + escapeHtml(item.label) + '</div></li>';
   }).join(''));
 
-  html('[data-list="goals"]', (project.challenge.goals || []).map(function (item) {
+  html('[data-list="goals"]', (challenge.goals || []).map(function (item) {
     return '<li>' + escapeHtml(item) + '</li>';
   }).join(''));
 
-  html('[data-list="findings"]', (project.research.findings || []).map(function (item) {
+  html('[data-list="findings"]', (research.findings || []).map(function (item) {
     return '<li>' + escapeHtml(item) + '</li>';
   }).join(''));
 
-  html('[data-list="ux"]', (project.ux.cards || []).map(function (card, index) {
+  html('[data-list="ux"]', (ux.cards || []).map(function (card, index) {
     var src = card.image;
     if (!src) {
-      var section = project.images.sections && project.images.sections[index + 1];
-      src = (section && section.src) || (index === 0 ? project.images.pixel : project.images.hero);
+      var section = images.sections && images.sections[index + 1];
+      src = (section && section.src) || (index === 0 ? images.pixel : images.hero);
     }
     return '<article class="pd-ux__card pd-reveal">' +
       '<figure class="pd-ux__media"><img src="' + escapeHtml(src) + '" alt="' + escapeHtml(card.title || '') +
-      '" width="960" height="540" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\'' + escapeHtml(project.images.hero) + '\'"></figure>' +
+      '" width="960" height="540" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\'' + escapeHtml(images.hero) + '\'"></figure>' +
       '<div class="pd-ux__body"><h3 class="pd-ux__title">' + escapeHtml(card.title) +
       '</h3><p class="pd-ux__text">' + escapeHtml(card.body) + '</p></div></article>';
   }).join(''));
 
-  var colors = (project.designSystem && project.designSystem.colors) || [];
-  var typeScale = (project.designSystem && project.designSystem.type) || [];
-  var spacingScale = (project.designSystem && project.designSystem.spacing) || [];
+  var colors = designSystem.colors || [];
+  var typeScale = designSystem.type || [];
+  var spacingScale = designSystem.spacing || [];
 
   var dsParts = [];
   if (colors.length) {
@@ -341,12 +344,12 @@
   html('.pd-ds', dsParts.join(''));
   hideIfEmpty('[data-block="ds"]', dsParts.length > 0);
 
-  var gallery = (project.images.sections && project.images.sections.length)
-    ? project.images.sections
+  var gallery = (images.sections && images.sections.length)
+    ? images.sections
     : [
-        { src: project.images.hero, alt: 'شات دسکتاپ ' + project.name },
-        { src: project.images.pixel, alt: 'پیش‌نمایش ' + project.name },
-        { src: project.images.skeleton, alt: 'اسکلت رابط ' + project.name }
+        { src: images.hero, alt: 'شات دسکتاپ ' + project.name },
+        { src: images.pixel, alt: 'پیش‌نمایش ' + project.name },
+        { src: images.skeleton, alt: 'اسکلت رابط ' + project.name }
       ].filter(function (item) { return item.src; });
 
   html('[data-list="gallery"]', gallery.map(function (item, index) {
@@ -355,14 +358,14 @@
     else if (index === 3 || index === 7) mod = 'pd-gallery__item--feature';
     return '<figure class="pd-gallery__item ' + mod + ' pd-reveal"><img src="' + escapeHtml(item.src) +
       '" alt="' + escapeHtml(item.alt) + '" width="1280" height="720" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\'' +
-      escapeHtml(project.images.hero) + '\'"></figure>';
+      escapeHtml(images.hero) + '\'"></figure>';
   }).join(''));
 
-  html('[data-list="layers"]', (project.tech.layers || []).map(function (item) {
+  html('[data-list="layers"]', (tech.layers || []).map(function (item) {
     return '<li>' + escapeHtml(item) + '</li>';
   }).join(''));
 
-  html('[data-list="stack"]', (project.tech.stack || []).map(function (item) {
+  html('[data-list="stack"]', (tech.stack || []).map(function (item) {
     return '<li><span dir="auto">' + escapeHtml(item) + '</span></li>';
   }).join(''));
 
@@ -377,8 +380,15 @@
     if (dd && !String(dd.textContent || '').trim()) item.hidden = true;
   });
 
+  hideIfEmpty('[data-block="summary"]', !!(summary.heading || summary.body));
+  hideIfEmpty('[data-block="challenge"]', !!(challenge.heading || challenge.body || (challenge.goals || []).length));
+  hideIfEmpty('[data-block="research"]', !!(research.heading || (research.findings || []).length));
+  hideIfEmpty('[data-block="ux"]', !!(ux.heading || (ux.cards || []).length));
+  hideIfEmpty('[data-block="gallery"]', gallery.length > 0);
+  hideIfEmpty('[data-block="tech"]', !!(tech.heading || tech.body || (tech.stack || []).length || (tech.layers || []).length));
+  hideIfEmpty('[data-block="outcome"]', !!(project.outcome && project.outcome.body) || (project.kpis || []).length > 0);
   hideIfEmpty('[data-block="early-metrics"]', (project.earlyMetrics || []).length > 0);
-  hideIfEmpty('[data-block="quote"]', !!(project.quote && project.quote.text));
+  hideIfEmpty('[data-block="quote"]', !!(quote.text));
   hideIfEmpty('[data-block="closing"]', !!(project.closing && project.closing.body));
 
   if (next) {
@@ -458,7 +468,86 @@
 
   root.hidden = false;
 
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var tocNav = root.querySelector('[data-list="toc"]');
+  var tocWrap = root.querySelector('[data-pd-toc], .pd-toc');
+  var tocLinks = [];
+  if (tocNav) {
+    var tocItems = [];
+    root.querySelectorAll('[data-toc]').forEach(function (section) {
+      if (section.hidden) return;
+      var id = section.id;
+      var label = section.getAttribute('data-toc');
+      if (!id || !label) return;
+      tocItems.push({ id: id, label: label });
+    });
+    if (tocItems.length < 3) {
+      if (tocWrap) tocWrap.hidden = true;
+    } else {
+      if (tocWrap) tocWrap.hidden = false;
+      tocNav.innerHTML = tocItems.map(function (item) {
+        return '<li><a class="pd-toc__link" href="#' + escapeHtml(item.id) + '">' +
+          escapeHtml(item.label) + '</a></li>';
+      }).join('');
+      tocLinks = Array.prototype.slice.call(tocNav.querySelectorAll('.pd-toc__link'));
+      tocNav.addEventListener('click', function (event) {
+        var link = event.target.closest('a.pd-toc__link');
+        if (!link) return;
+        var hash = link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') return;
+        var target = root.querySelector(hash);
+        if (!target) return;
+        event.preventDefault();
+        var behavior = reduceMotionPref() ? 'auto' : 'smooth';
+        target.scrollIntoView({ behavior: behavior, block: 'start' });
+        if (history && history.replaceState) {
+          history.replaceState(null, '', hash);
+        }
+      });
+    }
+  }
+
+  function reduceMotionPref() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  var progressEl = document.querySelector('[data-pd-progress]');
+  function updateProgress() {
+    if (!progressEl) return;
+    var doc = document.documentElement;
+    var scrollTop = window.scrollY || doc.scrollTop || 0;
+    var height = Math.max(doc.scrollHeight - window.innerHeight, 1);
+    var pct = Math.min(100, Math.max(0, (scrollTop / height) * 100));
+    progressEl.style.width = pct + '%';
+    progressEl.setAttribute('aria-valuenow', String(Math.round(pct)));
+  }
+
+  function updateTocActive() {
+    if (!tocLinks.length) return;
+    var marker = window.scrollY + Math.min(160, window.innerHeight * 0.25);
+    var activeId = '';
+    root.querySelectorAll('[data-toc]').forEach(function (section) {
+      if (section.hidden || !section.id) return;
+      if (section.offsetTop <= marker) activeId = section.id;
+    });
+    tocLinks.forEach(function (link) {
+      var on = link.getAttribute('href') === '#' + activeId;
+      link.classList.toggle('is-active', on);
+      if (on) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  function onScroll() {
+    updateProgress();
+    updateTocActive();
+  }
+
+  updateProgress();
+  updateTocActive();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  var reduceMotion = reduceMotionPref();
   if (!reduceMotion && 'IntersectionObserver' in window) {
     var reveals = root.querySelectorAll('.pd-reveal, .pd-hero__intro, .pd-hero__media, .pd-meta, .pd-section, .pd-related');
     reveals.forEach(function (el) {

@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Prefer clean URLs; compatibility shells are noindex in HTML too
+Disallow: /project.html
+Disallow: /service.html
+
 Sitemap: https://hashstudio.ir/sitemap.xml

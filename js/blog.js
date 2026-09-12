@@ -138,7 +138,6 @@
   var pagination = document.getElementById('blog-pagination');
   var searchForm = document.getElementById('blog-search-form');
   var searchInput = document.getElementById('blog-search-input');
-  var newsletterForm = document.getElementById('blog-newsletter-form');
 
   function escapeHtml(value) {
     return String(value)
@@ -256,15 +255,6 @@
       state.query = searchInput.value || '';
       state.page = 1;
       render();
-    });
-  }
-
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function (event) {
-      event.preventDefault();
-      var input = document.getElementById('blog-newsletter-email');
-      if (input) input.value = '';
-      newsletterForm.reset();
     });
   }
 

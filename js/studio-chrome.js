@@ -61,19 +61,6 @@
     document.body.insertBefore(skip, document.body.firstChild);
   }
 
-  document.querySelectorAll('form.home-footer__newsletter').forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      var input = form.querySelector('input[type="email"]');
-      var email = input && input.value.trim();
-      if (!email) return;
-      var subject = encodeURIComponent('عضویت در خبرنامه استودیو هش');
-      var body = encodeURIComponent('لطفاً این ایمیل را در خبرنامه ثبت کنید:\n' + email);
-      window.location.href = 'mailto:' + info.email +
-        '?subject=' + subject + '&body=' + body;
-    });
-  });
-
   // Analytics-ready CTA markers (no third-party dependency)
   document.querySelectorAll('a[href*="contact.html"], a[href$="contact.html"]').forEach(function (link) {
     if (link.hasAttribute('data-cta')) return;

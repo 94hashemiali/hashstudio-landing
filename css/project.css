@@ -884,6 +884,121 @@
   transform: none;
 }
 
+.pd-motion-off .pd-reveal-ready {
+  opacity: 1;
+  transform: none;
+}
+
+/* Reading progress */
+.pd-progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 60;
+  height: 3px;
+  pointer-events: none;
+  background: transparent;
+}
+
+.pd-progress__bar {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--color-accent, #1a5cff);
+  transform-origin: inline-start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-progress__bar {
+    transition: none;
+  }
+}
+
+/* Case-study TOC */
+.pd-toc {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--color-bg, #fff) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-block-end: 1px solid color-mix(in srgb, var(--color-ink, #111) 8%, transparent);
+}
+
+.project-detail {
+  scroll-padding-top: 4.5rem;
+}
+
+.pd-toc__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 0.65rem;
+  min-height: 2.75rem;
+}
+
+.pd-toc__label {
+  margin: 0;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--color-ink, #111) 55%, transparent);
+  white-space: nowrap;
+}
+
+.pd-toc__list {
+  display: flex;
+  gap: 0.35rem 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.pd-toc__link {
+  display: inline-block;
+  padding: 0.35rem 0.15rem;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--color-ink, #111) 65%, transparent);
+  text-decoration: none;
+  white-space: nowrap;
+  border-block-end: 2px solid transparent;
+}
+
+.pd-toc__link:hover,
+.pd-toc__link:focus-visible {
+  color: var(--color-ink, #111);
+}
+
+.pd-toc__link.is-active {
+  color: var(--color-ink, #111);
+  border-block-end-color: var(--color-accent, #1a5cff);
+}
+
+.pd-early__caption {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--color-ink, #111) 55%, transparent);
+}
+
+.pd-quote__eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--color-ink, #111) 55%, transparent);
+}
+
+@media (max-width: 48rem) {
+  .pd-toc__label {
+    display: none;
+  }
+
+  .pd-toc__inner {
+    padding-inline: 0;
+  }
+}
+
 .pd-hero__intro.pd-reveal-ready {
   transition-delay: 0.05s;
 }
