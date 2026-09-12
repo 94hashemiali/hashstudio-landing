@@ -208,8 +208,8 @@
     var featured = picks[0];
     var rest = picks.slice(1);
     var featuredHtml =
-      '<a class="blog-card blog-card--featured" href="article.html?slug=' + encodeURIComponent(featured.slug) +
-      '" data-cta="view-article" data-cta-location="home-blog" data-content-slug="' + escapeHtml(featured.slug) + '">' +
+      '<a class="blog-card blog-card--featured" href="/article/' + encodeURIComponent(featured.slug) +
+      '/" data-cta="view-article" data-cta-location="home-blog" data-content-slug="' + escapeHtml(featured.slug) + '">' +
       '<div class="blog-card__media"><img src="' + escapeHtml(featured.hero) + '" alt="" width="694" height="271" loading="lazy"></div>' +
       '<div class="blog-card__body">' +
       '<span class="blog-card__badge">' + escapeHtml(featured.tag) + '</span>' +
@@ -219,8 +219,8 @@
       escapeHtml(featured.read || '') + '</span></div></div></a>';
 
     var stack = rest.map(function (a) {
-      return '<a class="blog-card blog-card--compact" href="article.html?slug=' + encodeURIComponent(a.slug) +
-        '" data-cta="view-article" data-cta-location="home-blog" data-content-slug="' + escapeHtml(a.slug) + '">' +
+      return '<a class="blog-card blog-card--compact" href="/article/' + encodeURIComponent(a.slug) +
+        '/" data-cta="view-article" data-cta-location="home-blog" data-content-slug="' + escapeHtml(a.slug) + '">' +
         '<div class="blog-card__body">' +
         '<span class="blog-card__badge">' + escapeHtml(a.tag) + '</span>' +
         '<h3 class="blog-card__title">' + escapeHtml(a.title) + '</h3>' +

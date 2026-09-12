@@ -12,6 +12,12 @@
       "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[^&]+)" }],
       "destination": "/service/:slug/",
       "permanent": true
+    },
+    {
+      "source": "/article.html",
+      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[^&]+)" }],
+      "destination": "/article/:slug/",
+      "permanent": true
     }
   ],
   "routes": [

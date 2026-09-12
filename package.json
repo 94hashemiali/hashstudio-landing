@@ -7,6 +7,8 @@
     "dev": "python3 scripts/dev-server.py",
     "start": "python3 scripts/dev-server.py",
     "serve": "npx --yes serve . -l 3000",
+    "build": "python3 scripts/build.py",
+    "build:content": "python3 scripts/build-content.py",
     "sitemap": "python3 scripts/generate-sitemap.py",
     "validate": "python3 scripts/validate-site.py",
     "validate:content": "python3 scripts/validate-content.py"

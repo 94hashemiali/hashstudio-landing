@@ -74,7 +74,7 @@ def main() -> None:
     ]
     urls.extend(f"{BASE}/project/{slug}/" for slug in projects)
     urls.extend(f"{BASE}/service/{slug}/" for slug in services)
-    urls.extend(f"{BASE}/article.html?slug={slug}" for slug in articles)
+    urls.extend(f"{BASE}/article/{slug}/" for slug in articles)
 
     seen: set[str] = set()
     unique_urls: list[str] = []

@@ -5,11 +5,14 @@ DirectoryIndex index.html
 RewriteEngine On
 
 # Legacy query URLs → pretty paths
-RewriteCond %{QUERY_STRING} ^slug=([a-z0-9-]+)$ [NC]
+RewriteCond %{QUERY_STRING} (?:^|&)slug=([a-z0-9-]+)(?:&|$) [NC]
 RewriteRule ^project\.html$ /project/%1/? [R=301,L]
 
-RewriteCond %{QUERY_STRING} ^slug=([a-z0-9-]+)$ [NC]
+RewriteCond %{QUERY_STRING} (?:^|&)slug=([a-z0-9-]+)(?:&|$) [NC]
 RewriteRule ^service\.html$ /service/%1/? [R=301,L]
+
+RewriteCond %{QUERY_STRING} (?:^|&)slug=([a-z0-9-]+)(?:&|$) [NC]
+RewriteRule ^article\.html$ /article/%1/? [R=301,L]
 
 # Missing URL → branded 404 page (keeps HTTP 404 status)
 ErrorDocument 404 /404.html

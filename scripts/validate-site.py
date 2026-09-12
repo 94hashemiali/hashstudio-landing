@@ -4,13 +4,15 @@
 Checks:
   - missing title / meta description / canonical / H1
   - duplicate canonical URLs
-  - invalid project/service slug folders
+  - article/project/service folder integrity
+  - article SEO (canonical, OG, JSON-LD, lang/dir)
   - broken internal href targets (basic)
   - images missing width/height attributes (warn)
-  - query canonicals on project pages
+  - query canonicals
 
 Usage:
   python3 scripts/validate-site.py
+  npm run validate
 """
 
 from __future__ import annotations
@@ -21,6 +23,7 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+BASE = "https://hashstudio.ir"
 
 TITLE_RE = re.compile(r"<title[^>]*>(.*?)</title>", re.I | re.S)
 DESC_RE = re.compile(
@@ -45,6 +48,10 @@ IMG_RE = re.compile(r"<img\b[^>]*>", re.I)
 WIDTH_RE = re.compile(r"\bwidth=", re.I)
 HEIGHT_RE = re.compile(r"\bheight=", re.I)
 SLUG_RE = re.compile(r"^[a-z0-9-]+$")
+OG_RE = re.compile(r'<meta\s+[^>]*property=["\']og:(title|description|image|url|type)["\']', re.I)
+LD_RE = re.compile(r'<script[^>]*type=["\']application/ld\+json["\']', re.I)
+LANG_RE = re.compile(r'<html[^>]*\blang=["\']fa["\']', re.I)
+DIR_RE = re.compile(r'<html[^>]*\bdir=["\']rtl["\']', re.I)
 
 
 def read(path: Path) -> str:
@@ -75,7 +82,6 @@ def resolve_href(page: Path, href: str, has_base_root: bool) -> Path | None:
     if href.startswith("/"):
         target = ROOT / href.lstrip("/")
     elif has_base_root or not href.startswith("."):
-        # Site pages use <base href="/"> so relative assets resolve from root
         target = ROOT / href
     else:
         target = (page.parent / href).resolve()
@@ -89,6 +95,30 @@ def resolve_href(page: Path, href: str, has_base_root: bool) -> Path | None:
     return target
 
 
+def validate_article_page(rel: str, slug: str, html: str, errors: list[str]) -> None:
+    expected = f"{BASE}/article/{slug}/"
+    c = canonical(html)
+    if c != expected:
+        errors.append(f"{rel}: canonical expected {expected} got {c}")
+    if not LANG_RE.search(html):
+        errors.append(f'{rel}: missing lang="fa"')
+    if not DIR_RE.search(html):
+        errors.append(f'{rel}: missing dir="rtl"')
+    if not meta_desc(html):
+        errors.append(f"{rel}: missing meta description")
+    og_props = {m.group(1).lower() for m in OG_RE.finditer(html)}
+    for prop in ("title", "description", "image", "url", "type"):
+        if prop not in og_props:
+            errors.append(f"{rel}: missing og:{prop}")
+    if not LD_RE.search(html):
+        errors.append(f"{rel}: missing JSON-LD")
+    h1_count = len(H1_RE.findall(html))
+    if h1_count != 1:
+        errors.append(f"{rel}: expected exactly 1 H1, found {h1_count}")
+    if "article.html?slug=" in html:
+        errors.append(f"{rel}: contains legacy article.html?slug= link")
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
@@ -96,6 +126,11 @@ def main() -> int:
 
     project_dirs = [p for p in (ROOT / "project").iterdir() if p.is_dir()]
     service_dirs = [p for p in (ROOT / "service").iterdir() if p.is_dir()]
+    article_dirs = (
+        [p for p in (ROOT / "article").iterdir() if p.is_dir()]
+        if (ROOT / "article").exists()
+        else []
+    )
 
     for d in project_dirs:
         if not SLUG_RE.match(d.name):
@@ -109,8 +144,24 @@ def main() -> int:
         if not (d / "index.html").exists():
             errors.append(f"missing service index: service/{d.name}/index.html")
 
+    for d in article_dirs:
+        if not SLUG_RE.match(d.name):
+            errors.append(f"invalid article slug folder: {d.name}")
+        if not (d / "index.html").exists():
+            errors.append(f"missing article index: article/{d.name}/index.html")
+
+    # articles-data.js ↔ article/<slug>/ must match 1:1
+    articles_js = (ROOT / "js/articles-data.js").read_text(encoding="utf-8")
+    data_article_slugs = set(re.findall(r'^  "([a-z0-9-]+)": \{', articles_js, re.M))
+    folder_article_slugs = {d.name for d in article_dirs}
+    for slug in sorted(data_article_slugs - folder_article_slugs):
+        errors.append(f"articles-data slug missing generated page: article/{slug}/")
+    for slug in sorted(folder_article_slugs - data_article_slugs):
+        errors.append(f"generated article folder not in articles-data.js: article/{slug}/")
+
     html_files = sorted(ROOT.rglob("*.html"))
     skip_parts = {"node_modules", ".git"}
+    checked = 0
 
     for path in html_files:
         if any(part in skip_parts for part in path.parts):
@@ -118,14 +169,19 @@ def main() -> int:
         rel = str(path.relative_to(ROOT))
         html = read(path)
         has_base_root = bool(re.search(r'<base\s+[^>]*href=["\']/["\']', html, re.I))
+        checked += 1
 
         t = title(html)
         if not t:
             errors.append(f"{rel}: missing <title>")
 
-        # Compatibility shells intentionally thin; skip strict SEO on them
-        if rel in {"project.html", "service.html"}:
+        # Compatibility / legacy shells intentionally thin
+        if rel in {"project.html", "service.html", "article.html"}:
             continue
+
+        if rel.startswith("article/") and rel.endswith("/index.html"):
+            slug = path.parent.name
+            validate_article_page(rel, slug, html, errors)
 
         d = meta_desc(html)
         if not d and rel != "404.html":
@@ -134,10 +190,16 @@ def main() -> int:
         c = canonical(html)
         if c:
             canon_map[c].append(rel)
-            if "project.html?slug=" in c or "service.html?slug=" in c:
+            if "project.html?slug=" in c or "service.html?slug=" in c or "article.html?slug=" in c:
                 errors.append(f"{rel}: query canonical {c}")
+            if "localhost" in c or c.startswith("/"):
+                errors.append(f"{rel}: bad canonical {c}")
             if rel.startswith("project/") and "/project/" not in c:
                 errors.append(f"{rel}: canonical should be /project/{{slug}}/ → {c}")
+            if rel.startswith("service/") and "/service/" not in c:
+                errors.append(f"{rel}: canonical should be /service/{{slug}}/ → {c}")
+            if rel.startswith("article/") and f"/article/{path.parent.name}/" not in c:
+                errors.append(f"{rel}: canonical should be /article/{{slug}}/ → {c}")
         elif rel.endswith("index.html") or rel in {
             "index.html",
             "projects.html",
@@ -173,9 +235,14 @@ def main() -> int:
         if len(files) > 1:
             errors.append(f"duplicate canonical {c}: {', '.join(files)}")
 
-    print(f"Checked {len(html_files)} HTML files")
-    print(f"projects={len(project_dirs)} services={len(service_dirs)}")
-    print(f"errors={len(errors)} warnings={len(warnings)}")
+    # Friendly summary
+    err_mark = "✓" if not errors else "✗"
+    warn_mark = "✓" if not warnings else "⚠"
+    print(f"✓ {len(project_dirs)} projects validated")
+    print(f"✓ {len(service_dirs)} services validated")
+    print(f"✓ {len(article_dirs)} articles validated")
+    print(f"✓ {checked} HTML files scanned")
+    print(f"{err_mark} {len(errors)} errors / {warn_mark} {len(warnings)} warnings")
     for item in errors[:80]:
         print(f"ERROR: {item}")
     if len(errors) > 80:

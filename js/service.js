@@ -267,8 +267,8 @@
   var articleCards = serviceArticles.map(function (articleSlug) {
     var a = articlesBySlug[articleSlug];
     if (!a) return '';
-    return '<a class="sd-article" href="article.html?slug=' + encodeURIComponent(a.slug) +
-      '" data-cta="view-article" data-cta-location="service" data-content-slug="' + escapeHtml(a.slug) +
+    return '<a class="sd-article" href="/article/' + encodeURIComponent(a.slug) +
+      '/" data-cta="view-article" data-cta-location="service" data-content-slug="' + escapeHtml(a.slug) +
       '" data-service-slug="' + escapeHtml(svc.slug) + '">' +
       '<span class="sd-article__tag">' + escapeHtml(a.tag || '') + '</span>' +
       '<h3 class="sd-article__title">' + escapeHtml(a.title) + '</h3>' +

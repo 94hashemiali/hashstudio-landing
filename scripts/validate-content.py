@@ -67,12 +67,23 @@ def main() -> int:
                 errors.append(f"article related[] points to missing article: {slug}")
 
     # content-graph article → projects/services
+    articles_block = re.search(r"var ARTICLES = \{(.*?)\n  \};", graph_js, re.S)
+    graph_article_slugs: set[str] = set()
+    if articles_block:
+        graph_article_slugs = set(
+            re.findall(r"'([a-z0-9-]+)':\s*\{", articles_block.group(1))
+        )
+    for slug in sorted(article_set - graph_article_slugs):
+        errors.append(f"article missing content-graph entry: {slug}")
+    for slug in sorted(graph_article_slugs - article_set):
+        errors.append(f"content-graph unknown article: {slug}")
+
     for article, projects in re.findall(
         r"'([a-z0-9-]+)':\s*\{\s*projects:\s*\[([^\]]*)\]",
         graph_js,
     ):
         if article not in article_set:
-            errors.append(f"content-graph unknown article: {article}")
+            continue
         for slug in re.findall(r"'([a-z0-9-]+)'", projects):
             if slug not in project_set:
                 errors.append(f"content-graph article {article} → missing project {slug}")
@@ -81,6 +92,8 @@ def main() -> int:
         r"'([a-z0-9-]+)':\s*\{\s*projects:\s*\[[^\]]*\]\s*,\s*services:\s*\[([^\]]*)\]",
         graph_js,
     ):
+        if article not in article_set:
+            continue
         for slug in re.findall(r"'([a-z0-9-]+)'", services):
             if slug not in service_set:
                 errors.append(f"content-graph article {article} → missing service {slug}")
@@ -111,8 +124,12 @@ def main() -> int:
                 if slug not in article_set:
                     errors.append(f"content-graph service {service} → missing article {slug}")
 
-    print(f"articles={len(article_set)} projects={len(project_set)} services={len(service_set)}")
-    print(f"errors={len(errors)} warnings={len(warnings)}")
+    mark = "✓" if not errors else "✗"
+    print(f"✓ {len(project_set)} projects validated")
+    print(f"✓ {len(service_set)} services validated")
+    print(f"✓ {len(article_set)} articles validated")
+    print(f"{mark} {len(errors)} broken relationships / field errors")
+    print(f"{'✓' if not warnings else '⚠'} {len(warnings)} warnings")
     for item in errors[:60]:
         print(f"ERROR: {item}")
     for item in warnings[:20]:

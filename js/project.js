@@ -471,8 +471,8 @@
   html('[data-list="project-articles"]', projectArticles.map(function (articleSlug) {
     var a = articlesBySlug[articleSlug];
     if (!a) return '';
-    return '<a class="pd-article" href="/article.html?slug=' + encodeURIComponent(a.slug) +
-      '" data-cta="view-article" data-cta-location="project" data-content-slug="' + escapeHtml(a.slug) +
+    return '<a class="pd-article" href="/article/' + encodeURIComponent(a.slug) +
+      '/" data-cta="view-article" data-cta-location="project" data-content-slug="' + escapeHtml(a.slug) +
       '" data-project-slug="' + escapeHtml(project.slug) + '">' +
       '<span class="pd-article__tag">' + escapeHtml(a.tag || '') + '</span>' +
       '<h3 class="pd-article__title">' + escapeHtml(a.title) + '</h3>' +

@@ -119,14 +119,16 @@
     grid.innerHTML = posts
       .map(function (post) {
         return (
-          '<a class="blog-card" href="article.html?slug=' +
+          '<a class="blog-card" href="/article/' +
           encodeURIComponent(post.slug) +
-          '" data-cta="view-article" data-cta-location="blog" data-content-slug="' +
+          '/" data-cta="view-article" data-cta-location="blog" data-content-slug="' +
           escapeHtml(post.slug) +
           '">' +
           '<div class="blog-card__media"><img src="' +
           escapeHtml(post.image) +
-          '" alt="" width="392" height="220" loading="lazy"></div>' +
+          '" alt="' +
+          escapeHtml(post.title) +
+          '" width="392" height="220" loading="lazy" decoding="async"></div>' +
           '<div class="blog-card__body">' +
           '<span class="blog-card__tag">' +
           escapeHtml(post.tag) +

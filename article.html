@@ -3,232 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="مقاله تخصصی استودیو هش درباره ساخت محصول دیجیتال">
+  <meta name="robots" content="noindex,follow">
   <title>مقاله | استودیو هش</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" id="hash-font-vazirmatn">
-<link rel="icon" href="assets/images/home/logo.png" type="image/png">
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="css/article.css">
 </head>
-<body class="home-page article-page">
-
-  <div class="top-bar">
-    <div class="container top-bar__inner">
-      <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
-      <a href="contact.html" class="top-bar__btn">شروع پروژه</a>
-    </div>
-  </div>
-
-  <header class="home-header" id="site-header">
-    <div class="container home-header__inner">
-      <a href="index.html" class="home-header__logo">
-        <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
-        <span class="home-header__logo-text">استودیو هش</span>
-      </a>
-
-      <nav class="home-header__nav" id="main-nav" aria-label="منوی اصلی">
-        <a href="index.html" class="home-header__link">خانه</a>
-        <a href="services.html" class="home-header__link">خدمات</a>
-        <a href="projects.html" class="home-header__link">پروژه‌ها</a>
-        <a href="about.html" class="home-header__link">درباره ما</a>
-        <a href="blog.html" class="home-header__link is-active">بلاگ</a>
-        <a href="contact.html" class="home-header__link">تماس با ما</a>
-      </nav>
-
-      <div class="home-header__actions">
-        <a href="contact.html" class="btn btn--primary btn--header">شروع پروژه</a>
-        <a href="contact.html" class="home-header__profile" aria-label="تماس با ما">
-          <img src="assets/icons/profile.svg" alt="" width="39" height="39">
-        </a>
-        <button class="home-header__toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="main-nav">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="article-hero">
-      <div class="container">
-        <nav class="article-breadcrumb" aria-label="مسیر">
-          <a href="index.html">خانه</a>
-          <span class="article-breadcrumb__sep" aria-hidden="true">›</span>
-          <a href="blog.html">وبلاگ</a>
-          <span class="article-breadcrumb__sep" aria-hidden="true">›</span>
-          <a class="article-breadcrumb__current" data-field="crumb-tag" href="blog.html">طراحی محصول</a>
-        </nav>
-
-        <span class="article-hero__tag" data-field="tag">طراحی محصول</span>
-        <h1 class="article-hero__title" data-field="title">چگونه یک محصول دیجیتال موفق بسازیم: راهنمای جامع استودیو هش</h1>
-
-        <div class="article-hero__meta">
-          <div class="article-hero__author">
-            <img class="article-hero__avatar" data-field="avatar" src="assets/images/article/author.webp" alt="" width="52" height="52">
-            <div>
-              <div class="article-hero__author-name" data-field="author-name">علی محمدی</div>
-              <div class="article-hero__author-role" data-field="author-role">بنیان‌گذار و مدیر محصول استودیو هش</div>
-            </div>
-          </div>
-          <div class="article-hero__stats">
-            <time data-field="date">۱۲ مرداد ۱۴۰۳</time>
-            <span class="article-hero__dot" aria-hidden="true"></span>
-            <span data-field="read">زمان مطالعه: ۸ دقیقه</span>
-          </div>
-        </div>
-
-        <div class="article-hero__media">
-          <img data-field="hero" src="assets/images/article/hero.webp" alt="" width="1239" height="519" loading="eager">
-        </div>
-      </div>
-    </section>
-
-    <section class="article-main">
-      <div class="container">
-        <div class="article-layout">
-          <article class="article-content">
-            <p class="article-lead" data-field="lead"></p>
-            <div data-list="body"></div>
-          </article>
-
-          <aside class="article-aside">
-            <nav class="article-toc" aria-label="سرفصل‌های مقاله">
-              <h2 class="article-toc__title">سرفصل‌های این مقاله</h2>
-              <ol class="article-toc__list" data-list="toc"></ol>
-            </nav>
-            <div class="article-share">
-              <h2 class="article-share__title">ارسال این مطلب برای دیگران</h2>
-              <div class="article-share__row">
-                <a class="article-share__btn" href="#" aria-label="لینکدین"><img src="assets/icons/article/linkedin.svg" alt="" width="18" height="18"></a>
-                <a class="article-share__btn" href="#" aria-label="توییتر"><img src="assets/icons/article/x.svg" alt="" width="18" height="18"></a>
-                <a class="article-share__btn" href="#" aria-label="اشتراک"><img src="assets/icons/article/share.svg" alt="" width="18" height="18"></a>
-                <a class="article-share__btn" href="#" aria-label="وب"><img src="assets/icons/article/web.svg" alt="" width="18" height="18"></a>
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <aside class="article-author" aria-label="درباره نویسنده">
-          <img class="article-author__avatar" data-field="avatar-big" src="assets/images/article/author.webp" alt="" width="156" height="156">
-          <div>
-            <h2 class="article-author__title" data-field="author-about">درباره علی محمدی</h2>
-            <p class="article-author__bio" data-field="author-bio"></p>
-            <div class="article-author__row">
-              <div class="article-author__social">
-                <a href="https://www.instagram.com/hashstudio.ir/" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer"><img src="assets/icons/article/instagram.svg" alt="" width="18" height="18"></a>
-                <a class="article-author__social-li" href="#" aria-label="لینکدین"><img src="assets/icons/article/linkedin.svg" alt="" width="18" height="18"></a>
-                <a class="article-author__social-x" href="#" aria-label="توییتر"><img src="assets/icons/article/x.svg" alt="" width="18" height="18"></a>
-              </div>
-              <a class="article-author__more" data-field="author-more" href="blog.html">مشاهده مقالات بیشتر علی</a>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="article-related" aria-labelledby="article-related-title">
-      <div class="container">
-        <span class="article-related__badge">دانستنی‌های بیشتر</span>
-        <h2 class="article-related__heading" id="article-related-title">مطالعه مقالات مرتبط</h2>
-        <div class="article-related__grid" data-list="related"></div>
-      </div>
-    </section>
-
-    <section class="article-proof" data-block="article-projects" hidden>
-      <div class="container">
-        <span class="article-related__badge">اثبات در کار واقعی</span>
-        <h2 class="article-related__heading">این رویکرد را در این پروژه‌ها دیده‌ایم</h2>
-        <div class="article-proof__grid" data-list="article-projects"></div>
-      </div>
-    </section>
-
-    <section class="article-service-cta" data-block="article-services" hidden>
-      <div class="container">
-        <div class="article-service-cta__card">
-          <h2 class="article-service-cta__title">خدمت مرتبط با این موضوع</h2>
-          <p class="article-service-cta__body" data-field="service-context"></p>
-          <div class="article-service-cta__links" data-list="article-services"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="article-newsletter" aria-labelledby="article-newsletter-title">
-      <div class="container">
-        <div class="article-newsletter__card">
-          <div class="article-newsletter__content">
-            <h2 class="article-newsletter__title" id="article-newsletter-title" data-field="article-cta-title">پروژه بعدی را با هم شروع کنیم</h2>
-            <p class="article-newsletter__desc" data-field="article-cta-body">اگر این مقاله به مسئله محصول شما نزدیک بود، مسیر همکاری را کوتاه می‌کنیم.</p>
-            <a class="article-newsletter__submit" href="contact.html" data-article-cta>شروع پروژه</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="home-footer">
-    <div class="container">
-      <div class="home-footer__grid">
-        <div class="home-footer__brand">
-          <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
-          <div class="home-footer__brand-name">استودیو هش</div>
-          <p class="home-footer__brand-desc">طراحی و توسعه محصولات دیجیتال برای استارتاپ‌ها و شرکت‌های پیشرو — از ایده تا تجربه‌ای که کاربران عاشقش می‌شوند.</p>
-          <div class="home-footer__location">
-            <span class="home-footer__location-icon" aria-hidden="true">📍</span>
-            <span data-studio="address-short">تهران، یوسف‌آباد، جهان‌آرا، کوچه ۴۳</span>
-          </div>
-        </div>
-        <div class="home-footer__links-col">
-          <h3 class="home-footer__heading">دسترسی سریع</h3>
-          <nav class="home-footer__links" aria-label="لینک‌های فوتر">
-            <a href="index.html" class="home-footer__link">خانه اصلی</a>
-            <a href="services.html" class="home-footer__link">خدمات</a>
-            <a href="projects.html" class="home-footer__link">پروژه‌ها و نمونه‌کارها</a>
-            <a href="about.html" class="home-footer__link">درباره ما</a>
-            <a href="blog.html" class="home-footer__link">وبلاگ تخصصی</a>
-            <a href="contact.html" class="home-footer__link">تماس با ما</a>
-          </nav>
-        </div>
-        <div class="home-footer__links-col">
-          <h3 class="home-footer__heading">خدمات ما</h3>
-          <nav class="home-footer__links">
-            <a href="/service/product/" class="home-footer__link">طراحی محصول</a>
-            <a href="/service/ui-ux/" class="home-footer__link">طراحی UI/UX</a>
-            <a href="/service/web/" class="home-footer__link">توسعه وب مدرن</a>
-            <a href="/service/mobile/" class="home-footer__link">توسعه اپلیکیشن موبایل</a>
-            <a href="/service/mvp/" class="home-footer__link">راه‌اندازی MVP</a>
-            <a href="/service/ai/" class="home-footer__link">یکپارچه‌سازی هوش مصنوعی</a>
-            <a href="/service/seo/" class="home-footer__link">سئو و رشد</a>
-            <a href="/service/consulting/" class="home-footer__link">مشاوره محصول</a>
-          </nav>
-        </div>
-        <div class="home-footer__newsletter-col">
-          <h3 class="home-footer__heading">پروژه بعدی شما</h3>
-          <p class="home-footer__newsletter-desc">ایده، محصول نیمه‌کاره یا بازطراحی — مسیر را با هم مشخص می‌کنیم.</p>
-          <a class="btn btn--primary" href="/contact.html" data-cta="start-project" data-cta-location="footer">شروع پروژه</a>
-          <div class="home-footer__social" data-studio="social" data-studio-social-class="home-footer__social-link">
-            <a href="https://www.instagram.com/hashstudio.ir/" class="home-footer__social-link" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer">IG</a>
-          </div>
-        </div>
-      </div>
-      <div class="home-footer__bottom">
-        <span>تمامی حقوق مادی و معنوی محفوظ است © ۱۴۰۵ استودیو هش</span>
-        <span>طراحی و توسعه با ■ در استودیو هش</span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/studio-info.js"></script>
-  <script src="js/studio-chrome.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/projects-data.js"></script>
-  <script src="js/content-graph.js"></script>
-  <script src="js/articles-data.js"></script>
-  <script src="js/article.js"></script>
+<body>
+  <p><a id="legacy-article-link" href="/blog.html">انتقال به مقاله یا بلاگ…</a></p>
+  <script>
+    (function () {
+      function clean(value) {
+        return String(value || '').replace(/^\/+|\/+$/g, '').trim();
+      }
+      var slug = null;
+      try {
+        slug = clean(new URLSearchParams(location.search).get('slug'));
+      } catch (err) {}
+      if (!slug) {
+        var hash = (location.hash || '').replace(/^#/, '');
+        if (hash.indexOf('slug=') === 0) slug = clean(hash.slice(5));
+        else if (hash && hash.indexOf('=') === -1) slug = clean(hash);
+      }
+      var dest = slug ? '/article/' + encodeURIComponent(slug) + '/' : '/blog.html';
+      var link = document.getElementById('legacy-article-link');
+      if (link) link.setAttribute('href', dest);
+      location.replace(dest);
+    })();
+  </script>
 </body>
 </html>
