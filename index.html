@@ -15,6 +15,9 @@
   <meta property="og:image" content="https://hashstudio.ir/assets/images/home/logo.png">
   <meta name="twitter:card" content="summary_large_image">
   <title>استودیو هش | طراحی و توسعه محصول دیجیتال</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" id="hash-font-vazirmatn">
   <link rel="icon" href="assets/images/home/logo.png" type="image/png">
   <script type="application/ld+json">
   {
@@ -311,38 +314,37 @@
           <p class="section-head__desc">کیس‌استادی‌ها را باز کنید — هر کارت، مسیر کامل از مسئله تا محصول است.</p>
         </div>
 
-        <a href="/project/zarafe/" class="portfolio-featured">
-          <div class="portfolio-featured__visual">
-            <div class="site-preview">
-              <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/zarafe-pixel.webp" alt="پیش‌نمایش پلتفرم زرافه" width="1280" height="720" loading="lazy"></div>
-              <img class="site-preview__shot" src="assets/images/home/projects/zarafe-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
-            </div>
-          </div>
-          <div class="portfolio-featured__content">
-            <span class="portfolio-featured__label">فین‌تک · طراحی محصول + وب</span>
-            <h3 class="portfolio-featured__title">زرافه</h3>
-            <p class="portfolio-featured__desc">
-              پلتفرم خرید و فروش آنلاین طلا، نقره، مس و سکه — معامله شفاف، بدون اجرت و با امکان تحویل فیزیکی.
-            </p>
-            <div class="portfolio-featured__stats">
-              <div class="portfolio-featured__stat">
-                <div class="portfolio-featured__stat-value">۲۴/۷</div>
-                <div class="portfolio-featured__stat-label">معامله آنلاین</div>
-              </div>
-              <div class="portfolio-featured__stat">
-                <div class="portfolio-featured__stat-value">۴ فلز</div>
-                <div class="portfolio-featured__stat-label">طلا، نقره، مس، سکه</div>
-              </div>
-              <div class="portfolio-featured__stat">
-                <div class="portfolio-featured__stat-value">بدون اجرت</div>
-                <div class="portfolio-featured__stat-label">قیمت لحظه‌ای بازار</div>
+        <div id="home-portfolio-featured">
+          <a href="/project/zarafe/" class="portfolio-featured">
+            <div class="portfolio-featured__visual">
+              <div class="site-preview">
+                <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/zarafe-pixel.webp" alt="پیش‌نمایش پلتفرم زرافه" width="1280" height="720" loading="lazy"></div>
+                <img class="site-preview__shot" src="assets/images/home/projects/zarafe-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
               </div>
             </div>
-            <span class="portfolio-featured__link">مطالعه پروژه ›</span>
-          </div>
-        </a>
-
-        <div class="portfolio-grid">
+            <div class="portfolio-featured__content">
+              <span class="portfolio-featured__label">فین‌تک / سرمایه‌گذاری طلا · طراحی محصول + توسعه وب</span>
+              <h3 class="portfolio-featured__title">زرافه</h3>
+              <p class="portfolio-featured__desc">با زرافه، طلا خریدن آسونه: قیمت لحظه‌ای، کیف چندفلزی، تحویل فیزیکی و مسیری که ترس کارمزد پنهان را از معامله خرد برمی‌دارد.</p>
+              <div class="portfolio-featured__stats">
+                <div class="portfolio-featured__stat">
+                  <div class="portfolio-featured__stat-value">۲۴/۷</div>
+                  <div class="portfolio-featured__stat-label">معامله آنلاین بدون محدودیت ساعت</div>
+                </div>
+                <div class="portfolio-featured__stat">
+                  <div class="portfolio-featured__stat-value">۴ فلز</div>
+                  <div class="portfolio-featured__stat-label">طلا، نقره، مس و سکه در یک کیف</div>
+                </div>
+                <div class="portfolio-featured__stat">
+                  <div class="portfolio-featured__stat-value">بدون اجرت</div>
+                  <div class="portfolio-featured__stat-label">قیمت مبتنی بر نرخ بازار</div>
+                </div>
+              </div>
+              <span class="portfolio-featured__link">مطالعه پروژه ›</span>
+            </div>
+          </a>
+        </div>
+        <div class="portfolio-grid" id="home-portfolio-grid">
           <a href="/project/khosravani/" class="project-card">
             <div class="project-card__visual project-card__visual--navy">
               <div class="site-preview">
@@ -351,9 +353,7 @@
               </div>
             </div>
             <div class="project-card__body">
-              <div class="project-card__meta">
-                <span class="project-card__category">خودرو / نمایندگی</span>
-              </div>
+              <div class="project-card__meta"><span class="project-card__category">خودرو / نمایندگی</span></div>
               <h3 class="project-card__title">تجارت خودرو خسروانی</h3>
               <div class="project-card__tags">
                 <span class="project-card__tag">نمایندگی خودرو</span>
@@ -363,7 +363,6 @@
               <span class="project-card__link">مطالعه پروژه ›</span>
             </div>
           </a>
-
           <a href="/project/moniaz/" class="project-card">
             <div class="project-card__visual project-card__visual--blue">
               <div class="site-preview">
@@ -372,19 +371,16 @@
               </div>
             </div>
             <div class="project-card__body">
-              <div class="project-card__meta">
-                <span class="project-card__category">آموزش / نشر دیجیتال</span>
-              </div>
+              <div class="project-card__meta"><span class="project-card__category">آموزش / نشر دیجیتال</span></div>
               <h3 class="project-card__title">مُنیاز</h3>
               <div class="project-card__tags">
-                <span class="project-card__tag">آموزش آنلاین</span>
-                <span class="project-card__tag">کتاب تست</span>
-                <span class="project-card__tag">وب</span>
+                <span class="project-card__tag">نشر آنلاین</span>
+                <span class="project-card__tag">تحلیل ویدئویی</span>
+                <span class="project-card__tag">کنکور</span>
               </div>
               <span class="project-card__link">مطالعه پروژه ›</span>
             </div>
           </a>
-
           <a href="/project/shogir/" class="project-card">
             <div class="project-card__visual project-card__visual--teal">
               <div class="site-preview">
@@ -393,9 +389,7 @@
               </div>
             </div>
             <div class="project-card__body">
-              <div class="project-card__meta">
-                <span class="project-card__category">گردشگری / پلتفرم محلی</span>
-              </div>
+              <div class="project-card__meta"><span class="project-card__category">گردشگری / پلتفرم محلی</span></div>
               <h3 class="project-card__title">شوگیر</h3>
               <div class="project-card__tags">
                 <span class="project-card__tag">گردشگری</span>
@@ -405,7 +399,6 @@
               <span class="project-card__link">مطالعه پروژه ›</span>
             </div>
           </a>
-
           <a href="/project/vanilly/" class="project-card">
             <div class="project-card__visual project-card__visual--brown">
               <div class="site-preview">
@@ -414,9 +407,7 @@
               </div>
             </div>
             <div class="project-card__body">
-              <div class="project-card__meta">
-                <span class="project-card__category">فروشگاه / آرایشی</span>
-              </div>
+              <div class="project-card__meta"><span class="project-card__category">فروشگاه / آرایشی</span></div>
               <h3 class="project-card__title">وانیلی</h3>
               <div class="project-card__tags">
                 <span class="project-card__tag">آرایشی</span>
@@ -429,7 +420,7 @@
         </div>
 
         <div class="portfolio__more">
-          <a href="projects.html" class="btn btn--outline portfolio__more-btn">مشاهده همه پروژه‌ها</a>
+          <a href="projects.html" class="btn btn--outline portfolio__more-btn" data-cta="view-projects" data-cta-location="home-portfolio">مشاهده همه پروژه‌ها</a>
         </div>
       </div>
     </section>
@@ -909,6 +900,7 @@
     </div>
   </footer>
 
+  <script src="js/projects-data.js"></script>
   <script src="js/home.js"></script>
   <script src="js/studio-info.js"></script>
   <script src="js/studio-chrome.js"></script>

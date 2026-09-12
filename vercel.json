@@ -1,5 +1,19 @@
 {
   "version": 2,
+  "redirects": [
+    {
+      "source": "/project.html",
+      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[^&]+)" }],
+      "destination": "/project/:slug/",
+      "permanent": true
+    },
+    {
+      "source": "/service.html",
+      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[^&]+)" }],
+      "destination": "/service/:slug/",
+      "permanent": true
+    }
+  ],
   "routes": [
     { "handle": "filesystem" },
     { "src": "/(.*)", "status": 404, "dest": "/404.html" }

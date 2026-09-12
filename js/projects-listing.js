@@ -3,99 +3,19 @@
 
   var PAGE_SIZE = 6;
   var VISUALS = ['#2E1C40', '#0E2938', '#4E3629', '#1F3B2B', '#323B44', '#17252B'];
-
-  var META = {
-    zarafe: {
-      category: 'Fintech',
-      filters: ['web', 'product'],
-      tags: ['قیمت لحظه‌ای', 'توسعه وب', 'طراحی محصول']
-    },
-    khosravani: {
-      category: 'Automotive',
-      filters: ['web'],
-      tags: ['نمایندگی خودرو', 'توسعه وب', 'UI/UX']
-    },
-    moniaz: {
-      category: 'Education',
-      filters: ['web', 'product'],
-      tags: ['نشر آنلاین', 'تحلیل ویدئویی', 'کنکور']
-    },
-    shogir: {
-      category: 'Travel',
-      filters: ['web', 'mobile', 'product', 'mvp'],
-      tags: ['گردشگری', 'قشم', 'PWA']
-    },
-    vanilly: {
-      category: 'E-Commerce',
-      filters: ['web'],
-      tags: ['آرایشی', 'فروشگاه آنلاین', 'UI/UX']
-    },
-    pandoraland: {
-      category: 'Social Commerce',
-      filters: ['web', 'product'],
-      tags: ['سوشال‌کامرس', 'فروشگاه', 'طراحی محصول']
-    },
-    madanicamp: {
-      category: 'E-Commerce',
-      filters: ['web'],
-      tags: ['outdoor', 'فروشگاه', 'UI/UX']
-    },
-    zivanplus: {
-      category: 'E-Commerce',
-      filters: ['web'],
-      tags: ['پت‌شاپ', 'فروشگاه', 'UI/UX']
-    },
-    golding: {
-      category: 'Fintech',
-      filters: ['web', 'product'],
-      tags: ['پس‌انداز طلا', 'فین‌تک', 'وب']
-    },
-    zeissqom: {
-      category: 'Healthcare',
-      filters: ['web'],
-      tags: ['اپتیک', 'وب تخصصی', 'UI']
-    },
-    tfec: {
-      category: 'Fintech',
-      filters: ['web', 'product'],
-      tags: ['رمزارز', 'صرافی', 'فین‌تک']
-    },
-    azinpart: {
-      category: 'E-Commerce',
-      filters: ['web'],
-      tags: ['قطعات خودرو', 'B2B', 'فروشگاه']
-    },
-    abryadak: {
-      category: 'E-Commerce',
-      filters: ['web'],
-      tags: ['لوازم خودرو', 'فروشگاه', 'وب']
-    },
-    shefaei: {
-      category: 'Enterprise',
-      filters: ['web', 'product'],
-      tags: ['پرتال سازمانی', 'عضویت', 'توسعه']
-    },
-    visionsam: {
-      category: 'Agency',
-      filters: ['web'],
-      tags: ['آژانس', 'سایت معرفی', 'UI']
-    },
-    dgservice: {
-      category: 'Mobile',
-      filters: ['web', 'mobile', 'product', 'mvp'],
-      tags: ['معاوضه موبایل', 'وب', 'محصول']
-    },
-    crafty: {
-      category: 'AI SaaS',
-      filters: ['web', 'ai', 'product'],
-      tags: ['هوش مصنوعی', 'سه‌بعدی', 'استودیو وب']
-    }
+  var FILTER_LABELS = {
+    all: 'همه',
+    web: 'وب',
+    mobile: 'موبایل',
+    product: 'طراحی محصول',
+    mvp: 'MVP',
+    ai: 'هوش مصنوعی'
   };
 
   var projects = window.HASH_PROJECTS || [];
   var grid = document.getElementById('proj-grid');
   var pager = document.getElementById('proj-pagination');
-  var filterBtns = document.querySelectorAll('[data-proj-filter]');
+  var filterHost = document.querySelector('.proj-filters');
   var state = { filter: 'all', page: 1 };
 
   function escapeHtml(value) {
@@ -106,26 +26,43 @@
       .replace(/"/g, '&quot;');
   }
 
-  function enriched() {
-    return projects.map(function (project, index) {
-      var meta = META[project.slug] || {
-        category: 'Project',
-        filters: ['web'],
-        tags: (project.services || '').split(/\s*\+\s*/).filter(Boolean)
-      };
-      return {
-        project: project,
-        meta: meta,
-        visual: VISUALS[index % VISUALS.length]
-      };
+  function availableFilters() {
+    var counts = {};
+    projects.forEach(function (project) {
+      (project.filters || []).forEach(function (key) {
+        counts[key] = (counts[key] || 0) + 1;
+      });
+    });
+    return Object.keys(FILTER_LABELS).filter(function (key) {
+      return key === 'all' || counts[key] > 0;
     });
   }
 
+  function renderFilters() {
+    if (!filterHost) return;
+    var keys = availableFilters();
+    filterHost.innerHTML = keys
+      .map(function (key) {
+        var active = key === state.filter;
+        return (
+          '<button type="button" class="proj-filters__btn' +
+          (active ? ' is-active' : '') +
+          '" data-proj-filter="' +
+          escapeHtml(key) +
+          '" aria-pressed="' +
+          String(active) +
+          '">' +
+          escapeHtml(FILTER_LABELS[key]) +
+          '</button>'
+        );
+      })
+      .join('');
+  }
+
   function filtered() {
-    var list = enriched();
-    if (state.filter === 'all') return list;
-    return list.filter(function (item) {
-      return item.meta.filters.indexOf(state.filter) !== -1;
+    if (state.filter === 'all') return projects.slice();
+    return projects.filter(function (project) {
+      return (project.filters || []).indexOf(state.filter) !== -1;
     });
   }
 
@@ -138,46 +75,47 @@
     var pageItems = list.slice(start, start + PAGE_SIZE);
 
     if (!pageItems.length) {
-      grid.innerHTML =
-        '<p class="proj-empty">پروژه‌ای با این فیلتر پیدا نشد.</p>';
+      grid.innerHTML = '<p class="proj-empty">پروژه‌ای با این فیلتر پیدا نشد.</p>';
       renderPager(0);
       return;
     }
 
     grid.innerHTML = pageItems
-      .map(function (item) {
-        var p = item.project;
-        var m = item.meta;
-        var tags = (m.tags || [])
+      .map(function (p, index) {
+        var tags = (p.tags || [])
           .slice(0, 3)
           .map(function (tag) {
             return '<span class="proj-card__tag">' + escapeHtml(tag) + '</span>';
           })
           .join('');
+        var visual = VISUALS[(p.order != null ? p.order : index) % VISUALS.length];
+        var href = p.href || '/project/' + encodeURIComponent(p.slug) + '/';
+        var pixel = (p.images && p.images.pixel) || '';
+        var shot = (p.images && p.images.hero) || '';
         return (
-          '<a href="/project/' +
-          encodeURIComponent(p.slug) +
-          '/" class="proj-card">' +
+          '<a href="' +
+          escapeHtml(href) +
+          '" class="proj-card">' +
           '<div class="proj-card__visual" style="background:' +
-          item.visual +
+          visual +
           '">' +
           '<div class="site-preview">' +
           '<div class="site-preview__pixel" aria-hidden="true">' +
-          '<img src="assets/images/home/projects/' +
-          escapeHtml(p.slug) +
-          '-pixel.webp" alt="' +
+          '<img src="' +
+          escapeHtml(pixel) +
+          '" alt="' +
           escapeHtml(p.name) +
           '" width="1280" height="720" loading="lazy">' +
           '</div>' +
-          '<img class="site-preview__shot" src="assets/images/home/projects/' +
-          escapeHtml(p.slug) +
-          '-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">' +
+          '<img class="site-preview__shot" src="' +
+          escapeHtml(shot) +
+          '" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">' +
           '</div>' +
           '</div>' +
           '<div class="proj-card__body">' +
           '<div class="proj-card__meta">' +
           '<span class="proj-card__category">' +
-          escapeHtml(p.industry || m.category) +
+          escapeHtml(p.industry || '') +
           '</span>' +
           '<span class="proj-card__year">' +
           escapeHtml(p.year || '') +
@@ -192,7 +130,7 @@
           '<p class="proj-card__desc">' +
           escapeHtml(p.lead || '') +
           '</p>' +
-          '<span class="proj-card__cta">مشاهده کیس استادی</span>' +
+          '<span class="proj-card__cta">مطالعه پروژه</span>' +
           '<div class="proj-card__tags">' +
           tags +
           '</div>' +
@@ -253,18 +191,20 @@
     });
   }
 
-  filterBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
+  if (filterHost) {
+    filterHost.addEventListener('click', function (event) {
+      var btn = event.target.closest('[data-proj-filter]');
+      if (!btn) return;
       state.filter = btn.getAttribute('data-proj-filter') || 'all';
       state.page = 1;
-      filterBtns.forEach(function (item) {
+      filterHost.querySelectorAll('[data-proj-filter]').forEach(function (item) {
         var on = item === btn;
         item.classList.toggle('is-active', on);
         item.setAttribute('aria-pressed', String(on));
       });
       renderCards();
     });
-  });
+  }
 
   if (pager) {
     pager.addEventListener('click', function (event) {
@@ -283,11 +223,11 @@
 
   if (!projects.length) {
     if (grid) {
-      grid.innerHTML =
-        '<p class="proj-empty">داده پروژه‌ها بارگذاری نشد.</p>';
+      grid.innerHTML = '<p class="proj-empty">داده پروژه‌ها بارگذاری نشد.</p>';
     }
     return;
   }
 
+  renderFilters();
   renderCards();
 })();

@@ -73,4 +73,29 @@
         '?subject=' + subject + '&body=' + body;
     });
   });
+
+  // Analytics-ready CTA markers (no third-party dependency)
+  document.querySelectorAll('a[href*="contact.html"], a[href$="contact.html"]').forEach(function (link) {
+    if (link.hasAttribute('data-cta')) return;
+    var text = (link.textContent || '').trim();
+    if (/شروع پروژه|ارسال درخواست|مشاوره|تماس/.test(text) || link.classList.contains('btn--primary') || link.classList.contains('top-bar__btn') || link.classList.contains('btn--header')) {
+      link.setAttribute('data-cta', 'start-project');
+    }
+    if (!link.hasAttribute('data-cta-location')) {
+      if (link.closest('.top-bar')) link.setAttribute('data-cta-location', 'topbar');
+      else if (link.closest('.home-header, .site-header')) link.setAttribute('data-cta-location', 'nav');
+      else if (link.closest('.home-hero, .about-hero, .sd-hero, .pd-hero, .proj-hero, .svc-hero, .ct-hero')) link.setAttribute('data-cta-location', 'hero');
+      else if (link.closest('.home-final-cta, .about-finale, .pd-closing, .home-footer')) link.setAttribute('data-cta-location', 'footer-cta');
+      else if (link.closest('[data-block="service-links"], .pd-service-links')) link.setAttribute('data-cta-location', 'project-service');
+      else link.setAttribute('data-cta-location', 'page');
+    }
+  });
+
+  document.querySelectorAll('a[href*="projects.html"]').forEach(function (link) {
+    if (link.hasAttribute('data-cta')) return;
+    if (/مشاهده پروژ|پروژه‌ها|کیس/.test((link.textContent || '').trim())) {
+      link.setAttribute('data-cta', 'view-projects');
+      if (!link.hasAttribute('data-cta-location')) link.setAttribute('data-cta-location', 'page');
+    }
+  });
 })();

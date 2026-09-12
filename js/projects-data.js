@@ -1395,10 +1395,96 @@
     }
   ];
 
+
+  var LISTING = {
+    zarafe: {
+      featured: true,
+      homeOrder: 0,
+      filters: ['web', 'product'],
+      tags: ['قیمت لحظه‌ای', 'توسعه وب', 'طراحی محصول'],
+      cardTone: 'gold'
+    },
+    khosravani: {
+      homeOrder: 1,
+      filters: ['web'],
+      tags: ['نمایندگی خودرو', 'توسعه وب', 'UI/UX'],
+      cardTone: 'navy'
+    },
+    moniaz: {
+      homeOrder: 2,
+      filters: ['web', 'product'],
+      tags: ['نشر آنلاین', 'تحلیل ویدئویی', 'کنکور'],
+      cardTone: 'blue'
+    },
+    shogir: {
+      homeOrder: 3,
+      filters: ['web', 'mobile', 'product', 'mvp'],
+      tags: ['گردشگری', 'قشم', 'PWA'],
+      cardTone: 'teal'
+    },
+    vanilly: {
+      homeOrder: 4,
+      filters: ['web'],
+      tags: ['آرایشی', 'فروشگاه آنلاین', 'UI/UX'],
+      cardTone: 'brown'
+    },
+    pandoraland: {
+      filters: ['web', 'product'],
+      tags: ['سوشال‌کامرس', 'فروشگاه', 'طراحی محصول']
+    },
+    madanicamp: {
+      filters: ['web'],
+      tags: ['outdoor', 'فروشگاه', 'UI/UX']
+    },
+    zivanplus: {
+      filters: ['web'],
+      tags: ['پت‌شاپ', 'فروشگاه', 'UI/UX']
+    },
+    golding: {
+      filters: ['web', 'product'],
+      tags: ['پس‌انداز طلا', 'فین‌تک', 'وب']
+    },
+    zeissqom: {
+      filters: ['web'],
+      tags: ['اپتیک', 'وب تخصصی', 'UI']
+    },
+    tfec: {
+      filters: ['web', 'product'],
+      tags: ['رمزارز', 'صرافی', 'فین‌تک']
+    },
+    azinpart: {
+      filters: ['web'],
+      tags: ['قطعات خودرو', 'B2B', 'فروشگاه']
+    },
+    abryadak: {
+      filters: ['web'],
+      tags: ['لوازم خودرو', 'فروشگاه', 'وب']
+    },
+    shefaei: {
+      filters: ['web', 'product'],
+      tags: ['پرتال سازمانی', 'عضویت', 'توسعه']
+    },
+    visionsam: {
+      filters: ['web'],
+      tags: ['آژانس', 'سایت معرفی', 'UI']
+    },
+    dgservice: {
+      filters: ['web', 'mobile', 'product', 'mvp'],
+      tags: ['معاوضه موبایل', 'وب', 'محصول'],
+      serviceSlugs: ['product', 'web', 'mobile', 'mvp']
+    },
+    crafty: {
+      filters: ['web', 'ai', 'product'],
+      tags: ['هوش مصنوعی', 'سه‌بعدی', 'استودیو وب']
+    }
+  };
+
   PROJECTS.forEach(function (project, index) {
     var base = 'assets/images/home/projects/' + project.slug;
+    var listing = LISTING[project.slug] || {};
     project.nextSlug = PROJECTS[(index + 1) % PROJECTS.length].slug;
     project.prevSlug = PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length].slug;
+    project.order = index;
     project.images = {
       hero: base + '-shot.webp',
       pixel: base + '-pixel.webp',
@@ -1410,6 +1496,7 @@
         { src: base + '-s4.webp', alt: 'صفحه یا نمای دیگر ' + project.name }
       ]
     };
+    if (!project.designSystem) project.designSystem = {};
     if (!project.designSystem.type) project.designSystem.type = [];
     if (!project.designSystem.spacing) project.designSystem.spacing = [];
     if (!project.client) project.client = project.name;
@@ -1419,6 +1506,24 @@
         [project.services, project.role].filter(Boolean).join(' ')
       );
     }
+    project.featured = !!listing.featured;
+    if (typeof listing.homeOrder === 'number') project.homeOrder = listing.homeOrder;
+    if (listing.serviceSlugs && listing.serviceSlugs.length) {
+      project.serviceSlugs = listing.serviceSlugs.slice();
+    }
+    project.filters = listing.filters && listing.filters.length
+      ? listing.filters.slice()
+      : (project.serviceSlugs || []).slice();
+    project.tags = listing.tags && listing.tags.length
+      ? listing.tags.slice()
+      : String(project.services || '').split(/\s*\+\s*/).filter(Boolean);
+    if (listing.cardTone) project.cardTone = listing.cardTone;
+    project.href = '/project/' + encodeURIComponent(project.slug) + '/';
+    project.seo = project.seo || {
+      title: project.name + ' | پروژه طراحی و توسعه | استودیو هش',
+      description: project.lead || project.title || '',
+      image: 'https://hashstudio.ir/' + base + '-shot.webp'
+    };
   });
 
   function inferServiceSlugs(services) {
@@ -1476,6 +1581,7 @@
       project.images.hero = base + '-s1.webp';
       if (cfg.challenge) project.images.challenge = base + '-s' + cfg.challenge + '.webp';
       if (cfg.research) project.images.research = base + '-s' + cfg.research + '.webp';
+      if (project.seo) project.seo.image = 'https://hashstudio.ir/' + base + '-s1.webp';
     });
   })();
 

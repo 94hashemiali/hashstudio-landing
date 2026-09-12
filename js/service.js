@@ -111,17 +111,29 @@
   ld.id = 'service-jsonld';
   ld.textContent = JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: svc.name,
-    description: pageDesc,
-    url: canonical,
-    provider: {
-      '@type': 'Organization',
-      name: 'استودیو هش',
-      url: 'https://hashstudio.ir/'
-    },
-    areaServed: 'IR',
-    inLanguage: 'fa-IR'
+    '@graph': [
+      {
+        '@type': 'Service',
+        name: svc.name,
+        description: pageDesc,
+        url: canonical,
+        provider: {
+          '@type': 'Organization',
+          name: 'استودیو هش',
+          url: 'https://hashstudio.ir/'
+        },
+        areaServed: 'IR',
+        inLanguage: 'fa-IR'
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'خانه', item: 'https://hashstudio.ir/' },
+          { '@type': 'ListItem', position: 2, name: 'خدمات', item: 'https://hashstudio.ir/services.html' },
+          { '@type': 'ListItem', position: 3, name: svc.name, item: canonical }
+        ]
+      }
+    ]
   });
   document.head.appendChild(ld);
 
@@ -206,9 +218,9 @@
       '</div><p class="sd-tool__hint">' + escapeHtml(item.hint) + '</p></li>';
   }).join(''));
 
-  html('[data-list="cases"]', svc.cases.map(function (item) {
+  html('[data-list="cases"]', resolveCases(svc).map(function (item) {
     var base = 'assets/images/home/projects/' + item.slug;
-    var tags = item.tags.map(function (t) {
+    var tags = (item.tags || []).map(function (t) {
       return '<span class="sd-case__tag">' + escapeHtml(t) + '</span>';
     }).join('');
     return '<a class="sd-case" href="/project/' + encodeURIComponent(item.slug) + '/">' +
@@ -220,6 +232,35 @@
       '<h3 class="sd-case__title">' + escapeHtml(item.title) + '</h3>' +
       '<div class="sd-case__tags">' + tags + '</div></div></a>';
   }).join(''));
+
+  function resolveCases(service) {
+    var bySlug = window.HASH_PROJECTS_BY_SLUG || {};
+    var curated = (service.cases || []).map(function (item) {
+      var live = bySlug[item.slug];
+      if (!live) return item;
+      return {
+        slug: item.slug,
+        meta: item.meta || [live.year, live.industry].filter(Boolean).join(' • '),
+        title: item.title || live.name,
+        tags: item.tags || (live.tags || []).slice(0, 3)
+      };
+    }).filter(function (item) { return item && item.slug; });
+    if (curated.length) return curated.slice(0, 2);
+
+    return (window.HASH_PROJECTS || [])
+      .filter(function (project) {
+        return (project.serviceSlugs || []).indexOf(service.slug) !== -1;
+      })
+      .slice(0, 2)
+      .map(function (project) {
+        return {
+          slug: project.slug,
+          meta: [project.year, project.industry].filter(Boolean).join(' • '),
+          title: project.name + (project.lead ? ' — ' + project.lead.split('،')[0] : ''),
+          tags: (project.tags || []).slice(0, 3)
+        };
+      });
+  }
 
   html('[data-list="faqs"]', svc.faqs.map(function (item, i) {
     return '<details class="faq-item"' + (i === 0 ? ' open' : '') + '>' +

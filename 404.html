@@ -14,7 +14,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <title>۴۰۴ | استودیو هش</title>
   <base href="/">
-  <link rel="icon" href="assets/images/home/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" id="hash-font-vazirmatn">
+<link rel="icon" href="assets/images/home/logo.png" type="image/png">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
@@ -86,14 +89,15 @@
 
       <span class="nf-badge">خطای ۴۰۴</span>
       <h1 class="nf-title" id="nf-title">فکر کنم مسیر رو اشتباه اومدیم!</h1>
-      <p class="nf-desc">صفحه‌ای که دنبالش می‌گردید وجود ندارد یا جابه‌جا شده.</p>
+      <p class="nf-desc">صفحه‌ای که دنبالش می‌گردید وجود ندارد یا جابه‌جا شده. از خانه، پروژه‌ها یا تماس ادامه دهید.</p>
 
       <div class="nf-actions">
-        <a href="index.html" class="nf-btn nf-btn--primary">
+        <a href="index.html" class="nf-btn nf-btn--primary" data-cta="home" data-cta-location="404">
           <img src="assets/icons/404/home.svg" alt="" width="18" height="18">
           بازگشت به خانه
         </a>
-        <a href="projects.html" class="nf-btn nf-btn--ghost">مشاهده پروژه‌ها</a>
+        <a href="projects.html" class="nf-btn nf-btn--ghost" data-cta="view-projects" data-cta-location="404">مشاهده پروژه‌ها</a>
+        <a href="contact.html" class="nf-btn nf-btn--ghost" data-cta="start-project" data-cta-location="404">شروع پروژه</a>
       </div>
     </section>
   </main>

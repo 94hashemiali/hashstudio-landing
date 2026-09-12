@@ -156,19 +156,31 @@
   ld.id = 'project-jsonld';
   ld.textContent = JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
-    name: project.name,
-    headline: project.title,
-    description: pageDesc,
-    url: canonical,
-    image: ogImage || undefined,
-    inLanguage: 'fa-IR',
-    creator: {
-      '@type': 'Organization',
-      name: 'استودیو هش',
-      url: 'https://hashstudio.ir/'
-    },
-    about: project.industry || undefined
+    '@graph': [
+      {
+        '@type': 'CreativeWork',
+        name: project.name,
+        headline: project.title,
+        description: pageDesc,
+        url: canonical,
+        image: ogImage || undefined,
+        inLanguage: 'fa-IR',
+        creator: {
+          '@type': 'Organization',
+          name: 'استودیو هش',
+          url: 'https://hashstudio.ir/'
+        },
+        about: project.industry || undefined
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'خانه', item: 'https://hashstudio.ir/' },
+          { '@type': 'ListItem', position: 2, name: 'پروژه‌ها', item: 'https://hashstudio.ir/projects.html' },
+          { '@type': 'ListItem', position: 3, name: project.name, item: canonical }
+        ]
+      }
+    ]
   });
   document.head.appendChild(ld);
 
@@ -412,9 +424,20 @@
     return item.slug !== project.slug;
   });
   related.sort(function (a, b) {
-    var aScore = a.industry === project.industry ? 1 : 0;
-    var bScore = b.industry === project.industry ? 1 : 0;
-    return bScore - aScore;
+    function score(item) {
+      var s = 0;
+      if (item.industry && item.industry === project.industry) s += 3;
+      var shared = 0;
+      (item.serviceSlugs || []).forEach(function (slug) {
+        if ((project.serviceSlugs || []).indexOf(slug) !== -1) shared += 1;
+      });
+      s += shared;
+      (item.filters || []).forEach(function (key) {
+        if ((project.filters || []).indexOf(key) !== -1) s += 0.5;
+      });
+      return s;
+    }
+    return score(b) - score(a);
   });
   related = related.slice(0, 3);
 
