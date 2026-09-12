@@ -79,23 +79,42 @@
   var ld = document.createElement('script');
   ld.type = 'application/ld+json';
   ld.id = 'article-jsonld';
+  var graph = window.HASH_CONTENT_GRAPH;
+  var rel = (graph && graph.articleRel(article.slug || slug)) || { projects: [], services: [] };
   ld.textContent = JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.title,
-    description: pageDesc,
-    url: canonical,
-    image: ogImage,
-    inLanguage: 'fa-IR',
-    author: article.author && article.author.name
-      ? { '@type': 'Person', name: article.author.name }
-      : { '@type': 'Organization', name: 'استودیو هش' },
-    publisher: {
-      '@type': 'Organization',
-      name: 'استودیو هش',
-      url: 'https://hashstudio.ir/',
-      logo: 'https://hashstudio.ir/assets/images/home/logo.png'
-    }
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        headline: article.title,
+        description: pageDesc,
+        url: canonical,
+        image: ogImage,
+        inLanguage: 'fa-IR',
+        mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+        author: article.author && article.author.name
+          ? { '@type': 'Person', name: article.author.name }
+          : { '@type': 'Organization', name: 'استودیو هش' },
+        publisher: {
+          '@type': 'Organization',
+          name: 'استودیو هش',
+          url: 'https://hashstudio.ir/',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://hashstudio.ir/assets/images/home/logo.png'
+          }
+        }
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'خانه', item: 'https://hashstudio.ir/' },
+          { '@type': 'ListItem', position: 2, name: 'بلاگ', item: 'https://hashstudio.ir/blog.html' },
+          { '@type': 'ListItem', position: 3, name: article.tag || 'مقاله', item: 'https://hashstudio.ir/blog.html?filter=' + encodeURIComponent(article.tagFilter || 'all') },
+          { '@type': 'ListItem', position: 4, name: article.title, item: canonical }
+        ]
+      }
+    ]
   });
   document.head.appendChild(ld);
 
@@ -113,7 +132,7 @@
   var crumbTag = document.querySelector('[data-field="crumb-tag"]');
   if (crumbTag) {
     crumbTag.textContent = article.tag;
-    crumbTag.href = 'blog.html';
+    crumbTag.href = 'blog.html?filter=' + encodeURIComponent(article.tagFilter || 'all');
   }
 
   var hero = document.querySelector('[data-field="hero"]');
@@ -129,7 +148,9 @@
   if (avatarBig) avatarBig.src = article.author.avatar;
 
   var more = document.querySelector('[data-field="author-more"]');
-  if (more && more.tagName === 'A') more.href = article.author.moreHref;
+  if (more && more.tagName === 'A') {
+    more.href = 'blog.html?filter=' + encodeURIComponent(article.tagFilter || 'all');
+  }
 
   var tocSections = article.sections || [];
   var toc = tocSections.map(function (item, index) {
@@ -175,7 +196,7 @@
   // Quote after first section
   var bodyRoot = document.querySelector('[data-list="body"]');
   var firstSection = bodyRoot && bodyRoot.querySelector('.article-section');
-  if (firstSection) {
+  if (firstSection && article.quote && article.quote.text) {
     var quote = document.createElement('blockquote');
     quote.className = 'article-quote';
     quote.innerHTML = '<p class="article-quote__text">' + escapeHtml(article.quote.text) +
@@ -183,8 +204,71 @@
     firstSection.after(quote);
   }
 
+  var projectsBySlug = window.HASH_PROJECTS_BY_SLUG || {};
+  var serviceLabels = (graph && graph.serviceLabels) || {};
+  var projectCards = (rel.projects || []).map(function (projectSlug) {
+    var p = projectsBySlug[projectSlug];
+    if (!p) return '';
+    var svcLabel = (p.serviceSlugs || []).map(function (s) {
+      return serviceLabels[s];
+    }).filter(Boolean).slice(0, 1).join('') || (p.services || '');
+    var img = (p.images && p.images.hero) || '';
+    return '<a class="article-proof__card" href="/project/' + encodeURIComponent(p.slug) +
+      '/" data-cta="view-project" data-cta-location="article" data-content-slug="' +
+      escapeHtml(article.slug) + '" data-project-slug="' + escapeHtml(p.slug) + '">' +
+      '<figure class="article-proof__media"><img src="' + escapeHtml(img) + '" alt="' +
+      escapeHtml(p.name) + '" width="640" height="400" loading="lazy" decoding="async"></figure>' +
+      '<div class="article-proof__body">' +
+      '<span class="article-proof__industry">' + escapeHtml(p.industry || '') + '</span>' +
+      '<h3 class="article-proof__title">' + escapeHtml(p.name) + '</h3>' +
+      '<p class="article-proof__meta">' + escapeHtml(svcLabel) + '</p>' +
+      '<p class="article-proof__lead">' + escapeHtml(p.lead || '') + '</p>' +
+      '<span class="article-proof__cta">مطالعه کیس‌استادی</span></div></a>';
+  }).join('');
+
+  var proofSection = document.querySelector('[data-block="article-projects"]');
+  if (proofSection) {
+    if (projectCards) {
+      html('[data-list="article-projects"]', projectCards);
+      proofSection.hidden = false;
+    } else {
+      proofSection.hidden = true;
+    }
+  }
+
+  var serviceCards = (rel.services || []).map(function (serviceSlug) {
+    var label = serviceLabels[serviceSlug] || serviceSlug;
+    return '<a class="article-service-link" href="/service/' + encodeURIComponent(serviceSlug) +
+      '/" data-cta="view-service" data-cta-location="article" data-content-slug="' +
+      escapeHtml(article.slug) + '" data-service-slug="' + escapeHtml(serviceSlug) + '">' +
+      escapeHtml(label) + '</a>';
+  }).join('');
+
+  var serviceSection = document.querySelector('[data-block="article-services"]');
+  if (serviceSection) {
+    if (serviceCards) {
+      html('[data-list="article-services"]', serviceCards);
+      if (rel.ctaBody) text('[data-field="service-context"]', rel.ctaBody);
+      serviceSection.hidden = false;
+    } else {
+      serviceSection.hidden = true;
+    }
+  }
+
+  var ctaTitle = rel.ctaTitle || 'درباره پروژه بعدی‌تان حرف بزنیم';
+  var ctaBody = rel.ctaBody || 'اگر این مقاله به مسئله محصول شما نزدیک بود، مسیر همکاری را کوتاه می‌کنیم.';
+  text('[data-field="article-cta-title"]', ctaTitle);
+  text('[data-field="article-cta-body"]', ctaBody);
+  document.querySelectorAll('[data-article-cta]').forEach(function (el) {
+    el.setAttribute('data-cta', 'start-project');
+    el.setAttribute('data-cta-location', 'article');
+    el.setAttribute('data-content-slug', article.slug || slug);
+  });
+
   html('[data-list="related"]', (article.related || []).map(function (post) {
-    return '<a class="article-related__card" href="article.html?slug=' + encodeURIComponent(post.slug) + '">' +
+    return '<a class="article-related__card" href="article.html?slug=' + encodeURIComponent(post.slug) +
+      '" data-cta="view-article" data-cta-location="article-related" data-content-slug="' +
+      escapeHtml(post.slug) + '">' +
       '<div class="article-related__media"><img src="' + escapeHtml(post.image) +
       '" alt="" width="384" height="240" loading="lazy"></div>' +
       '<div class="article-related__body">' +
@@ -200,6 +284,7 @@
   var sections = links.map(function (link) {
     return document.querySelector(link.getAttribute('href'));
   }).filter(Boolean);
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function setActive() {
     var current = sections[0];
@@ -210,6 +295,20 @@
     links.forEach(function (link) {
       var on = current && link.getAttribute('href') === '#' + current.id;
       link.classList.toggle('is-active', !!on);
+      if (on) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  var tocNav = document.querySelector('.article-toc__list');
+  if (tocNav) {
+    tocNav.addEventListener('click', function (event) {
+      var link = event.target.closest('a.article-toc__link');
+      if (!link) return;
+      var target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     });
   }
 

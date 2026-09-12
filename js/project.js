@@ -466,6 +466,21 @@
 
   hideIfEmpty('[data-block="related"]', related.length > 0);
 
+  var articlesBySlug = window.HASH_ARTICLES_BY_SLUG || {};
+  var projectArticles = (window.HASH_CONTENT_GRAPH && window.HASH_CONTENT_GRAPH.projectRel(project.slug).articles) || [];
+  html('[data-list="project-articles"]', projectArticles.map(function (articleSlug) {
+    var a = articlesBySlug[articleSlug];
+    if (!a) return '';
+    return '<a class="pd-article" href="/article.html?slug=' + encodeURIComponent(a.slug) +
+      '" data-cta="view-article" data-cta-location="project" data-content-slug="' + escapeHtml(a.slug) +
+      '" data-project-slug="' + escapeHtml(project.slug) + '">' +
+      '<span class="pd-article__tag">' + escapeHtml(a.tag || '') + '</span>' +
+      '<h3 class="pd-article__title">' + escapeHtml(a.title) + '</h3>' +
+      '<p class="pd-article__lead">' + escapeHtml((a.lead || '').slice(0, 140)) + '</p>' +
+      '<span class="pd-article__cta">از نگاه استودیو هش</span></a>';
+  }).join(''));
+  hideIfEmpty('[data-block="project-articles"]', projectArticles.length > 0);
+
   root.hidden = false;
 
   var tocNav = root.querySelector('[data-list="toc"]');

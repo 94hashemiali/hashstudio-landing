@@ -140,17 +140,31 @@
       </div>
     </section>
 
+    <section class="article-proof" data-block="article-projects" hidden>
+      <div class="container">
+        <span class="article-related__badge">اثبات در کار واقعی</span>
+        <h2 class="article-related__heading">این رویکرد را در این پروژه‌ها دیده‌ایم</h2>
+        <div class="article-proof__grid" data-list="article-projects"></div>
+      </div>
+    </section>
+
+    <section class="article-service-cta" data-block="article-services" hidden>
+      <div class="container">
+        <div class="article-service-cta__card">
+          <h2 class="article-service-cta__title">خدمت مرتبط با این موضوع</h2>
+          <p class="article-service-cta__body" data-field="service-context"></p>
+          <div class="article-service-cta__links" data-list="article-services"></div>
+        </div>
+      </div>
+    </section>
+
     <section class="article-newsletter" aria-labelledby="article-newsletter-title">
       <div class="container">
         <div class="article-newsletter__card">
           <div class="article-newsletter__content">
-            <h2 class="article-newsletter__title" id="article-newsletter-title">جدیدترین مطالب را در ایمیل خود دریافت کنید</h2>
-            <p class="article-newsletter__desc">هر دو هفته یک‌بار، مجموعه‌ای گزینش‌شده از مقالات طراحی، چالش‌های مهندسی و تجربیات محصولی را مستقیماً برای شما ارسال می‌کنیم. بدون اسپم.</p>
-            <form class="article-newsletter__form" id="article-newsletter-form">
-              <label class="visually-hidden" for="article-newsletter-email">ایمیل کاری</label>
-              <input id="article-newsletter-email" class="article-newsletter__input" type="email" name="email" placeholder="ایمیل کاری شما..." required>
-              <button type="submit" class="article-newsletter__submit">عضویت در خبرنامه</button>
-            </form>
+            <h2 class="article-newsletter__title" id="article-newsletter-title" data-field="article-cta-title">پروژه بعدی را با هم شروع کنیم</h2>
+            <p class="article-newsletter__desc" data-field="article-cta-body">اگر این مقاله به مسئله محصول شما نزدیک بود، مسیر همکاری را کوتاه می‌کنیم.</p>
+            <a class="article-newsletter__submit" href="contact.html" data-article-cta>شروع پروژه</a>
           </div>
         </div>
       </div>
@@ -212,6 +226,8 @@
   <script src="js/studio-info.js"></script>
   <script src="js/studio-chrome.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/projects-data.js"></script>
+  <script src="js/content-graph.js"></script>
   <script src="js/articles-data.js"></script>
   <script src="js/article.js"></script>
 </body>

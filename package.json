@@ -8,6 +8,7 @@
     "start": "python3 scripts/dev-server.py",
     "serve": "npx --yes serve . -l 3000",
     "sitemap": "python3 scripts/generate-sitemap.py",
-    "validate": "python3 scripts/validate-site.py"
+    "validate": "python3 scripts/validate-site.py",
+    "validate:content": "python3 scripts/validate-content.py"
   }
 }

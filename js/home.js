@@ -188,4 +188,51 @@
 
   renderPortfolio();
   initTechTabs();
+  renderBlogPreview();
+
+  function renderBlogPreview() {
+    var host = document.getElementById('home-blog-preview');
+    if (!host) return;
+    var bySlug = window.HASH_ARTICLES_BY_SLUG || {};
+    var preferred = ['product-validation', 'modern-ui-2026', 'nextjs-scale-seo', 'mvp-scope', 'enterprise-ai'];
+    var picks = preferred.map(function (slug) { return bySlug[slug]; }).filter(Boolean).slice(0, 3);
+    if (picks.length < 3) {
+      Object.keys(bySlug).forEach(function (slug) {
+        if (picks.length >= 3) return;
+        if (preferred.indexOf(slug) !== -1) return;
+        picks.push(bySlug[slug]);
+      });
+    }
+    if (!picks.length) return;
+
+    var featured = picks[0];
+    var rest = picks.slice(1);
+    var featuredHtml =
+      '<a class="blog-card blog-card--featured" href="article.html?slug=' + encodeURIComponent(featured.slug) +
+      '" data-cta="view-article" data-cta-location="home-blog" data-content-slug="' + escapeHtml(featured.slug) + '">' +
+      '<div class="blog-card__media"><img src="' + escapeHtml(featured.hero) + '" alt="" width="694" height="271" loading="lazy"></div>' +
+      '<div class="blog-card__body">' +
+      '<span class="blog-card__badge">' + escapeHtml(featured.tag) + '</span>' +
+      '<h3 class="blog-card__title">' + escapeHtml(featured.title) + '</h3>' +
+      '<p class="blog-card__desc">' + escapeHtml((featured.lead || '').slice(0, 140)) + '</p>' +
+      '<div class="blog-card__meta"><span>' + escapeHtml(featured.date || '') + '</span><span>· ' +
+      escapeHtml(featured.read || '') + '</span></div></div></a>';
+
+    var stack = rest.map(function (a) {
+      return '<a class="blog-card blog-card--compact" href="article.html?slug=' + encodeURIComponent(a.slug) +
+        '" data-cta="view-article" data-cta-location="home-blog" data-content-slug="' + escapeHtml(a.slug) + '">' +
+        '<div class="blog-card__body">' +
+        '<span class="blog-card__badge">' + escapeHtml(a.tag) + '</span>' +
+        '<h3 class="blog-card__title">' + escapeHtml(a.title) + '</h3>' +
+        '<p class="blog-card__desc">' + escapeHtml((a.lead || '').slice(0, 100)) + '</p>' +
+        '<div class="blog-card__meta"><span>' + escapeHtml(a.date || '') + '</span><span>· ' +
+        escapeHtml(a.read || '') + '</span></div></div>' +
+        '<div class="blog-card__media"><img src="' + escapeHtml(a.hero) + '" alt="" width="200" height="224" loading="lazy"></div></a>';
+    }).join('');
+
+    host.innerHTML =
+      '<div class="blog-preview-grid">' + featuredHtml +
+      (stack ? '<div class="blog-preview-stack">' + stack + '</div>' : '') +
+      '</div>';
+  }
 })();

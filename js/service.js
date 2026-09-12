@@ -262,6 +262,29 @@
       });
   }
 
+  var articlesBySlug = window.HASH_ARTICLES_BY_SLUG || {};
+  var serviceArticles = (window.HASH_CONTENT_GRAPH && window.HASH_CONTENT_GRAPH.serviceRel(svc.slug).articles) || [];
+  var articleCards = serviceArticles.map(function (articleSlug) {
+    var a = articlesBySlug[articleSlug];
+    if (!a) return '';
+    return '<a class="sd-article" href="article.html?slug=' + encodeURIComponent(a.slug) +
+      '" data-cta="view-article" data-cta-location="service" data-content-slug="' + escapeHtml(a.slug) +
+      '" data-service-slug="' + escapeHtml(svc.slug) + '">' +
+      '<span class="sd-article__tag">' + escapeHtml(a.tag || '') + '</span>' +
+      '<h3 class="sd-article__title">' + escapeHtml(a.title) + '</h3>' +
+      '<p class="sd-article__lead">' + escapeHtml((a.lead || '').slice(0, 120)) + '</p>' +
+      '<span class="sd-article__cta">خواندن مقاله</span></a>';
+  }).join('');
+  var articlesBlock = root.querySelector('[data-block="service-articles"]');
+  if (articlesBlock) {
+    if (articleCards) {
+      html('[data-list="service-articles"]', articleCards);
+      articlesBlock.hidden = false;
+    } else {
+      articlesBlock.hidden = true;
+    }
+  }
+
   html('[data-list="faqs"]', svc.faqs.map(function (item, i) {
     return '<details class="faq-item"' + (i === 0 ? ' open' : '') + '>' +
       '<summary class="faq-item__question"><span class="faq-item__label">' + escapeHtml(item.q) +
