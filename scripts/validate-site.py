@@ -163,6 +163,35 @@ def validate_detail_page(
     if len(re.sub(r"\s+", "", html)) < 2000:
         errors.append(f"{rel}: generated HTML looks too thin")
 
+    # Fail empty primary template shells (pre-SSG pattern)
+    h1_m = re.search(r"<h1[^>]*>(.*?)</h1>", html, re.I | re.S)
+    if h1_m and not re.sub(r"<[^>]+>", "", h1_m.group(1)).strip():
+        errors.append(f"{rel}: empty H1 (content not statically rendered)")
+    for field in ("title", "lead", "name"):
+        for m in re.finditer(
+            rf"<([a-z0-9]+)[^>]*data-field=\"{field}\"[^>]*>(.*?)</\1>",
+            html,
+            re.I | re.S,
+        ):
+            text = re.sub(r"<[^>]+>", "", m.group(2)).strip()
+            if not text:
+                errors.append(
+                    f"{rel}: empty data-field=\"{field}\" (content not statically rendered)"
+                )
+    if kind == "project":
+        if "pd-hero__title" not in html:
+            errors.append(f"{rel}: missing project hero title markup")
+        if not re.search(r'data-list="toc">\s*<li>', html):
+            # TOC may be hidden when <3 sections; allow empty only if toc wrap hidden
+            if not re.search(r'data-pd-toc[^>]*\bhidden\b', html) and 'data-pd-toc hidden' not in html:
+                if 'pd-toc__link' not in html:
+                    errors.append(f"{rel}: project TOC empty but not hidden")
+        if "projects-data.js" in html and "<script" in html:
+            pass  # already checked via script src
+    if kind == "service":
+        if "sd-hero__title" not in html and "sd-hero__lead" not in html:
+            errors.append(f"{rel}: missing service hero content markup")
+
 
 def validate_article_page(rel: str, slug: str, html: str, errors: list[str]) -> None:
     validate_detail_page(rel, slug, html, "article", errors)
