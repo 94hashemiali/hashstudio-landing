@@ -33,8 +33,71 @@
   if (!article) return;
 
   document.title = article.title + ' | استودیو هش';
+  var pageDesc = (article.lead || '').slice(0, 160);
+  var canonical = 'https://hashstudio.ir/article.html?slug=' + encodeURIComponent(article.slug || slug);
+  var ogImage = article.hero
+    ? ('https://hashstudio.ir/' + String(article.hero).replace(/^\//, ''))
+    : 'https://hashstudio.ir/assets/images/home/logo.png';
+
+  function setMeta(attr, key, value) {
+    if (!value) return;
+    var el = document.querySelector('meta[' + attr + '="' + key + '"]');
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute(attr, key);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', value);
+  }
+
+  function setLink(rel, href) {
+    var el = document.querySelector('link[rel="' + rel + '"]');
+    if (!el) {
+      el = document.createElement('link');
+      el.setAttribute('rel', rel);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('href', href);
+  }
+
   var metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) metaDesc.setAttribute('content', article.lead.slice(0, 150));
+  if (metaDesc) metaDesc.setAttribute('content', pageDesc);
+  setMeta('property', 'og:type', 'article');
+  setMeta('property', 'og:locale', 'fa_IR');
+  setMeta('property', 'og:site_name', 'استودیو هش');
+  setMeta('property', 'og:title', document.title);
+  setMeta('property', 'og:description', pageDesc);
+  setMeta('property', 'og:url', canonical);
+  setMeta('property', 'og:image', ogImage);
+  setMeta('name', 'twitter:card', 'summary_large_image');
+  setMeta('name', 'twitter:title', document.title);
+  setMeta('name', 'twitter:description', pageDesc);
+  setLink('canonical', canonical);
+
+  var existingLd = document.getElementById('article-jsonld');
+  if (existingLd) existingLd.remove();
+  var ld = document.createElement('script');
+  ld.type = 'application/ld+json';
+  ld.id = 'article-jsonld';
+  ld.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: pageDesc,
+    url: canonical,
+    image: ogImage,
+    inLanguage: 'fa-IR',
+    author: article.author && article.author.name
+      ? { '@type': 'Person', name: article.author.name }
+      : { '@type': 'Organization', name: 'استودیو هش' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'استودیو هش',
+      url: 'https://hashstudio.ir/',
+      logo: 'https://hashstudio.ir/assets/images/home/logo.png'
+    }
+  });
+  document.head.appendChild(ld);
 
   text('[data-field="tag"]', article.tag);
   text('[data-field="title"]', article.title);

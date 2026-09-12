@@ -64,9 +64,66 @@
       .replace(/"/g, '&quot;');
   }
 
-  document.title = svc.name + ' | استودیو هش';
+  document.title = svc.name + ' | خدمات | استودیو هش';
+  var pageDesc = svc.lead || '';
+  var canonical = 'https://hashstudio.ir/service/' + encodeURIComponent(svc.slug) + '/';
+  var ogImage = 'https://hashstudio.ir/' + String(svc.heroImage || 'assets/images/home/logo.png').replace(/^\//, '');
+
+  function setMeta(attr, key, value) {
+    if (!value) return;
+    var el = document.querySelector('meta[' + attr + '="' + key + '"]');
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute(attr, key);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', value);
+  }
+
+  function setLink(rel, href) {
+    var el = document.querySelector('link[rel="' + rel + '"]');
+    if (!el) {
+      el = document.createElement('link');
+      el.setAttribute('rel', rel);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('href', href);
+  }
+
   var meta = document.querySelector('meta[name="description"]');
-  if (meta) meta.setAttribute('content', svc.lead);
+  if (meta) meta.setAttribute('content', pageDesc);
+  setMeta('property', 'og:type', 'website');
+  setMeta('property', 'og:locale', 'fa_IR');
+  setMeta('property', 'og:site_name', 'استودیو هش');
+  setMeta('property', 'og:title', document.title);
+  setMeta('property', 'og:description', pageDesc);
+  setMeta('property', 'og:url', canonical);
+  setMeta('property', 'og:image', ogImage);
+  setMeta('name', 'twitter:card', 'summary_large_image');
+  setMeta('name', 'twitter:title', document.title);
+  setMeta('name', 'twitter:description', pageDesc);
+  setLink('canonical', canonical);
+
+  var existingLd = document.getElementById('service-jsonld');
+  if (existingLd) existingLd.remove();
+  var ld = document.createElement('script');
+  ld.type = 'application/ld+json';
+  ld.id = 'service-jsonld';
+  ld.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: svc.name,
+    description: pageDesc,
+    url: canonical,
+    provider: {
+      '@type': 'Organization',
+      name: 'استودیو هش',
+      url: 'https://hashstudio.ir/'
+    },
+    areaServed: 'IR',
+    inLanguage: 'fa-IR'
+  });
+  document.head.appendChild(ld);
 
   page.dataset.theme = svc.theme || 'product';
   page.classList.toggle('is-hero-flip', !!svc.heroFlip);

@@ -1,6 +1,25 @@
 (function () {
   'use strict';
 
+  (function loadFonts() {
+    if (document.getElementById('hash-font-vazirmatn')) return;
+    var pre1 = document.createElement('link');
+    pre1.rel = 'preconnect';
+    pre1.href = 'https://fonts.googleapis.com';
+    var pre2 = document.createElement('link');
+    pre2.rel = 'preconnect';
+    pre2.href = 'https://fonts.gstatic.com';
+    pre2.crossOrigin = 'anonymous';
+    var font = document.createElement('link');
+    font.id = 'hash-font-vazirmatn';
+    font.rel = 'stylesheet';
+    font.href = 'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap';
+    var head = document.head;
+    head.appendChild(pre1);
+    head.appendChild(pre2);
+    head.appendChild(font);
+  })();
+
   const header = document.querySelector('.site-header, .home-header');
   const toggle = document.querySelector('.site-header__toggle, .home-header__toggle');
   const nav = document.querySelector('.site-header__nav, .home-header__nav');

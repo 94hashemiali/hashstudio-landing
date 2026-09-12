@@ -44,4 +44,33 @@
         '" target="_blank" rel="noopener noreferrer">' + escapeHtml(social.short) + '</a>';
     }).join('');
   });
+
+  document.querySelectorAll('a.home-header__profile').forEach(function (el) {
+    el.setAttribute('aria-label', 'تماس با ما');
+  });
+
+  var main = document.querySelector('main');
+  var mainId = (main && main.id) ? main.id : 'main-content';
+  if (main && !main.id) main.id = mainId;
+
+  if (!document.querySelector('.skip-link')) {
+    var skip = document.createElement('a');
+    skip.className = 'skip-link';
+    skip.href = '#' + mainId;
+    skip.textContent = 'رفتن به محتوای اصلی';
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+
+  document.querySelectorAll('form.home-footer__newsletter').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var input = form.querySelector('input[type="email"]');
+      var email = input && input.value.trim();
+      if (!email) return;
+      var subject = encodeURIComponent('عضویت در خبرنامه استودیو هش');
+      var body = encodeURIComponent('لطفاً این ایمیل را در خبرنامه ثبت کنید:\n' + email);
+      window.location.href = 'mailto:' + info.email +
+        '?subject=' + subject + '&body=' + body;
+    });
+  });
 })();

@@ -186,9 +186,13 @@
           '<h3 class="proj-card__title">' +
           escapeHtml(p.name) +
           '</h3>' +
+          '<p class="proj-card__role">' +
+          escapeHtml(p.role || p.services || '') +
+          '</p>' +
           '<p class="proj-card__desc">' +
           escapeHtml(p.lead || '') +
           '</p>' +
+          '<span class="proj-card__cta">مشاهده کیس استادی</span>' +
           '<div class="proj-card__tags">' +
           tags +
           '</div>' +
