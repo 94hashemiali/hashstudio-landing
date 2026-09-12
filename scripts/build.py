@@ -2,10 +2,12 @@
 """Full production build for Hash Studio static site.
 
 Steps:
-  1. validate content (relationships + required fields)
-  2. generate static articles + projects + services (+ articles-index.js)
-  3. generate sitemap.xml
-  4. validate generated HTML / SEO / assets
+  1. validate content
+  2. generate articles
+  3. generate projects
+  4. generate services
+  5. generate sitemap
+  6. validate generated site
 
 Usage:
   python3 scripts/build.py
@@ -36,7 +38,9 @@ def run(label: str, script: str) -> None:
 def main() -> None:
     print("Hash Studio build", flush=True)
     run("validate content", "validate-content.py")
-    run("generate static content (articles/projects/services)", "build-content.py")
+    run("generate articles", "build-content.py")
+    run("generate projects", "build-projects.py")
+    run("generate services", "build-services.py")
     run("generate sitemap", "generate-sitemap.py")
     run("validate site", "validate-site.py")
     print("\n✓ Build succeeded", flush=True)

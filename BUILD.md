@@ -29,10 +29,13 @@ npm run serve            # static preview :3000
 ## Pipeline
 
 1. `scripts/validate-content.py`
-2. `node scripts/export-site-data.js` → `.cache/site-data.json` (hydrated projects/services)
-3. `scripts/build-content.py` → articles + projects + services + `articles-index.js`
-4. `scripts/generate-sitemap.py`
-5. `scripts/validate-site.py`
+2. `scripts/build-content.py` → articles + `articles-index.js`
+3. `scripts/build-projects.py` → `project/<slug>/index.html` (via Node export of hydrated project data)
+4. `scripts/build-services.py` → `service/<slug>/index.html`
+5. `scripts/generate-sitemap.py`
+6. `scripts/validate-site.py`
+
+Project source of truth: `js/projects-data.js` (do not hand-edit generated project HTML).
 
 ## Generated output
 
