@@ -1,0 +1,14 @@
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Dependencies
+node_modules/
+
+# Local temp / design work artifacts
+.tmp-*/
+.tmp-*.png
+desgin/
+design/
+why-us-section.svg.png

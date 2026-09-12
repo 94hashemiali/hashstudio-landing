@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="844" height="440" viewBox="0 0 844 440" fill="none">
+  <rect width="844" height="440" rx="24" fill="#141c28"/>
+  <rect x="16" y="16" width="812" height="408" rx="18" fill="#0f1418" fill-opacity="0.35"/>
+  <rect x="16" y="16" width="812" height="44" rx="18" fill="#0b0f14"/>
+  <rect x="16" y="42" width="812" height="18" fill="#0b0f14"/>
+  <circle cx="40" cy="38" r="6" fill="#ff5f57"/>
+  <circle cx="60" cy="38" r="6" fill="#febc2e"/>
+  <circle cx="80" cy="38" r="6" fill="#28c840"/>
+  <rect x="108" y="28" width="520" height="20" rx="10" fill="#1c242c"/>
+  <text x="368" y="42" text-anchor="middle" fill="#9aa7b0" font-size="11" font-family="Vazirmatn,Tahoma,sans-serif">khosravani.com</text>
+  
+        <rect x="36" y="78" width="500" height="248" rx="12" fill="#1e2836"/>
+        <ellipse cx="286" cy="230" rx="190" ry="54" fill="#ff6b4a" fill-opacity="0.12"/>
+        <path d="M140 230 L190 188 H240 L280 168 H390 L440 188 L490 230 Z" fill="#ff6b4a" fill-opacity="0.55"/>
+        <circle cx="210" cy="238" r="22" fill="#0b0f16" stroke="#ff6b4a" stroke-width="4"/>
+        <circle cx="430" cy="238" r="22" fill="#0b0f16" stroke="#ff6b4a" stroke-width="4"/>
+        <rect x="552" y="78" width="256" height="74" rx="12" fill="#1e2836"/>
+        <rect x="568" y="96" width="120" height="8" rx="4" fill="#fff" fill-opacity="0.3"/>
+        <rect x="568" y="116" width="80" height="8" rx="4" fill="#ff6b4a"/>
+        <rect x="552" y="166" width="256" height="74" rx="12" fill="#1e2836"/>
+        <rect x="568" y="184" width="140" height="8" rx="4" fill="#fff" fill-opacity="0.3"/>
+        <rect x="568" y="204" width="90" height="8" rx="4" fill="#ff6b4a"/>
+        <rect x="552" y="254" width="256" height="72" rx="12" fill="#1e2836"/>
+        <rect x="568" y="272" width="110" height="8" rx="4" fill="#fff" fill-opacity="0.3"/>
+        <rect x="568" y="292" width="70" height="8" rx="4" fill="#ff6b4a"/>
+        
+  <text x="36" y="390" fill="#fff" font-size="22" font-weight="800" font-family="Vazirmatn,Tahoma,sans-serif">خسروانی</text>
+  <rect x="36" y="348" width="54" height="22" rx="11" fill="#ff6b4a" fill-opacity="0.18"/><text x="63.0" y="363" text-anchor="middle" fill="#ff6b4a" font-size="10" font-family="Vazirmatn,Tahoma,sans-serif">خودرو</text><rect x="98.0" y="348" width="76" height="22" rx="11" fill="#ff6b4a" fill-opacity="0.18"/><text x="135.8" y="363" text-anchor="middle" fill="#ff6b4a" font-size="10" font-family="Vazirmatn,Tahoma,sans-serif">نمایندگی</text>
+</svg>

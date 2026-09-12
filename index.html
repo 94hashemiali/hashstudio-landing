@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="استودیو هش — طراحی و توسعه محصولات دیجیتال">
+  <title>استودیو هش | طراحی محصول دیجیتال</title>
+  <link rel="icon" href="assets/images/home/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body class="home-page">
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
+      <a href="contact.html" class="top-bar__btn">شروع همکاری</a>
+    </div>
+  </div>
+
+  <!-- Header — desgin/navbar.svg (1440×80) -->
+  <header class="home-header" id="site-header">
+    <div class="container home-header__inner">
+      <a href="index.html" class="home-header__logo">
+        <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+        <span class="home-header__logo-text">استودیو هش</span>
+      </a>
+
+      <nav class="home-header__nav" id="main-nav" aria-label="منوی اصلی">
+        <a href="index.html" class="home-header__link is-active">خانه</a>
+        <a href="services.html" class="home-header__link">خدمات</a>
+        <a href="projects.html" class="home-header__link">پروژه‌ها</a>
+        <a href="about.html" class="home-header__link">درباره ما</a>
+        <a href="blog.html" class="home-header__link">بلاگ</a>
+        <a href="contact.html" class="home-header__link">تماس با ما</a>
+      </nav>
+
+      <div class="home-header__actions">
+        <a href="contact.html" class="btn btn--primary btn--header">شروع همکاری</a>
+        <a href="contact.html" class="home-header__profile" aria-label="پروفایل کاربر">
+          <img src="assets/icons/profile.svg" alt="" width="39" height="39">
+        </a>
+        <button class="home-header__toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="main-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="home-hero">
+      <div class="container home-hero__grid">
+        <div class="home-hero__content">
+          <span class="badge badge--hero">
+            <span class="badge__dot" aria-hidden="true"></span>
+            نسخه جدید استودیو هش منتشر شد
+          </span>
+          <h1 class="home-hero__title">
+            ما محصول دیجیتال می‌سازیم،<br>
+            <span>نه فقط کد.</span>
+          </h1>
+          <p class="home-hero__desc">
+            استودیو هش همراه کسب‌وکارها و استارتاپ‌ها از مرحله ایده تا لانچ محصولات دیجیتال است — با تمرکز بر تجربه کاربری، کیفیت فنی و رشد واقعی.
+          </p>
+          <div class="home-hero__actions">
+            <a href="contact.html" class="btn btn--primary btn--lg">شروع پروژه</a>
+            <a href="projects.html" class="btn btn--outline btn--lg">مشاهده پروژه‌ها</a>
+          </div>
+          <div class="home-hero__proof">
+            <div class="home-hero__avatars">
+              <img src="assets/images/home/avatar-1.png" alt="" width="34" height="34">
+              <img src="assets/images/home/avatar-2.png" alt="" width="34" height="34">
+              <img src="assets/images/home/avatar-3.png" alt="" width="34" height="34">
+            </div>
+            <p class="home-hero__proof-text">بیش از ۷ سال تجربه در ساخت<br>محصولات دیجیتال موفق</p>
+          </div>
+        </div>
+        <div class="home-hero__visual">
+          <img src="assets/images/home/hero.png" alt="ایلاستریشن جزیره شناور استودیو هش" width="560" height="520">
+        </div>
+      </div>
+    </section>
+
+    <!-- Trusted brands -->
+    <section class="trusted" aria-label="مشتریان">
+      <div class="container">
+        <div class="trusted__card">
+          <p class="trusted__title">
+            <span class="show-desktop">برخی از مشتریانی که به ما اعتماد کرده‌اند</span>
+            <span class="show-mobile">برندهایی که به ما اعتماد کرده‌اند</span>
+          </p>
+          <div class="trusted__logos">
+            <span class="trusted__logo">علی‌بابا</span>
+            <span class="trusted__logo">تپسی</span>
+            <span class="trusted__logo">دیجی‌کالا</span>
+            <span class="trusted__logo">آپارات</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <!-- Services — desgin/services-section.svg (1440×880) -->
+    <section class="home-section home-section--white home-services" id="services">
+      <div class="container">
+        <header class="services-head">
+          <span class="services-head__badge">خدمات ما</span>
+          <h2 class="services-head__title">محصولی که کاربران دوستش دارند</h2>
+        </header>
+
+        <div class="services-featured">
+          <article class="service-featured">
+            <div class="service-featured__icon" aria-hidden="true">
+              <img src="assets/icons/services/web-dev.svg" alt="" width="62" height="62">
+            </div>
+            <h3 class="service-featured__title">توسعه وب</h3>
+            <p class="service-featured__desc">کدنویسی استاندارد با فرانت‌اندهای سریع و بک‌اندهای پایدار.</p>
+            <a href="service.html" class="service-featured__link">
+              <svg class="service-featured__link-icon" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              جزئیات بیشتر
+            </a>
+          </article>
+          <article class="service-featured">
+            <div class="service-featured__icon" aria-hidden="true">
+              <img src="assets/icons/services/product-design.svg" alt="" width="62" height="62">
+            </div>
+            <h3 class="service-featured__title">طراحی محصول</h3>
+            <p class="service-featured__desc">از ایده تا ساختار نهایی و نقشه راه کامل محصول شما.</p>
+            <a href="service.html" class="service-featured__link">
+              <svg class="service-featured__link-icon" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              جزئیات بیشتر
+            </a>
+          </article>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-mini">
+            <div class="service-mini__icon" aria-hidden="true">
+              <img src="assets/icons/services/mvp.svg" alt="" width="30" height="30">
+            </div>
+            <div class="service-mini__body">
+              <h3 class="service-mini__title">ساخت MVP</h3>
+              <p class="service-mini__desc">راه‌اندازی سریع اولیه برای تست بازار و گرفتن بازخورد.</p>
+            </div>
+          </article>
+          <article class="service-mini">
+            <div class="service-mini__icon" aria-hidden="true">
+              <img src="assets/icons/services/mobile.svg" alt="" width="30" height="30">
+            </div>
+            <div class="service-mini__body">
+              <h3 class="service-mini__title">توسعه موبایل</h3>
+              <p class="service-mini__desc">اپلیکیشن‌های بومی و نیتیو برای پلتفرم‌های اندروید و iOS.</p>
+            </div>
+          </article>
+          <article class="service-mini">
+            <div class="service-mini__icon" aria-hidden="true">
+              <img src="assets/icons/services/ui-ux.svg" alt="" width="30" height="30">
+            </div>
+            <div class="service-mini__body">
+              <h3 class="service-mini__title">طراحی UI/UX</h3>
+              <p class="service-mini__desc">رابط‌های کاربری خیره‌کننده همراه با تجربه کاربری روان.</p>
+            </div>
+          </article>
+          <article class="service-mini">
+            <div class="service-mini__icon" aria-hidden="true">
+              <img src="assets/icons/services/consulting.svg" alt="" width="30" height="30">
+            </div>
+            <div class="service-mini__body">
+              <h3 class="service-mini__title">مشاوره محصول</h3>
+              <p class="service-mini__desc">بهینه‌سازی قیف فروش و بهبود مدل‌های کسب‌وکار.</p>
+            </div>
+          </article>
+          <article class="service-mini">
+            <div class="service-mini__icon" aria-hidden="true">
+              <img src="assets/icons/services/seo.svg" alt="" width="30" height="30">
+            </div>
+            <div class="service-mini__body">
+              <h3 class="service-mini__title">دیجیتال مارکتینگ و سئو</h3>
+              <p class="service-mini__desc">افزایش رتبه گوگل و جذب مشتریان ارگانیک و هدفمند.</p>
+            </div>
+          </article>
+          <article class="service-mini">
+            <div class="service-mini__icon" aria-hidden="true">
+              <img src="assets/icons/services/ai.svg" alt="" width="30" height="30">
+            </div>
+            <div class="service-mini__body">
+              <h3 class="service-mini__title">هوش مصنوعی</h3>
+              <p class="service-mini__desc">یکپارچه‌سازی ابزارها و مدل‌های نوین پردازش داده.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <!-- Process — desgin/process-section.svg (1440×524) -->
+    <section class="home-section home-section--cream process" id="process">
+      <div class="container">
+        <div class="section-head process__head">
+          <span class="process__badge">فرآیند کار ما</span>
+          <h2 class="process__title">از ایده تا انتشار؛ مسیر ساخت محصول</h2>
+        </div>
+
+        <div class="process-steps">
+          <article class="process-step is-active">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۱</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">تحقیق و کشف</h3>
+              <p class="process-step__desc">شناخت نیازها</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۲</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">استراتژی</h3>
+              <p class="process-step__desc">تعریف مسیر</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۳</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">معماری اطلاعات</h3>
+              <p class="process-step__desc">ساختار اولیه</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۴</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">طراحی UI</h3>
+              <p class="process-step__desc">بصری‌سازی نهایی</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۵</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">توسعه</h3>
+              <p class="process-step__desc">کدنویسی اصولی</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۶</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">تست و لانچ</h3>
+              <p class="process-step__desc">کنترل کیفیت نهایی</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۷</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">رشد و پشتیبانی</h3>
+              <p class="process-step__desc">بهبود مستمر</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio — desgin/featured-projects.svg (1440×1790) -->
+    <section class="home-section home-section--white portfolio" id="portfolio">
+      <div class="container">
+        <div class="section-head portfolio__head">
+          <span class="portfolio__badge">نمونه‌کارها</span>
+          <h2 class="section-head__title">محصولاتی که با افتخار ساخته‌ایم</h2>
+        </div>
+
+        <a href="https://zarafe.com/" class="portfolio-featured" target="_blank" rel="noopener noreferrer">
+          <div class="portfolio-featured__visual">
+            <div class="site-preview">
+              <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/zarafe-pixel.webp" alt="پیش‌نمایش پلتفرم زرافه" width="1280" height="720" loading="lazy"></div>
+              <img class="site-preview__shot" src="assets/images/home/projects/zarafe-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
+            </div>
+          </div>
+          <div class="portfolio-featured__content">
+            <span class="portfolio-featured__label">Gold Investment</span>
+            <h3 class="portfolio-featured__title">زرافه</h3>
+            <p class="portfolio-featured__desc">
+              پلتفرم خرید و فروش آنلاین طلا، نقره، مس و سکه — معامله شفاف، بدون اجرت و با امکان تحویل فیزیکی.
+            </p>
+            <div class="portfolio-featured__stats">
+              <div class="portfolio-featured__stat">
+                <div class="portfolio-featured__stat-value">۲۴/۷</div>
+                <div class="portfolio-featured__stat-label">معامله آنلاین</div>
+              </div>
+              <div class="portfolio-featured__stat">
+                <div class="portfolio-featured__stat-value">۴ فلز</div>
+                <div class="portfolio-featured__stat-label">طلا، نقره، مس، سکه</div>
+              </div>
+              <div class="portfolio-featured__stat">
+                <div class="portfolio-featured__stat-value">بدون اجرت</div>
+                <div class="portfolio-featured__stat-label">قیمت لحظه‌ای بازار</div>
+              </div>
+            </div>
+            <span class="portfolio-featured__link show-mobile">مشاهده سایت ›</span>
+          </div>
+        </a>
+
+        <div class="portfolio-grid">
+          <a href="https://khosravani.com/" class="project-card" target="_blank" rel="noopener noreferrer">
+            <div class="project-card__visual project-card__visual--navy">
+              <div class="site-preview">
+                <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/khosravani-pixel.webp" alt="تجارت خودرو خسروانی" width="1280" height="720" loading="lazy"></div>
+                <img class="site-preview__shot" src="assets/images/home/projects/khosravani-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
+              </div>
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="project-card__category">Automotive</span>
+              </div>
+              <h3 class="project-card__title">تجارت خودرو خسروانی</h3>
+              <div class="project-card__tags">
+                <span class="project-card__tag">نمایندگی خودرو</span>
+                <span class="project-card__tag">توسعه وب</span>
+                <span class="project-card__tag">UI/UX</span>
+              </div>
+              <span class="project-card__link show-mobile">مشاهده سایت ›</span>
+            </div>
+          </a>
+
+          <a href="https://moniaz.ir" class="project-card" target="_blank" rel="noopener noreferrer">
+            <div class="project-card__visual project-card__visual--blue">
+              <div class="site-preview">
+                <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/moniaz-pixel.webp" alt="مُنیاز" width="1280" height="720" loading="lazy"></div>
+                <img class="site-preview__shot" src="assets/images/home/projects/moniaz-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
+              </div>
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="project-card__category">Education</span>
+              </div>
+              <h3 class="project-card__title">مُنیاز</h3>
+              <div class="project-card__tags">
+                <span class="project-card__tag">آموزش آنلاین</span>
+                <span class="project-card__tag">کتاب تست</span>
+                <span class="project-card__tag">وب</span>
+              </div>
+              <span class="project-card__link show-mobile">مشاهده سایت ›</span>
+            </div>
+          </a>
+
+          <a href="https://shogir.ir" class="project-card" target="_blank" rel="noopener noreferrer">
+            <div class="project-card__visual project-card__visual--teal">
+              <div class="site-preview">
+                <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/shogir-pixel.webp" alt="شوگیر" width="1280" height="720" loading="lazy"></div>
+                <img class="site-preview__shot" src="assets/images/home/projects/shogir-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
+              </div>
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="project-card__category">Travel Platform</span>
+              </div>
+              <h3 class="project-card__title">شوگیر</h3>
+              <div class="project-card__tags">
+                <span class="project-card__tag">گردشگری</span>
+                <span class="project-card__tag">قشم</span>
+                <span class="project-card__tag">PWA</span>
+              </div>
+              <span class="project-card__link show-mobile">مشاهده سایت ›</span>
+            </div>
+          </a>
+
+          <a href="https://vanilly.ir" class="project-card" target="_blank" rel="noopener noreferrer">
+            <div class="project-card__visual project-card__visual--brown">
+              <div class="site-preview">
+                <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/vanilly-pixel.webp" alt="وانیلی" width="1280" height="720" loading="lazy"></div>
+                <img class="site-preview__shot" src="assets/images/home/projects/vanilly-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
+              </div>
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="project-card__category">E-Commerce</span>
+              </div>
+              <h3 class="project-card__title">وانیلی</h3>
+              <div class="project-card__tags">
+                <span class="project-card__tag">آرایشی</span>
+                <span class="project-card__tag">فروشگاه آنلاین</span>
+                <span class="project-card__tag">UI/UX</span>
+              </div>
+              <span class="project-card__link show-mobile">مشاهده سایت ›</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="portfolio__more">
+          <a href="projects.html" class="btn btn--outline portfolio__more-btn">مشاهده همه پروژه‌ها</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case study — desgin/case-study-section.svg (1440×559) -->
+    <section class="case-study" id="case-study">
+      <div class="container">
+        <article class="case-study__card">
+          <div class="case-study__visual">
+            <div class="site-preview">
+              <div class="site-preview__pixel" aria-hidden="true"><img src="assets/images/home/projects/khosravani-pixel.webp" alt="تجارت خودرو خسروانی" width="1280" height="720" loading="lazy"></div>
+              <img class="site-preview__shot" src="assets/images/home/projects/khosravani-shot.webp" alt="" width="1280" height="720" loading="lazy" aria-hidden="true">
+            </div>
+          </div>
+          <div class="case-study__content">
+            <span class="case-study__badge">مطالعه موردی برگزیده</span>
+            <h2 class="case-study__title">تجارت خودرو خسروانی</h2>
+            <p class="case-study__desc">
+              وب‌سایت فروش و نمایندگی رسمی خودرو — معرفی برندها، مقایسه مدل‌ها، خرید نقدی و اقساطی و ارتباط مستقیم با شعب فعال.
+            </p>
+            <div class="case-study__stats">
+              <div class="case-study__stat">
+                <div class="case-study__stat-value">۱۵</div>
+                <div class="case-study__stat-label">شعبه فعال</div>
+              </div>
+              <div class="case-study__stat">
+                <div class="case-study__stat-value">۲۰+</div>
+                <div class="case-study__stat-label">سال تجربه</div>
+              </div>
+              <div class="case-study__stat">
+                <div class="case-study__stat-value">۱۷</div>
+                <div class="case-study__stat-label">برند رسمی</div>
+              </div>
+            </div>
+            <a href="https://khosravani.com/" class="btn btn--primary case-study__btn" target="_blank" rel="noopener noreferrer">مشاهده سایت</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Stats — desgin/stats-section.svg (1440×174) -->
+    <section class="home-stats" aria-label="آمار">
+      <div class="container">
+        <div class="home-stats__grid">
+          <div class="home-stats__item">
+            <div class="home-stats__value">+۳۰</div>
+            <div class="home-stats__label">محصول دیجیتال</div>
+          </div>
+          <div class="home-stats__item">
+            <div class="home-stats__value">+۷ سال</div>
+            <div class="home-stats__label">تجربه تخصصی</div>
+          </div>
+          <div class="home-stats__item">
+            <div class="home-stats__value">+۱۰</div>
+            <div class="home-stats__label">تکنولوژی</div>
+          </div>
+          <div class="home-stats__item">
+            <div class="home-stats__value">+۲۰</div>
+            <div class="home-stats__label">مشتری</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why us — desgin/why-us-section.svg (1440×513) -->
+    <section class="home-section home-section--white home-why-us" id="why-us">
+      <div class="container">
+        <div class="why-us-layout">
+          <div class="why-us-grid">
+            <article class="why-us-item">
+              <span class="why-us-item__num">۰۱</span>
+              <div class="why-us-item__body">
+                <h3 class="why-us-item__title">تفکر محصولی</h3>
+                <p class="why-us-item__desc">ما فقط طرح نمی‌سازیم، مسئله واقعی کسب‌وکار شما را حل می‌کنیم.</p>
+              </div>
+            </article>
+            <article class="why-us-item">
+              <span class="why-us-item__num">۰۲</span>
+              <div class="why-us-item__body">
+                <h3 class="why-us-item__title">طراحی + مهندسی</h3>
+                <p class="why-us-item__desc">تیم‌های توسعه و دیزاین ما کاملاً با هم یکپارچه و هماهنگ هستند.</p>
+              </div>
+            </article>
+            <article class="why-us-item">
+              <span class="why-us-item__num">۰۳</span>
+              <div class="why-us-item__body">
+                <h3 class="why-us-item__title">تکرار سریع</h3>
+                <p class="why-us-item__desc">سریع می‌سازیم، بلافاصله تست می‌کنیم و مستمر ارتقا می‌دهیم.</p>
+              </div>
+            </article>
+            <article class="why-us-item">
+              <span class="why-us-item__num">۰۴</span>
+              <div class="why-us-item__body">
+                <h3 class="why-us-item__title">مشارکت بلندمدت</h3>
+                <p class="why-us-item__desc">حتی بعد از لانچ موفق، همواره در کنار محصول و توسعه آن هستیم.</p>
+              </div>
+            </article>
+          </div>
+          <header class="why-us-head">
+            <span class="why-us-head__badge">چرا ما</span>
+            <h2 class="why-us-head__title">چرا استودیو هش؟</h2>
+            <p class="why-us-head__desc">ما فقط یک تیم اجرایی نیستیم؛ از تعریف مسئله تا رشد محصول کنار شما می‌مانیم و تصمیم‌ها را با نگاه محصولی و مهندسی جلو می‌بریم.</p>
+          </header>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technologies -->
+    <section class="home-section home-section--cream home-tech" id="technologies">
+      <div class="container">
+        <div class="section-head">
+          <span class="badge badge--section">تکنولوژی‌ها</span>
+          <h2 class="section-head__title">با تکنولوژی درست می‌سازیم</h2>
+        </div>
+        <div class="tech-tabs" role="tablist" aria-label="دسته‌بندی تکنولوژی">
+          <button class="tech-tabs__btn is-active" type="button" role="tab" aria-selected="true" data-tech-tab="frontend">فرانت‌اند</button>
+          <button class="tech-tabs__btn" type="button" role="tab" aria-selected="false" data-tech-tab="design">طراحی</button>
+          <button class="tech-tabs__btn" type="button" role="tab" aria-selected="false" data-tech-tab="mobile">موبایل</button>
+          <button class="tech-tabs__btn" type="button" role="tab" aria-selected="false" data-tech-tab="backend">بک‌اند</button>
+          <button class="tech-tabs__btn" type="button" role="tab" aria-selected="false" data-tech-tab="ai">هوش مصنوعی</button>
+          <button class="tech-tabs__btn" type="button" role="tab" aria-selected="false" data-tech-tab="infra">زیرساخت</button>
+        </div>
+        <div class="tech-grid" id="tech-grid">
+          <div class="tech-card" data-tech-categories="frontend">
+            <span class="tech-card__name">React</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="336 417 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M344.834 426C344.834 426.46 344.46 426.833 344 426.833C343.54 426.833 343.167 426.46 343.167 426C343.167 425.54 343.54 425.167 344 425.167C344.46 425.167 344.834 425.54 344.834 426ZM350.833 432.833C352.533 431.142 350.85 426.7 347.083 422.917C343.3 419.15 338.858 417.467 337.167 419.167C335.467 420.858 337.15 425.3 340.917 429.083C344.7 432.85 349.142 434.533 350.833 432.833ZM347.083 429.083C350.85 425.3 352.533 420.858 350.833 419.167C349.142 417.467 344.7 419.15 340.917 422.917C337.15 426.7 335.467 431.142 337.167 432.833C338.858 434.533 343.3 432.85 347.083 429.083Z"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="frontend">
+            <span class="tech-card__name">Next.js</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="651 417 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M662.5 423.5L657.5 428.5M657.5 423.5L662.5 428.5M668.334 426C668.334 430.603 664.603 434.334 660 434.334C655.397 434.334 651.666 430.603 651.666 426C651.666 421.397 655.397 417.666 660 417.666C664.603 417.666 668.334 421.397 668.334 426Z"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="frontend">
+            <span class="tech-card__name">Vue.js</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="969 417 16 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M973.5 426L975.167 427.666L978.5 424.333M982.666 426.833C982.666 431 979.75 433.084 976.283 434.292C976.102 434.353 975.905 434.351 975.725 434.284C972.25 433.084 969.334 431 969.334 426.833V421C969.334 420.779 969.422 420.567 969.578 420.411C969.734 420.254 969.946 420.166 970.167 420.166C971.834 420.166 973.917 419.166 975.367 417.9C975.543 417.749 975.768 417.666 976 417.666C976.232 417.666 976.457 417.749 976.633 417.9C978.091 419.175 980.166 420.166 981.833 420.166C982.054 420.166 982.266 420.254 982.422 420.411C982.578 420.567 982.666 420.779 982.666 421V426.833Z"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="frontend">
+            <span class="tech-card__name">TypeScript</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="1283 419 20 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1295.33 431L1300.33 426L1295.33 421M1288.67 421L1283.67 426L1288.67 431"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="backend">
+            <span class="tech-card__name">Node.js</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="333 524 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M344 540.667V542.334M344 525.666V527.333M348.167 540.667V542.334M348.167 525.666V527.333M335.666 534H337.333M335.666 538.167H337.333M335.666 529.833H337.333M350.667 534H352.334M350.667 538.167H352.334M350.667 529.833H352.334M339.833 540.667V542.334M339.833 525.666V527.333M339 527.333H349C349.921 527.333 350.667 528.079 350.667 529V539C350.667 539.921 349.921 540.667 349 540.667H339C338.079 540.667 337.333 539.921 337.333 539V529C337.333 528.079 338.079 527.333 339 527.333ZM341.5 530.666H346.5C346.96 530.666 347.334 531.04 347.334 531.5V536.5C347.334 536.96 346.96 537.334 346.5 537.334H341.5C341.04 537.334 340.666 536.96 340.666 536.5V531.5C340.666 531.04 341.04 530.666 341.5 530.666Z"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="backend">
+            <span class="tech-card__name">Python</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="651 525 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M662.5 531.5L657.5 536.5M657.5 531.5L662.5 536.5M668.334 534C668.334 538.603 664.603 542.334 660 542.334C655.397 542.334 651.666 538.603 651.666 534C651.666 529.397 655.397 525.666 660 525.666C664.603 525.666 668.334 529.397 668.334 534Z"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="backend">
+            <span class="tech-card__name">Django</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="967 526 20 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M974.333 527.334V530.667M967.666 530.667H984.334M971 527.334V530.667M969.333 527.334H982.667C983.588 527.334 984.334 528.08 984.334 529V538.999C984.334 539.92 983.588 540.666 982.667 540.666H969.333C968.412 540.666 967.666 539.92 967.666 538.999V529C967.666 528.08 968.412 527.334 969.333 527.334Z"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="backend">
+            <span class="tech-card__name">PostgreSQL</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="1283 525 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1294.5 531.5L1289.5 536.5M1289.5 531.5L1294.5 536.5M1300.33 534C1300.33 538.603 1296.6 542.334 1292 542.334C1287.4 542.334 1283.67 538.603 1283.67 534C1283.67 529.397 1287.4 525.666 1292 525.666C1296.6 525.666 1300.33 529.397 1300.33 534Z"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="infra">
+            <span class="tech-card__name">Docker</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="336 633 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M351.5 636.166C351.5 637.547 348.142 638.666 344 638.666C339.858 638.666 336.5 637.547 336.5 636.166M351.5 636.166C351.5 634.785 348.142 633.666 344 633.666C339.858 633.666 336.5 634.785 336.5 636.166M351.5 636.166V647.834C351.5 648.497 350.71 649.133 349.303 649.602C347.897 650.071 345.989 650.334 344 650.334C342.011 650.334 340.103 650.071 338.697 649.602C337.29 649.133 336.5 648.497 336.5 647.834V636.166M336.5 642C336.5 642.663 337.29 643.299 338.697 643.768C340.103 644.237 342.011 644.5 344 644.5C345.989 644.5 347.897 644.237 349.303 643.768C350.71 643.299 351.5 642.663 351.5 642"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="mobile">
+            <span class="tech-card__name">Flutter</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="654 633 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M660 633.666H657.083C656.309 633.666 655.567 633.973 655.02 634.52C654.473 635.067 654.166 635.809 654.166 636.583C654.166 637.356 654.473 638.098 655.02 638.645C655.567 639.192 656.309 639.499 657.083 639.499M660 633.666V639.499M660 633.666H662.917C663.3 633.666 663.679 633.741 664.033 633.888C664.387 634.035 664.709 634.249 664.98 634.52C665.251 634.791 665.465 635.113 665.612 635.467C665.759 635.82 665.834 636.2 665.834 636.583C665.834 636.966 665.759 637.345 665.612 637.699C665.465 638.053 665.251 638.374 664.98 638.645C664.709 638.916 664.387 639.131 664.033 639.277C663.679 639.424 663.3 639.499 662.917 639.499M657.083 639.499H660M657.083 639.499C656.309 639.499 655.567 639.807 655.02 640.354C654.473 640.901 654.166 641.642 654.166 642.416C654.166 643.19 654.473 643.931 655.02 644.478C655.567 645.025 656.309 645.333 657.083 645.333M660 639.499H662.917M660 639.499V645.333M662.917 639.499C662.534 639.499 662.155 639.575 661.801 639.721C661.447 639.868 661.125 640.083 660.854 640.354C660.584 640.624 660.369 640.946 660.222 641.3C660.075 641.654 660 642.033 660 642.416C660 642.799 660.075 643.178 660.222 643.532C660.369 643.886 660.584 644.208 660.854 644.478C661.125 644.749 661.447 644.964 661.801 645.111C662.155 645.257 662.534 645.333 662.917 645.333C663.3 645.333 663.679 645.257 664.033 645.111C664.387 644.964 664.709 644.749 664.98 644.478C665.251 644.208 665.465 643.886 665.612 643.532C665.759 643.178 665.834 642.799 665.834 642.416C665.834 642.033 665.759 641.654 665.612 641.3C665.465 640.946 665.251 640.624 664.98 640.354C664.709 640.083 664.387 639.868 664.033 639.721C663.679 639.575 663.3 639.499 662.917 639.499ZM660 645.333V648.249C660 649.023 659.693 649.765 659.146 650.312C658.599 650.859 657.857 651.166 657.083 651.166C656.309 651.166 655.567 650.859 655.02 650.312C654.473 649.765 654.166 649.023 654.166 648.249C654.166 647.476 654.473 646.734 655.02 646.187C655.567 645.64 656.309 645.333 657.083 645.333M660 645.333H657.083"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="mobile">
+            <span class="tech-card__name">React Native</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="967 633 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M978.5 639.5L973.5 644.5M973.5 639.5L978.5 644.5M984.334 642C984.334 646.603 980.603 650.334 976 650.334C971.397 650.334 967.666 646.603 967.666 642C967.666 637.397 971.397 633.666 976 633.666C980.603 633.666 984.334 637.397 984.334 642Z"/></svg></span>
+          </div>
+          <div class="tech-card" data-tech-categories="design">
+            <span class="tech-card__name">Figma</span>
+            <span class="tech-card__icon" aria-hidden="true"><svg viewBox="1283 633 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1293.67 637.833L1296.17 640.333M1286.17 637V640.333M1297.83 643.667V647M1290.33 633.666V635.333M1287.83 638.666H1284.5M1299.5 645.333H1296.17M1291.17 634.499H1289.5M1300.03 635.033L1298.97 633.966C1298.87 633.871 1298.76 633.796 1298.64 633.745C1298.52 633.693 1298.38 633.667 1298.25 633.667C1298.12 633.667 1297.98 633.693 1297.86 633.745C1297.74 633.796 1297.63 633.871 1297.53 633.966L1283.97 647.533C1283.87 647.627 1283.8 647.739 1283.75 647.862C1283.69 647.985 1283.67 648.117 1283.67 648.25C1283.67 648.383 1283.69 648.515 1283.75 648.638C1283.8 648.761 1283.87 648.873 1283.97 648.967L1285.03 650.033C1285.13 650.129 1285.24 650.205 1285.36 650.257C1285.48 650.309 1285.62 650.336 1285.75 650.336C1285.88 650.336 1286.02 650.309 1286.14 650.257C1286.26 650.205 1286.37 650.129 1286.47 650.033L1300.03 636.466C1300.13 636.373 1300.21 636.261 1300.26 636.138C1300.31 636.015 1300.34 635.883 1300.34 635.749C1300.34 635.616 1300.31 635.483 1300.26 635.36C1300.21 635.237 1300.13 635.126 1300.03 635.033Z"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Industries -->
+    <section class="home-section home-section--alt home-industries" id="industries">
+      <div class="container">
+        <div class="section-head section-head--start">
+          <span class="badge badge--section">حوزه‌های فعالیت</span>
+          <h2 class="section-head__title">برای چه کسب‌وکارهایی محصول می‌سازیم؟</h2>
+        </div>
+        <div class="industries-layout">
+          <article class="industry-featured">
+            <div class="industry-featured__icon" aria-hidden="true">
+              <svg viewBox="904 259 32 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M904.999 267H935.001M907.999 259.499H932.001C933.658 259.499 935.001 260.842 935.001 262.499V277.501C935.001 279.158 933.658 280.501 932.001 280.501H907.999C906.342 280.501 904.999 279.158 904.999 277.501V262.499C904.999 260.842 906.342 259.499 907.999 259.499Z"/>
+              </svg>
+            </div>
+            <span class="industry-featured__badge">حوزه تخصصی</span>
+            <h3 class="industry-featured__title">فین‌تک</h3>
+            <p class="industry-featured__desc">پرداخت، کیف پول دیجیتال، لندتک و سامانه‌های مالی امن — از MVP تا مقیاس میلیونی تراکنش.</p>
+            <div class="industry-featured__tags">
+              <span class="industry-featured__tag">بانکداری دیجیتال</span>
+              <span class="industry-featured__tag">کیف پول</span>
+              <span class="industry-featured__tag">پرداخت</span>
+            </div>
+          </article>
+          <div class="industries-grid">
+            <article class="industry-card">
+              <span class="industry-card__icon" aria-hidden="true">
+                <svg viewBox="635 246 20 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M648.667 254C648.667 255.061 648.245 256.078 647.495 256.828C646.745 257.579 645.727 258 644.667 258C643.606 258 642.588 257.579 641.838 256.828C641.088 256.078 640.667 255.061 640.667 254M635.769 250.034H653.563M636.067 249.466C635.807 249.813 635.667 250.234 635.667 250.666V264C635.667 264.531 635.877 265.04 636.252 265.415C636.627 265.79 637.136 266.001 637.667 266.001H651.667C652.197 266.001 652.706 265.79 653.081 265.415C653.456 265.04 653.667 264.531 653.667 264V250.666C653.667 250.234 653.526 249.813 653.267 249.466L651.267 246.799C651.08 246.551 650.839 246.349 650.561 246.21C650.283 246.071 649.977 245.999 649.667 245.999H639.667C639.356 245.999 639.05 246.071 638.772 246.21C638.494 246.349 638.253 246.551 638.067 246.799L636.067 249.466Z"/>
+                </svg>
+              </span>
+              <h3 class="industry-card__title">استارتاپ‌ها</h3>
+              <p class="industry-card__desc">MVP سریع</p>
+            </article>
+            <article class="industry-card">
+              <span class="industry-card__icon" aria-hidden="true">
+                <svg viewBox="381 247 21 19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M391.333 251V265M391.333 251C391.333 249.939 390.912 248.922 390.162 248.172C389.411 247.421 388.394 247 387.333 247H382.333C382.067 247 381.813 247.105 381.625 247.293C381.438 247.48 381.333 247.735 381.333 248V261C381.333 261.265 381.438 261.52 381.625 261.707C381.813 261.895 382.067 262 382.333 262H388.333C389.129 262 389.892 262.316 390.455 262.879C391.017 263.441 391.333 264.204 391.333 265M391.333 251C391.333 249.939 391.755 248.922 392.505 248.172C393.255 247.421 394.273 247 395.334 247H400.334C400.599 247 400.854 247.105 401.041 247.293C401.229 247.48 401.334 247.735 401.334 248V261C401.334 261.265 401.229 261.52 401.041 261.707C400.854 261.895 400.599 262 400.334 262H394.334C393.538 262 392.775 262.316 392.212 262.879C391.649 263.441 391.333 264.204 391.333 265"/>
+                </svg>
+              </span>
+              <h3 class="industry-card__title">آموزش آنلاین</h3>
+              <p class="industry-card__desc">LMS و کلاس مجازی</p>
+            </article>
+            <article class="industry-card">
+              <span class="industry-card__icon" aria-hidden="true">
+                <svg viewBox="128 247 21 19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M129.219 257.001H135.499L135.999 256.001L138 260.501L140 253.501L141.5 257.001H146.77M127.999 253.5C127.999 252.387 128.337 251.301 128.967 250.384C129.598 249.467 130.492 248.763 131.531 248.364C132.57 247.966 133.706 247.892 134.788 248.153C135.869 248.414 136.847 248.996 137.591 249.824C137.643 249.88 137.706 249.925 137.777 249.955C137.847 249.986 137.923 250.002 138 250.002C138.076 250.002 138.152 249.986 138.223 249.955C138.293 249.925 138.356 249.88 138.409 249.824C139.15 248.991 140.128 248.403 141.212 248.14C142.295 247.876 143.434 247.948 144.475 248.348C145.517 248.747 146.412 249.454 147.042 250.374C147.671 251.294 148.006 252.385 148.001 253.5C148.001 255.79 146.5 257.5 145 259L139.508 264.313C139.322 264.527 139.092 264.699 138.834 264.818C138.576 264.936 138.296 264.998 138.012 265C137.728 265.002 137.447 264.943 137.188 264.828C136.929 264.713 136.697 264.544 136.508 264.332L130.999 259C129.499 257.5 127.999 255.8 127.999 253.5Z"/>
+                </svg>
+              </span>
+              <h3 class="industry-card__title">سلامت و درمان</h3>
+              <p class="industry-card__desc">درمان از راه دور و سوابق پزشکی</p>
+            </article>
+            <article class="industry-card">
+              <span class="industry-card__icon" aria-hidden="true">
+                <svg viewBox="634 405 21 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M634.666 415C634.665 415.191 634.719 415.378 634.822 415.54C634.925 415.701 635.072 415.829 635.246 415.91L643.846 419.82C644.105 419.937 644.387 419.998 644.671 419.998C644.956 419.998 645.237 419.937 645.496 419.82L654.077 415.92C654.254 415.84 654.404 415.711 654.509 415.547C654.613 415.384 654.668 415.194 654.667 415M634.666 420C634.665 420.191 634.719 420.379 634.822 420.54C634.925 420.701 635.072 420.83 635.246 420.91L643.846 424.82C644.105 424.938 644.387 424.998 644.671 424.998C644.956 424.998 645.237 424.938 645.496 424.82L654.077 420.92C654.254 420.84 654.404 420.711 654.509 420.548C654.613 420.384 654.668 420.194 654.667 420M645.497 405.179C645.236 405.061 644.953 404.999 644.667 404.999C644.38 404.999 644.097 405.061 643.837 405.179L635.266 409.08C635.089 409.158 634.938 409.286 634.832 409.448C634.726 409.611 634.669 409.801 634.669 409.995C634.669 410.189 634.726 410.378 634.832 410.541C634.938 410.703 635.089 410.831 635.266 410.91L643.847 414.82C644.107 414.939 644.39 415 644.677 415C644.963 415 645.246 414.939 645.507 414.82L654.087 410.92C654.265 410.841 654.416 410.713 654.522 410.551C654.628 410.388 654.684 410.199 654.684 410.005C654.684 409.811 654.628 409.621 654.522 409.458C654.416 409.296 654.265 409.168 654.087 409.09L645.497 405.179Z"/>
+                </svg>
+              </span>
+              <h3 class="industry-card__title">SaaS</h3>
+              <p class="industry-card__desc">نرم‌افزار ابری</p>
+            </article>
+            <article class="industry-card">
+              <span class="industry-card__icon" aria-hidden="true">
+                <svg viewBox="381 405 21 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M391.334 417.999V422.999C391.334 422.999 394.364 422.449 395.334 420.999C396.414 419.379 395.334 415.999 395.334 415.999M391.334 417.999C392.731 417.467 394.071 416.797 395.334 415.999M391.334 417.999L388.334 414.999M388.334 414.999C388.867 413.619 389.537 412.295 390.334 411.049C391.5 409.186 393.122 407.652 395.047 406.593C396.973 405.534 399.137 404.986 401.334 404.999C401.334 407.719 400.554 412.499 395.334 415.999M388.334 414.999L383.334 414.998C383.334 414.998 383.884 411.969 385.334 410.999C386.954 409.919 390.334 411.049 390.334 411.049M383.834 419.499C382.334 420.759 381.834 424.499 381.834 424.499C381.834 424.499 385.574 423.999 386.834 422.499C387.544 421.659 387.534 420.369 386.744 419.589C386.356 419.218 385.844 419.004 385.307 418.987C384.77 418.971 384.245 419.153 383.834 419.499Z"/>
+                </svg>
+              </span>
+              <h3 class="industry-card__title">تجارت الکترونیک</h3>
+              <p class="industry-card__desc">فروشگاه‌های آنلاین</p>
+            </article>
+            <article class="industry-card">
+              <span class="industry-card__icon" aria-hidden="true">
+                <svg viewBox="128 405 21 19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <path d="M142 422.999V406.999C142 406.469 141.789 405.96 141.414 405.585C141.039 405.21 140.53 404.999 140 404.999H136C135.469 404.999 134.96 405.21 134.585 405.585C134.21 405.96 134 406.469 134 406.999V422.999M129.999 408.999H146C147.105 408.999 148.001 409.894 148.001 410.999V420.999C148.001 422.104 147.105 422.999 146 422.999H129.999C128.895 422.999 127.999 422.104 127.999 420.999V410.999C127.999 409.894 128.895 408.999 129.999 408.999Z"/>
+                </svg>
+              </span>
+              <h3 class="industry-card__title">سازمانی</h3>
+              <p class="industry-card__desc">اتوماسیون فرآیندها</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="home-section home-section--cream home-team" id="team">
+      <div class="container">
+        <div class="section-head">
+          <span class="badge badge--section">تیم ما</span>
+          <h2 class="section-head__title">آدم‌هایی که پشت محصول شما هستند</h2>
+        </div>
+        <div class="home-team-grid">
+          <article class="home-team-card">
+            <img class="home-team-card__avatar" src="assets/images/home/team-ceo.png" alt="محمدعلی هاشمی" width="78" height="78">
+            <h3 class="home-team-card__name">محمدعلی هاشمی</h3>
+            <p class="home-team-card__role">CEO</p>
+          </article>
+          <article class="home-team-card">
+            <img class="home-team-card__avatar" src="assets/images/home/team-cto.png" alt="امیرحسین محمدپور" width="78" height="78">
+            <h3 class="home-team-card__name">امیرحسین محمدپور</h3>
+            <p class="home-team-card__role">CTO</p>
+          </article>
+          <article class="home-team-card">
+            <img class="home-team-card__avatar" src="assets/images/home/team-1.png" alt="امیرحسین محمدپور" width="78" height="78">
+            <h3 class="home-team-card__name">امیرحسین محمدپور</h3>
+            <p class="home-team-card__role">Product Designer</p>
+          </article>
+          <article class="home-team-card">
+            <img class="home-team-card__avatar" src="assets/images/home/team-2.png" alt="محمدعلی هاشمی" width="78" height="78">
+            <h3 class="home-team-card__name">محمدعلی هاشمی</h3>
+            <p class="home-team-card__role">UI Designer</p>
+          </article>
+          <article class="home-team-card">
+            <img class="home-team-card__avatar" src="assets/images/home/team-3.png" alt="محمدعلی هاشمی" width="78" height="78">
+            <h3 class="home-team-card__name">محمدعلی هاشمی</h3>
+            <p class="home-team-card__role">Frontend Lead</p>
+          </article>
+          <article class="home-team-card">
+            <img class="home-team-card__avatar" src="assets/images/home/team-4.png" alt="امیرحسین محمدپور" width="78" height="78">
+            <h3 class="home-team-card__name">امیرحسین محمدپور</h3>
+            <p class="home-team-card__role">Backend Developer</p>
+          </article>
+          <article class="home-team-card">
+            <img class="home-team-card__avatar" src="assets/images/home/team-5.png" alt="محمدعلی هاشمی" width="78" height="78">
+            <h3 class="home-team-card__name">محمدعلی هاشمی</h3>
+            <p class="home-team-card__role">Mobile Developer</p>
+          </article>
+          <article class="home-team-card">
+            <img class="home-team-card__avatar" src="assets/images/home/team-6.png" alt="امیرحسن محمدپور" width="78" height="78">
+            <h3 class="home-team-card__name">امیرحسن محمدپور</h3>
+            <p class="home-team-card__role">Product Manager</p>
+          </article>
+        </div>
+        <div class="home-team__more">
+          <a href="about.html" class="home-team__link">← آشنایی با تیم</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="home-section home-section--white" id="testimonials">
+      <div class="container">
+        <div class="section-head">
+          <span class="badge badge--section">نظرات مشتریان</span>
+          <h2 class="section-head__title">مشتری‌ها درباره همکاری با ما چه می‌گویند؟</h2>
+        </div>
+        <div class="testimonials-grid">
+          <article class="testimonial-card testimonial-card--featured">
+            <span class="testimonial-card__quote-icon" aria-hidden="true"></span>
+            <blockquote class="testimonial-card__text">تیم فنی هش استودیو عمیقاً مسائل بیزینس ما را درک می‌کند و با تفکر همه‌جانبه، کدهای تمیز، مقیاس‌پذیر و پایدار تحویل می‌دهد.</blockquote>
+            <footer class="testimonial-card__author">
+              <img src="assets/images/home/testimonial-1.png" alt="" width="55" height="55">
+              <div>
+                <cite class="testimonial-card__name">محمدرضا علوی</cite>
+                <span class="testimonial-card__meta">بنیان‌گذار پونتو / ساخت MVP مالی</span>
+              </div>
+            </footer>
+          </article>
+          <div class="testimonials-stack">
+            <article class="testimonial-card">
+              <blockquote class="testimonial-card__text">طراحی بی‌نظیر تجربه کاربری همراه با چابکی در توسعه، این تیم را شریک استراتژیک ما قرار داده است.</blockquote>
+              <footer class="testimonial-card__author">
+                <div>
+                  <cite class="testimonial-card__name">سارا رضایی</cite>
+                  <span class="testimonial-card__meta">مدیر محصول اسنپ / اپلیکیشن سوپراپ</span>
+                </div>
+                <img src="assets/images/home/testimonial-2.png" alt="" width="38" height="38">
+              </footer>
+            </article>
+            <article class="testimonial-card">
+              <blockquote class="testimonial-card__text">تعهد استودیو هش به محصول و تلاش همیشگی آن‌ها، مسیر رشد پروژه ما را هموار کرد. خروجی فراتر از انتظار بود.</blockquote>
+              <footer class="testimonial-card__author">
+                <div>
+                  <cite class="testimonial-card__name">امیرحسین امیری</cite>
+                  <span class="testimonial-card__meta">مدیر فنی دیجی‌کالا / توسعه وب لجستیک</span>
+                </div>
+                <img src="assets/images/home/testimonial-3.png" alt="" width="38" height="38">
+              </footer>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog preview -->
+    <section class="home-section home-section--white blog-preview" id="blog-preview">
+      <div class="container">
+        <div class="section-head">
+          <span class="badge badge--section">وبلاگ و تجربه‌ها</span>
+          <h2 class="section-head__title">از تجربه‌هایی که در مسیر ساخت محصول یاد گرفته‌ایم</h2>
+        </div>
+        <div class="blog-preview-grid">
+          <article class="blog-card blog-card--featured">
+            <div class="blog-card__media">
+              <img src="assets/images/home/blog-featured.png" alt="" width="694" height="271" loading="lazy">
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__badge">طراحی محصول</span>
+              <h3 class="blog-card__title">چگونه قبل از کدنویسی بیهوده، محصول را اعتبارسنجی کنیم؟</h3>
+              <p class="blog-card__desc">روش‌های عملی و ترفندهای ارزیابی ایده محصول برای جلوگیری از هدررفت منابع مالی و توسعه ویژگی‌های غیرکاربردی.</p>
+              <div class="blog-card__meta">
+                <time datetime="2026-05-04">۱۴ اردیبهشت ۱۴۰۵</time>
+                <span>· ۵ دقیقه</span>
+              </div>
+            </div>
+          </article>
+          <div class="blog-preview-stack">
+            <article class="blog-card blog-card--compact">
+              <div class="blog-card__body">
+                <span class="blog-card__badge">UI/UX</span>
+                <h3 class="blog-card__title">اصول طراحی رابط‌های کاربری مدرن در سال ۲۰۲۶</h3>
+                <p class="blog-card__desc">بررسی نقش انیمیشن‌های تعاملی، جزئیات ریز و نحوه خلق سفرهای کاربری ماندگار در دنیای وب و اپلیکیشن.</p>
+                <div class="blog-card__meta">
+                  <time datetime="2026-04-18">۲۹ فروردین ۱۴۰۵</time>
+                  <span>· ۸ دقیقه</span>
+                </div>
+              </div>
+              <div class="blog-card__media">
+                <img src="assets/images/home/blog-thumb-ui.png" alt="" width="200" height="224" loading="lazy">
+              </div>
+            </article>
+            <article class="blog-card blog-card--compact">
+              <div class="blog-card__body">
+                <span class="blog-card__badge">توسعه</span>
+                <h3 class="blog-card__title">توسعه فرانت‌اند با فریمورک Next.js: راهنمای پایداری</h3>
+                <p class="blog-card__desc">نگاهی عمیق به بهترین شیوه‌های بهینه‌سازی سرعت بارگذاری، سئو و ساختار بهینه فایل‌ها در پروژه‌های در مقیاس تجاری.</p>
+                <div class="blog-card__meta">
+                  <time datetime="2026-04-04">۱۵ فروردین ۱۴۰۵</time>
+                  <span>· ۱۰ دقیقه</span>
+                </div>
+              </div>
+              <div class="blog-card__media">
+                <img src="assets/images/home/blog-thumb-dev.png" alt="" width="200" height="224" loading="lazy">
+              </div>
+            </article>
+          </div>
+        </div>
+        <a href="blog.html" class="btn btn--outline btn--lg blog-preview__btn">مشاهده وبلاگ ←</a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="home-section home-section--cream faq-section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <span class="badge badge--section">پاسخ به سؤالات</span>
+          <h2 class="section-head__title">شاید این سؤال شما هم باشد</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary class="faq-item__question">
+              <span class="faq-item__label">ساخت یک MVP چقدر زمان می‌برد؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">بسته به ویژگی‌های کلیدی مدنظر، فرآیند توسعه چابک یک محصول کمینه ارزشمند (MVP) در استودیو هش معمولاً بین ۶ تا ۱۲ هفته زمان می‌برد. ما تمام تلاشمان را می‌کنیم تا در کوتاه‌ترین زمان ممکن، بهترین خروجی را به بازار بفرستید.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              <span class="faq-item__label">هزینه طراحی و توسعه چگونه محاسبه می‌شود؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">بر اساس دامنه پروژه، تعداد صفحات، سطح طراحی و تکنولوژی‌های مورد نیاز برآورد می‌شود. پس از جلسه کشف، پیشنهاد شفاف ارائه می‌دهیم.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              <span class="faq-item__label">آیا فقط طراحی انجام می‌دهید؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">بله، می‌توانید فقط UI/UX یا طراحی محصول را سفارش دهید؛ اما تمرکز و تجربه اصلی ما در یکپارچگی طراحی و توسعه است تا محصول نهایی دقیقاً همان چیزی شود که طراحی شده.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              <span class="faq-item__label">آیا پروژه‌های نیمه‌کاره را ادامه می‌دهید؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">بله. ابتدا وضعیت فعلی پروژه را بررسی می‌کنیم، ریسک‌ها و بدهی‌های فنی را می‌سنجیم و سپس نقشه راه شفاف برای ادامه کار پیشنهاد می‌دهیم.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              <span class="faq-item__label">بعد از لانچ محصول پشتیبانی دارید؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">بله. پس از لانچ، پشتیبانی فنی، رفع باگ و بهبودهای تدریجی را بر اساس قرارداد همراهی ادامه می‌دهیم تا محصول پایدار بماند و رشد کند.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-item__question">
+              <span class="faq-item__label">آیا با استارتاپ‌های Early Stage کار می‌کنید؟</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <p class="faq-item__answer">بله. بسیاری از پروژه‌های ما با تیم‌های دو تا پنج نفره شروع شده و تا مرحله رشد و جذب سرمایه همراهی کرده‌ایم.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="home-final-cta">
+      <div class="container">
+        <article class="home-final-cta__card">
+          <h2 class="home-final-cta__title">ایده‌ی شما، محصول بعدی ماست؟</h2>
+          <p class="home-final-cta__desc">اگر ایده‌ای در سر دارید یا به دنبال تیمی هستید که همراه شما یک محصول موفق بسازد، ما آماده‌ایم با هم درباره‌اش صحبت کنیم.</p>
+          <div class="home-final-cta__actions">
+            <a href="contact.html" class="btn btn--primary btn--lg">شروع همکاری</a>
+            <a href="projects.html" class="btn btn--outline btn--lg">مشاهده پروژه‌ها</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="home-footer">
+    <div class="container">
+      <div class="home-footer__grid">
+        <div class="home-footer__brand">
+          <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+          <div class="home-footer__brand-name">استودیو هش</div>
+          <p class="home-footer__brand-desc">طراحی و توسعه محصولات دیجیتال برای استارتاپ‌ها و شرکت‌های پیشرو — از ایده تا تجربه‌ای که کاربران عاشقش می‌شوند.</p>
+          <div class="home-footer__location">
+            <span class="home-footer__location-icon" aria-hidden="true">📍</span>
+            <span>تهران، خیابان آزادی، کارخانه نوآوری</span>
+          </div>
+        </div>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">دسترسی سریع</h3>
+          <nav class="home-footer__links" aria-label="لینک‌های فوتر">
+            <a href="index.html" class="home-footer__link">خانه اصلی</a>
+            <a href="projects.html" class="home-footer__link">پروژه‌ها و نمونه‌کارها</a>
+            <a href="about.html" class="home-footer__link">درباره ما</a>
+            <a href="blog.html" class="home-footer__link">وبلاگ تخصصی</a>
+            <a href="contact.html" class="home-footer__link">تماس با ما</a>
+            <a href="contact.html" class="home-footer__link">فرصت‌های همکاری</a>
+          </nav>
+        </div>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">خدمات ما</h3>
+          <nav class="home-footer__links">
+            <a href="service.html" class="home-footer__link">طراحی محصول</a>
+            <a href="service.html" class="home-footer__link">طراحی UI/UX</a>
+            <a href="service.html" class="home-footer__link">توسعه وب مدرن</a>
+            <a href="service.html" class="home-footer__link">توسعه اپلیکیشن موبایل</a>
+            <a href="service.html" class="home-footer__link">راه‌اندازی MVP</a>
+            <a href="service.html" class="home-footer__link">یکپارچه‌سازی هوش مصنوعی</a>
+          </nav>
+        </div>
+        <div class="home-footer__newsletter-col">
+          <h3 class="home-footer__heading">خبرنامه استودیو هش</h3>
+          <p class="home-footer__newsletter-desc">جدیدترین مطالب علمی، تجربه‌ها و مقاله‌های محصولی را مستقیم در ایمیل خود دریافت کنید.</p>
+          <form class="home-footer__newsletter" action="#" method="post">
+            <div class="home-footer__newsletter-row">
+              <label for="footer-newsletter-email" class="visually-hidden">ایمیل</label>
+              <input id="footer-newsletter-email" class="home-footer__newsletter-input" type="email" name="email" placeholder="ایمیل شما" required>
+              <button type="submit" class="btn btn--primary">عضویت</button>
+            </div>
+          </form>
+          <div class="home-footer__social">
+            <a href="#" class="home-footer__social-link" aria-label="اینستاگرام">IG</a>
+            <a href="#" class="home-footer__social-link" aria-label="توییتر">X</a>
+            <a href="#" class="home-footer__social-link" aria-label="لینکدین">LI</a>
+            <a href="#" class="home-footer__social-link" aria-label="تلگرام">TG</a>
+          </div>
+        </div>
+      </div>
+      <div class="home-footer__bottom">
+        <span>© ۱۴۰۵ استودیو هش. تمامی حقوق محفوظ است.</span>
+        <span>طراحی و توسعه توسط استودیو هش</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/home.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

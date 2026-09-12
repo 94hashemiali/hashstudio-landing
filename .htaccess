@@ -1,0 +1,6 @@
+# Hash Studio — Apache / LiteSpeed / cPanel
+Options -Indexes
+DirectoryIndex index.html
+
+# Missing URL → branded 404 page (keeps HTTP 404 status)
+ErrorDocument 404 /404.html

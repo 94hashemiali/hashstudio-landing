@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="844" height="440" viewBox="0 0 844 440" fill="none" shape-rendering="crispEdges">
+<rect width="844" height="440" rx="18" fill="#17252B"/>
+<!-- floating pixels -->
+<rect x="28" y="36" width="8" height="8" fill="#F7F2E8"/>
+<rect x="40" y="28" width="12" height="8" fill="#F7F2E8"/>
+<rect x="808" y="48" width="12" height="8" fill="#F7F2E8"/>
+<rect x="796" y="56" width="8" height="8" fill="#F7F2E8"/>
+<!-- CRT bezel like hero monitor -->
+<rect x="40" y="28" width="764" height="384" rx="12" fill="#E6D7B8"/>
+<rect x="40" y="28" width="764" height="384" rx="12" fill="none" stroke="#C4B28A" stroke-width="3"/>
+<rect x="48" y="36" width="748" height="20" fill="#F3E9D2"/>
+<rect x="60" y="42" width="8" height="8" fill="#E24A3A"/>
+<rect x="76" y="42" width="8" height="8" fill="#FFB818"/>
+<rect x="92" y="42" width="8" height="8" fill="#3DCC6A"/>
+<rect x="292" y="40" width="260" height="12" rx="2" fill="#C4B28A"/>
+<!-- screen -->
+<rect x="56" y="60" width="732" height="320" fill="#121A28"/>
+
+<rect x="56" y="60" width="732" height="20" fill="#0E4B48"/>
+<rect x="520" y="66" width="140" height="8" fill="#FFFFFF"/>
+<rect x="656" y="88" width="96" height="24" fill="#F37021"/>
+<rect x="200" y="88" width="400" height="24" fill="#F2F2F2"/>
+<rect x="72" y="88" width="32" height="24" fill="#0E4B48"/>
+<rect x="112" y="92" width="72" height="16" fill="#EEF4F4"/>
+<rect x="620" y="124" width="64" height="8" fill="#0E4B48"/>
+<rect x="548" y="124" width="56" height="8" fill="#789"/>
+<rect x="476" y="124" width="56" height="8" fill="#789"/>
+<circle cx="700" cy="172" r="24" fill="none" stroke="#F37021" stroke-width="3"/>
+<circle cx="628" cy="172" r="24" fill="none" stroke="#F37021" stroke-width="3"/>
+<circle cx="556" cy="172" r="24" fill="none" stroke="#F37021" stroke-width="3"/>
+<circle cx="484" cy="172" r="24" fill="none" stroke="#F37021" stroke-width="3"/>
+<circle cx="412" cy="172" r="24" fill="none" stroke="#F37021" stroke-width="3"/>
+<circle cx="340" cy="172" r="24" fill="none" stroke="#F37021" stroke-width="3"/>
+<circle cx="268" cy="172" r="24" fill="none" stroke="#F37021" stroke-width="3"/>
+<circle cx="196" cy="172" r="24" fill="none" stroke="#F37021" stroke-width="3"/>
+<rect x="72" y="216" width="700" height="144" fill="#D8D8D8"/>
+<rect x="92" y="240" width="80" height="80" fill="#C0392B"/>
+<rect x="192" y="256" width="112" height="64" fill="#8A8A8A"/>
+<rect x="324" y="236" width="128" height="84" fill="#6A6A6A"/>
+<rect x="472" y="260" width="144" height="56" fill="#9A9A9A"/>
+
+<!-- island grass under the CRT -->
+<rect x="120" y="400" width="604" height="12" fill="#5B8C32"/>
+<rect x="136" y="396" width="40" height="8" fill="#7CB342"/>
+<rect x="220" y="396" width="24" height="8" fill="#7CB342"/>
+<rect x="480" y="396" width="32" height="8" fill="#7CB342"/>
+<rect x="640" y="396" width="20" height="8" fill="#7CB342"/>
+<rect x="160" y="412" width="524" height="10" fill="#8B6230"/>
+<rect x="200" y="422" width="80" height="6" fill="#6B4A20"/>
+<rect x="520" y="422" width="64" height="6" fill="#6B4A20"/>
+<!-- yellow dotted links like hero -->
+<path d="M52 88 L20 72" stroke="#FFB818" stroke-width="2" stroke-dasharray="4 6" fill="none"/>
+<rect x="8" y="56" width="28" height="20" fill="#2A2A32"/>
+<rect x="14" y="62" width="16" height="4" fill="#FFB818"/>
+<path d="M792 100 L828 80" stroke="#FFB818" stroke-width="2" stroke-dasharray="4 6" fill="none"/>
+<rect x="812" y="64" width="24" height="24" rx="12" fill="#2A2A32"/>
+<polygon points="820,70 828,76 820,82" fill="#FFB818"/>
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d06a7628-f1b8-4add-a093-b2ef6ebe7fb8" name="hs" url="http://ftp.hashstudio.ir">
+        <fileTransfer accessType="FTPS" host="ftp.hashstudio.ir" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

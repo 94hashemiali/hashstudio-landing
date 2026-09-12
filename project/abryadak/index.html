@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="جزئیات پروژه — استودیو هش">
+  <title>پروژه | استودیو هش</title>
+  <link rel="icon" href="assets/images/home/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/project.css">
+</head>
+<body class="home-page project-page" data-slug="abryadak">
+
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
+      <a href="contact.html" class="top-bar__btn">شروع همکاری</a>
+    </div>
+  </div>
+
+  <header class="home-header" id="site-header">
+    <div class="container home-header__inner">
+      <a href="index.html" class="home-header__logo">
+        <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+        <span class="home-header__logo-text">استودیو هش</span>
+      </a>
+
+      <nav class="home-header__nav" id="main-nav" aria-label="منوی اصلی">
+        <a href="index.html" class="home-header__link">خانه</a>
+        <a href="services.html" class="home-header__link">خدمات</a>
+        <a href="projects.html" class="home-header__link is-active">پروژه‌ها</a>
+        <a href="about.html" class="home-header__link">درباره ما</a>
+        <a href="blog.html" class="home-header__link">بلاگ</a>
+        <a href="contact.html" class="home-header__link">تماس با ما</a>
+      </nav>
+
+      <div class="home-header__actions">
+        <a href="contact.html" class="btn btn--primary btn--header">شروع همکاری</a>
+        <a href="contact.html" class="home-header__profile" aria-label="پروفایل کاربر">
+          <img src="assets/icons/profile.svg" alt="" width="39" height="39">
+        </a>
+        <button class="home-header__toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="main-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="project-root" hidden>
+    <section class="pd-hero">
+      <div class="container">
+        <nav class="pd-breadcrumb" aria-label="مسیر">
+          <a href="index.html">خانه</a>
+          <span class="pd-breadcrumb__sep" aria-hidden="true">‹</span>
+          <a href="projects.html">پروژه‌ها</a>
+          <span class="pd-breadcrumb__sep" aria-hidden="true">‹</span>
+          <span data-field="name"></span>
+        </nav>
+        <h1 class="pd-hero__title" data-field="title"></h1>
+        <p class="pd-hero__lead" data-field="lead"></p>
+        <div class="pd-hero__actions">
+          <a class="btn btn--primary btn--lg" data-field="live-link" href="#" target="_blank" rel="noopener noreferrer">مشاهده سایت</a>
+        </div>
+        <figure class="pd-hero__media">
+          <img data-field="hero-img" src="" alt="" width="1280" height="720">
+        </figure>
+      </div>
+    </section>
+
+    <section class="pd-meta" aria-label="اطلاعات پروژه">
+      <div class="container">
+        <dl class="pd-meta__grid">
+          <div class="pd-meta__item">
+            <dt>صنعت بیزینس</dt>
+            <dd data-field="industry"></dd>
+          </div>
+          <div class="pd-meta__item">
+            <dt>خدمات ارائه شده</dt>
+            <dd data-field="services"></dd>
+          </div>
+          <div class="pd-meta__item">
+            <dt>سال انجام</dt>
+            <dd data-field="year"></dd>
+          </div>
+          <div class="pd-meta__item">
+            <dt>مدت پروژه</dt>
+            <dd data-field="duration"></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="pd-section pd-section--cream">
+      <div class="container pd-split">
+        <div class="pd-split__copy">
+          <span class="badge badge--section" data-field="summary-badge"></span>
+          <h2 class="pd-section__title" data-field="summary-heading"></h2>
+          <p class="pd-section__body" data-field="summary-body"></p>
+        </div>
+        <ul class="pd-early" data-list="earlyMetrics"></ul>
+      </div>
+    </section>
+
+    <section class="pd-section pd-section--white">
+      <div class="container pd-split pd-split--visual">
+        <figure class="pd-split__media">
+          <img data-field="challenge-img" src="" alt="" width="1280" height="720">
+        </figure>
+        <div class="pd-split__copy">
+          <span class="badge badge--section">چالش اصلی</span>
+          <h2 class="pd-section__title" data-field="challenge-heading"></h2>
+          <p class="pd-section__body" data-field="challenge-body"></p>
+          <h3 class="pd-section__sub">اهداف استراتژیک</h3>
+          <ul class="pd-goals" data-list="goals"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="pd-section pd-section--cream">
+      <div class="container pd-split pd-split--visual pd-split--flip">
+        <div class="pd-split__copy">
+          <span class="badge badge--section">تحقیقات و آنالیز</span>
+          <h2 class="pd-section__title" data-field="research-heading"></h2>
+          <p class="pd-section__body" data-field="research-sub"></p>
+          <h3 class="pd-section__sub">یافته‌های کلیدی فاز اکتشاف</h3>
+          <ul class="pd-findings" data-list="findings"></ul>
+        </div>
+        <figure class="pd-split__media">
+          <img data-field="research-img" src="" alt="" width="1280" height="720">
+        </figure>
+      </div>
+    </section>
+
+    <section class="pd-section pd-section--white">
+      <div class="container">
+        <div class="section-head">
+          <span class="badge badge--section">فرآیند طراحی تجربه کاربری</span>
+          <h2 class="section-head__title" data-field="ux-heading"></h2>
+        </div>
+        <div class="pd-ux" data-list="ux"></div>
+      </div>
+    </section>
+
+    <section class="pd-section pd-section--cream">
+      <div class="container">
+        <div class="section-head section-head--start">
+          <span class="badge badge--section">سیستم طراحی اختصاصی</span>
+          <h2 class="section-head__title" data-field="ds-heading"></h2>
+          <p class="section-head__desc" data-field="ds-body"></p>
+        </div>
+        <div class="pd-ds">
+          <div>
+            <h3 class="pd-ds__label">رنگ‌ها</h3>
+            <ul class="pd-swatches" data-list="colors"></ul>
+          </div>
+          <div>
+            <h3 class="pd-ds__label">تایپوگرافی</h3>
+            <ul class="pd-type" data-list="type"></ul>
+          </div>
+          <div>
+            <h3 class="pd-ds__label">فاصله‌گذاری</h3>
+            <ul class="pd-spacing" data-list="spacing"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pd-section pd-section--white">
+      <div class="container">
+        <div class="section-head">
+          <span class="badge badge--section">رابط کاربری نهایی</span>
+          <h2 class="section-head__title">صفحات طراحی‌شده محصول</h2>
+          <p class="section-head__desc">نمایی از تجربه نهایی روی دسکتاپ — ساده، خوانا و آمادهٔ استفاده واقعی.</p>
+        </div>
+        <div class="pd-gallery" data-list="gallery"></div>
+      </div>
+    </section>
+
+    <section class="pd-section pd-section--cream">
+      <div class="container">
+        <div class="section-head section-head--start">
+          <span class="badge badge--section">توسعه و تکنولوژی</span>
+          <h2 class="section-head__title" data-field="tech-heading"></h2>
+          <p class="section-head__desc" data-field="tech-body"></p>
+        </div>
+        <div class="pd-arch" aria-label="معماری فنی سیستم">
+          <p class="pd-arch__caption">معماری فنی سیستم</p>
+          <ol class="pd-arch__layers" data-list="layers"></ol>
+        </div>
+        <ul class="pd-stack" data-list="stack"></ul>
+      </div>
+    </section>
+
+    <section class="pd-section pd-section--white">
+      <div class="container">
+        <div class="section-head">
+          <span class="badge badge--section">نتایج پایانی</span>
+          <h2 class="section-head__title">تغییرات واقعی در شاخص‌های کلیدی بیزینس</h2>
+        </div>
+        <ul class="pd-kpis" data-list="kpis"></ul>
+      </div>
+    </section>
+
+    <section class="pd-section pd-section--cream">
+      <div class="container">
+        <blockquote class="pd-quote">
+          <p class="pd-quote__text" data-field="quote-text"></p>
+          <footer class="pd-quote__footer">
+            <img class="pd-quote__avatar" src="assets/images/placeholder-avatar.svg" alt="" width="64" height="64">
+            <div>
+              <cite class="pd-quote__role" data-field="quote-role"></cite>
+              <span class="pd-quote__org" data-field="quote-org"></span>
+            </div>
+          </footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="pd-next">
+      <div class="container">
+        <a class="pd-next__card" data-field="next-link" href="projects.html">
+          <div class="pd-next__copy">
+            <span class="pd-next__label">پروژه بعدی</span>
+            <span class="pd-next__pill" data-field="next-industry"></span>
+            <h2 class="pd-next__title" data-field="next-name"></h2>
+            <p class="pd-next__desc" data-field="next-lead"></p>
+          </div>
+          <figure class="pd-next__media">
+            <img data-field="next-img" src="" alt="" width="640" height="360">
+          </figure>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-final-cta">
+      <div class="container">
+        <article class="home-final-cta__card">
+          <h2 class="home-final-cta__title">می‌خواهید پروژه بعدی ما باشید؟</h2>
+          <p class="home-final-cta__desc">آماده‌ایم ایده‌ها را به محصول دیجیتال تبدیل کنیم — از کشف مسئله تا لانچ و رشد.</p>
+          <div class="home-final-cta__actions">
+            <a href="contact.html" class="btn btn--primary btn--lg">شروع همکاری</a>
+            <a href="contact.html" class="btn btn--outline btn--lg">مشاوره رایگان</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="home-footer">
+    <div class="container">
+      <div class="home-footer__grid">
+        <div class="home-footer__brand">
+          <img src="assets/images/home/logo.png" alt="لوگوی استودیو هش" width="36" height="36">
+          <div class="home-footer__brand-name">استودیو هش</div>
+          <p class="home-footer__brand-desc">طراحی و توسعه محصولات دیجیتال برای استارتاپ‌ها و شرکت‌های پیشرو — از ایده تا تجربه‌ای که کاربران عاشقش می‌شوند.</p>
+          <div class="home-footer__location">
+            <span class="home-footer__location-icon" aria-hidden="true">📍</span>
+            <span data-studio="address-short">تهران، یوسف‌آباد، جهان‌آرا، کوچه ۴۳</span>
+          </div>
+        </div>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">دسترسی سریع</h3>
+          <nav class="home-footer__links" aria-label="لینک‌های فوتر">
+            <a href="index.html" class="home-footer__link">خانه اصلی</a>
+            <a href="projects.html" class="home-footer__link">پروژه‌ها و نمونه‌کارها</a>
+            <a href="about.html" class="home-footer__link">درباره ما</a>
+            <a href="blog.html" class="home-footer__link">وبلاگ تخصصی</a>
+            <a href="contact.html" class="home-footer__link">تماس با ما</a>
+            <a href="contact.html" class="home-footer__link">فرصت‌های همکاری</a>
+          </nav>
+        </div>
+        <div class="home-footer__links-col">
+          <h3 class="home-footer__heading">خدمات ما</h3>
+          <nav class="home-footer__links">
+            <a href="/service/product/" class="home-footer__link">طراحی محصول</a>
+            <a href="/service/ui-ux/" class="home-footer__link">طراحی UI/UX</a>
+            <a href="/service/web/" class="home-footer__link">توسعه وب مدرن</a>
+            <a href="/service/mobile/" class="home-footer__link">توسعه اپلیکیشن موبایل</a>
+            <a href="/service/mvp/" class="home-footer__link">راه‌اندازی MVP</a>
+            <a href="/service/ai/" class="home-footer__link">یکپارچه‌سازی هوش مصنوعی</a>
+          </nav>
+        </div>
+        <div class="home-footer__newsletter-col">
+          <h3 class="home-footer__heading">خبرنامه استودیو هش</h3>
+          <p class="home-footer__newsletter-desc">جدیدترین مطالب علمی، تجربه‌ها و مقاله‌های محصولی را مستقیم در ایمیل خود دریافت کنید.</p>
+          <form class="home-footer__newsletter" action="#" method="post">
+            <div class="home-footer__newsletter-row">
+              <label for="footer-newsletter-email" class="visually-hidden">ایمیل</label>
+              <input id="footer-newsletter-email" class="home-footer__newsletter-input" type="email" name="email" placeholder="ایمیل شما" required>
+              <button type="submit" class="btn btn--primary">عضویت</button>
+            </div>
+          </form>
+          <div class="home-footer__social" data-studio="social" data-studio-social-class="home-footer__social-link">
+            <a href="https://www.instagram.com/hashstudio.ir/" class="home-footer__social-link" aria-label="اینستاگرام" target="_blank" rel="noopener noreferrer">IG</a>
+          </div>
+        </div>
+      </div>
+      <div class="home-footer__bottom">
+        <span>تمامی حقوق مادی و معنوی محفوظ است © ۱۴۰۵ استودیو هش</span>
+        <span>طراحی و توسعه با ■ در استودیو هش</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/projects-data.js?v=9" charset="utf-8"></script>
+  <script src="js/project.js?v=9" charset="utf-8"></script>
+  <script src="js/main.js?v=4" charset="utf-8"></script>
+  <script src="/js/studio-info.js"></script>
+  <script src="/js/studio-chrome.js"></script>
+</body>
+</html>
