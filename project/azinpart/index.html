@@ -5,13 +5,14 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="جزئیات پروژه — استودیو هش">
+  <meta name="robots" content="index,follow">
   <title>پروژه | استودیو هش</title>
   <link rel="icon" href="assets/images/home/logo.png" type="image/png">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="css/project.css">
+  <link rel="stylesheet" href="css/project.css?v=12">
 </head>
 <body class="home-page project-page" data-slug="azinpart">
 
@@ -55,17 +56,25 @@
   <main id="project-root" hidden>
     <section class="pd-hero">
       <div class="container">
-        <nav class="pd-breadcrumb" aria-label="مسیر">
-          <a href="index.html">خانه</a>
-          <span class="pd-breadcrumb__sep" aria-hidden="true">‹</span>
-          <a href="projects.html">پروژه‌ها</a>
-          <span class="pd-breadcrumb__sep" aria-hidden="true">‹</span>
-          <span data-field="name"></span>
-        </nav>
-        <h1 class="pd-hero__title" data-field="title"></h1>
-        <p class="pd-hero__lead" data-field="lead"></p>
-        <div class="pd-hero__actions">
-          <a class="btn btn--primary btn--lg" data-field="live-link" href="#" target="_blank" rel="noopener noreferrer">مشاهده سایت</a>
+        <div class="pd-hero__intro">
+          <nav class="pd-breadcrumb" aria-label="مسیر">
+            <a href="index.html">خانه</a>
+            <span class="pd-breadcrumb__sep" aria-hidden="true">‹</span>
+            <a href="projects.html">پروژه‌ها</a>
+            <span class="pd-breadcrumb__sep" aria-hidden="true">‹</span>
+            <span data-field="name"></span>
+          </nav>
+          <p class="pd-hero__brand" data-field="brand"></p>
+          <div class="pd-hero__chips" aria-label="دسته‌بندی پروژه">
+            <span class="pd-hero__chip" data-field="industry"></span>
+            <span class="pd-hero__chip" data-field="services"></span>
+          </div>
+          <h1 class="pd-hero__title" data-field="title"></h1>
+          <p class="pd-hero__lead" data-field="lead"></p>
+          <div class="pd-hero__actions">
+            <a class="btn btn--primary btn--lg" data-field="live-link" href="#" target="_blank" rel="noopener noreferrer">مشاهده وب‌سایت</a>
+            <a class="btn btn--outline btn--lg" href="contact.html">شروع یک پروژه</a>
+          </div>
         </div>
         <figure class="pd-hero__media">
           <img data-field="hero-img" src="" alt="" width="1280" height="720">
@@ -77,43 +86,55 @@
       <div class="container">
         <dl class="pd-meta__grid">
           <div class="pd-meta__item">
-            <dt>صنعت بیزینس</dt>
+            <dt>مشتری</dt>
+            <dd data-field="client"></dd>
+          </div>
+          <div class="pd-meta__item">
+            <dt>نوع پروژه</dt>
             <dd data-field="industry"></dd>
           </div>
           <div class="pd-meta__item">
-            <dt>خدمات ارائه شده</dt>
+            <dt>خدمات</dt>
             <dd data-field="services"></dd>
           </div>
           <div class="pd-meta__item">
-            <dt>سال انجام</dt>
+            <dt>نقش Hash Studio</dt>
+            <dd data-field="role"></dd>
+          </div>
+          <div class="pd-meta__item">
+            <dt>پلتفرم</dt>
+            <dd data-field="platform"></dd>
+          </div>
+          <div class="pd-meta__item">
+            <dt>سال</dt>
             <dd data-field="year"></dd>
           </div>
           <div class="pd-meta__item">
-            <dt>مدت پروژه</dt>
+            <dt>مدت</dt>
             <dd data-field="duration"></dd>
           </div>
         </dl>
       </div>
     </section>
 
-    <section class="pd-section pd-section--cream">
+    <section class="pd-section pd-section--cream" data-block="summary">
       <div class="container pd-split">
         <div class="pd-split__copy">
           <span class="badge badge--section" data-field="summary-badge"></span>
           <h2 class="pd-section__title" data-field="summary-heading"></h2>
           <p class="pd-section__body" data-field="summary-body"></p>
         </div>
-        <ul class="pd-early" data-list="earlyMetrics"></ul>
+        <ul class="pd-early" data-block="early-metrics" data-list="earlyMetrics"></ul>
       </div>
     </section>
 
     <section class="pd-section pd-section--white">
       <div class="container pd-split pd-split--visual">
-        <figure class="pd-split__media">
-          <img data-field="challenge-img" src="" alt="" width="1280" height="720">
+        <figure class="pd-split__media pd-split__media--tall">
+          <img data-field="challenge-img" src="" alt="" width="960" height="1280" loading="lazy">
         </figure>
         <div class="pd-split__copy">
-          <span class="badge badge--section">چالش اصلی</span>
+          <span class="badge badge--section">مسئله چه بود؟</span>
           <h2 class="pd-section__title" data-field="challenge-heading"></h2>
           <p class="pd-section__body" data-field="challenge-body"></p>
           <h3 class="pd-section__sub">اهداف استراتژیک</h3>
@@ -123,60 +144,59 @@
     </section>
 
     <section class="pd-section pd-section--cream">
-      <div class="container pd-split pd-split--visual pd-split--flip">
+      <div class="container">
+        <div class="section-head section-head--start">
+          <span class="badge badge--section">رویکرد ما</span>
+          <h2 class="section-head__title">از کشف مسئله تا مسیر محصول</h2>
+          <p class="section-head__desc">استراتژی، تحقیق و طراحی تجربه — بر اساس واقعیت‌های کاربر و محدودیت‌های کسب‌وکار.</p>
+        </div>
+      </div>
+      <div class="container pd-split pd-split--visual pd-split--flip" style="margin-top:2.5rem">
         <div class="pd-split__copy">
-          <span class="badge badge--section">تحقیقات و آنالیز</span>
+          <span class="badge badge--section">تحقیق و استراتژی</span>
           <h2 class="pd-section__title" data-field="research-heading"></h2>
           <p class="pd-section__body" data-field="research-sub"></p>
-          <h3 class="pd-section__sub">یافته‌های کلیدی فاز اکتشاف</h3>
+          <h3 class="pd-section__sub">یافته‌های کلیدی</h3>
           <ul class="pd-findings" data-list="findings"></ul>
         </div>
         <figure class="pd-split__media">
-          <img data-field="research-img" src="" alt="" width="1280" height="720">
+          <img data-field="research-img" src="" alt="" width="1280" height="720" loading="lazy">
+        </figure>
+      </div>
+      <div class="container" style="margin-top:3rem">
+        <figure class="pd-feature">
+          <img data-field="feature-img" src="" alt="" width="1600" height="686" loading="lazy">
         </figure>
       </div>
     </section>
 
     <section class="pd-section pd-section--white">
       <div class="container">
-        <div class="section-head">
-          <span class="badge badge--section">فرآیند طراحی تجربه کاربری</span>
+        <div class="section-head section-head--start">
+          <span class="badge badge--section">UX و محصول</span>
           <h2 class="section-head__title" data-field="ux-heading"></h2>
         </div>
         <div class="pd-ux" data-list="ux"></div>
       </div>
     </section>
 
-    <section class="pd-section pd-section--cream">
+    <section class="pd-section pd-section--cream" data-block="ds">
       <div class="container">
         <div class="section-head section-head--start">
-          <span class="badge badge--section">سیستم طراحی اختصاصی</span>
+          <span class="badge badge--section">جزئیات رابط</span>
           <h2 class="section-head__title" data-field="ds-heading"></h2>
           <p class="section-head__desc" data-field="ds-body"></p>
         </div>
-        <div class="pd-ds">
-          <div>
-            <h3 class="pd-ds__label">رنگ‌ها</h3>
-            <ul class="pd-swatches" data-list="colors"></ul>
-          </div>
-          <div>
-            <h3 class="pd-ds__label">تایپوگرافی</h3>
-            <ul class="pd-type" data-list="type"></ul>
-          </div>
-          <div>
-            <h3 class="pd-ds__label">فاصله‌گذاری</h3>
-            <ul class="pd-spacing" data-list="spacing"></ul>
-          </div>
-        </div>
+        <div class="pd-ds"></div>
       </div>
     </section>
 
     <section class="pd-section pd-section--white">
       <div class="container">
         <div class="section-head">
-          <span class="badge badge--section">رابط کاربری نهایی</span>
-          <h2 class="section-head__title">صفحات طراحی‌شده محصول</h2>
-          <p class="section-head__desc">نمایی از تجربه نهایی روی دسکتاپ — ساده، خوانا و آمادهٔ استفاده واقعی.</p>
+          <span class="badge badge--section">تجربه محصول</span>
+          <h2 class="section-head__title">صفحاتی از تجربه نهایی</h2>
+          <p class="section-head__desc">نمایی از رابط واقعی — بزرگ، خوانا و نزدیک به تجربه کاربر.</p>
         </div>
         <div class="pd-gallery" data-list="gallery"></div>
       </div>
@@ -185,12 +205,12 @@
     <section class="pd-section pd-section--cream">
       <div class="container">
         <div class="section-head section-head--start">
-          <span class="badge badge--section">توسعه و تکنولوژی</span>
+          <span class="badge badge--section">پیاده‌سازی فنی</span>
           <h2 class="section-head__title" data-field="tech-heading"></h2>
           <p class="section-head__desc" data-field="tech-body"></p>
         </div>
         <div class="pd-arch" aria-label="معماری فنی سیستم">
-          <p class="pd-arch__caption">معماری فنی سیستم</p>
+          <p class="pd-arch__caption">چگونه ساختیم</p>
           <ol class="pd-arch__layers" data-list="layers"></ol>
         </div>
         <ul class="pd-stack" data-list="stack"></ul>
@@ -199,15 +219,16 @@
 
     <section class="pd-section pd-section--white">
       <div class="container">
-        <div class="section-head">
-          <span class="badge badge--section">نتایج پایانی</span>
-          <h2 class="section-head__title">تغییرات واقعی در شاخص‌های کلیدی بیزینس</h2>
+        <div class="pd-outcome-head" data-block="outcome-copy">
+          <span class="badge badge--section" data-field="outcome-badge">نتیجه پروژه</span>
+          <h2 class="pd-section__title" data-field="outcome-heading">خروجی پروژه</h2>
+          <p class="pd-section__body" data-field="outcome-body"></p>
         </div>
         <ul class="pd-kpis" data-list="kpis"></ul>
       </div>
     </section>
 
-    <section class="pd-section pd-section--cream">
+    <section class="pd-section pd-section--cream" data-block="quote">
       <div class="container">
         <blockquote class="pd-quote">
           <p class="pd-quote__text" data-field="quote-text"></p>
@@ -222,7 +243,39 @@
       </div>
     </section>
 
-    <section class="pd-next">
+    <section class="pd-section pd-section--dark" data-block="closing">
+      <div class="container">
+        <article class="pd-closing">
+          <h2 class="pd-closing__title" data-field="closing-heading"></h2>
+          <p class="pd-closing__body" data-field="closing-body"></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="home-final-cta">
+      <div class="container">
+        <article class="home-final-cta__card">
+          <h2 class="home-final-cta__title">پروژه بعدی شما می‌تواند از همین‌جا شروع شود.</h2>
+          <p class="home-final-cta__desc">از کشف مسئله تا طراحی و توسعه محصول دیجیتال — آماده‌ایم درباره ایده شما صحبت کنیم.</p>
+          <div class="home-final-cta__actions">
+            <a href="contact.html" class="btn btn--primary btn--lg">شروع یک پروژه</a>
+            <a href="contact.html" class="btn btn--outline btn--lg">با ما صحبت کنید</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="pd-related" data-block="related">
+      <div class="container">
+        <div class="section-head section-head--start">
+          <span class="badge badge--section">پروژه‌های دیگر</span>
+          <h2 class="section-head__title">نمونه‌های دیگر استودیو هش</h2>
+        </div>
+        <div class="pd-related__grid" data-list="related"></div>
+      </div>
+    </section>
+
+    <section class="pd-next" data-block="next">
       <div class="container">
         <a class="pd-next__card" data-field="next-link" href="projects.html">
           <div class="pd-next__copy">
@@ -232,22 +285,9 @@
             <p class="pd-next__desc" data-field="next-lead"></p>
           </div>
           <figure class="pd-next__media">
-            <img data-field="next-img" src="" alt="" width="640" height="360">
+            <img data-field="next-img" src="" alt="" width="640" height="360" loading="lazy">
           </figure>
         </a>
-      </div>
-    </section>
-
-    <section class="home-final-cta">
-      <div class="container">
-        <article class="home-final-cta__card">
-          <h2 class="home-final-cta__title">می‌خواهید پروژه بعدی ما باشید؟</h2>
-          <p class="home-final-cta__desc">آماده‌ایم ایده‌ها را به محصول دیجیتال تبدیل کنیم — از کشف مسئله تا لانچ و رشد.</p>
-          <div class="home-final-cta__actions">
-            <a href="contact.html" class="btn btn--primary btn--lg">شروع همکاری</a>
-            <a href="contact.html" class="btn btn--outline btn--lg">مشاوره رایگان</a>
-          </div>
-        </article>
       </div>
     </section>
   </main>
@@ -308,8 +348,8 @@
     </div>
   </footer>
 
-  <script src="js/projects-data.js?v=9" charset="utf-8"></script>
-  <script src="js/project.js?v=9" charset="utf-8"></script>
+  <script src="js/projects-data.js?v=12" charset="utf-8"></script>
+  <script src="js/project.js?v=12" charset="utf-8"></script>
   <script src="js/main.js?v=4" charset="utf-8"></script>
   <script src="/js/studio-info.js"></script>
   <script src="/js/studio-chrome.js"></script>

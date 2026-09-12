@@ -1,22 +1,6 @@
 (function (global) {
   'use strict';
 
-  var TYPE = [
-    { name: 'H1', value: '32 / ExtraBold' },
-    { name: 'H2', value: '24 / Bold' },
-    { name: 'Body', value: '16 / Regular' },
-    { name: 'Caption', value: '13 / Medium' }
-  ];
-
-  var SPACING = [
-    { name: 'XS', value: '4px' },
-    { name: 'S', value: '8px' },
-    { name: 'M', value: '16px' },
-    { name: 'L', value: '24px' },
-    { name: 'XL', value: '32px' },
-    { name: '2XL', value: '48px' }
-  ];
-
   var PROJECTS = [
     {
       slug: 'zarafe',
@@ -190,6 +174,18 @@
       services: 'طراحی محصول آموزشی + وب',
       year: '۱۴۰۳',
       duration: '۵ ماه کاری',
+      client: 'مُنیاز',
+      role: 'طراحی محصول، تجربه کاربری و توسعه وب',
+      platform: 'وب',
+      closing: {
+        heading: 'چرا این پروژه مهم است',
+        body: 'مُنیاز فقط یک ویترین کتاب دیجیتال نیست — محصولی است که لحظهٔ گیر کردن روی تست را به جلسهٔ کوتاه تحلیلی تبدیل می‌کند. استودیو هش از کشف مسئله و مسیر کاربر تا لایسنس، OTP و پلیر مطالعه، تجربه را حول یک هدف بیزینسی چید: اعتماد قبل از پرداخت، و مطالعهٔ واقعی بعد از آن.'
+      },
+      outcome: {
+        badge: 'نتیجه پروژه',
+        heading: 'خروجی ملموس برای نشر و یادگیری',
+        body: 'مسیر انتخاب چهارگانه، اعتماد چهره‌محور دبیر، و حلقهٔ تست‌به‌ویدئو روی همان صفحه — بدون اینکه محصول شبیه انبار PDF به‌نظر برسد.'
+      },
       summary: {
         badge: 'خلاصه پروژه',
         heading: 'نشر را از چاپخانه به لحظهٔ گیر کردن روی تست ببر',
@@ -1414,8 +1410,11 @@
         { src: base + '-s4.webp', alt: 'صفحه یا نمای دیگر ' + project.name }
       ]
     };
-    if (!project.designSystem.type) project.designSystem.type = TYPE;
-    if (!project.designSystem.spacing) project.designSystem.spacing = SPACING;
+    /* Keep TYPE/SPACING only when a project explicitly defines them — no generic fake tokens. */
+    if (!project.designSystem.type) project.designSystem.type = [];
+    if (!project.designSystem.spacing) project.designSystem.spacing = [];
+    if (!project.client) project.client = project.name;
+    if (!project.role) project.role = project.services;
   });
 
   // User-supplied section shots (desgin/{slug}/ → assets/.../{slug}-sN.webp)
