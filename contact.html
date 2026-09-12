@@ -75,9 +75,9 @@
           <span class="ct-breadcrumb__current">تماس با ما</span>
         </nav>
         <h1 class="ct-hero__title">درباره محصولی که می‌خواهید بسازید، حرف بزنیم.</h1>
-        <p class="ct-hero__lead">فرم کوتاه را پر کنید یا مستقیم تماس بگیرید. معمولاً ظرف ۲۴ تا ۴۸ ساعت برای هماهنگی جلسه اولیه پاسخ می‌دهیم.</p>
-        <ol class="ct-process" aria-label="مراحل بعد از ارسال">
-          <li><strong>۱.</strong> فرم را ارسال کنید (ایمیل شما باز می‌شود).</li>
+        <p class="ct-hero__lead">فرم کوتاه برای شروع یک گفت‌وگوی حرفه‌ای است — نه تیکت پشتیبانی. معمولاً ظرف ۲۴ تا ۴۸ ساعت برای جلسه کشف پاسخ می‌دهیم.</p>
+        <ol class="ct-process" aria-label="مراحل بعد از تماس">
+          <li><strong>۱.</strong> فرم را پر کنید؛ دکمه، پنجره ایمیل شما را باز می‌کند.</li>
           <li><strong>۲.</strong> تیم استودیو پیام را می‌خواند و سؤال‌های کلیدی را مشخص می‌کند.</li>
           <li><strong>۳.</strong> جلسه کوتاه کشف برای هم‌راستا شدن روی مسئله و محدوده.</li>
         </ol>
@@ -143,8 +143,9 @@
           </aside>
 
           <div class="ct-form-card">
-            <h2 class="ct-form-card__title">جزئیات پروژه شما</h2>
-            <form id="contact-form" class="ct-form" novalidate>
+            <h2 class="ct-form-card__title">شروع گفت‌وگو درباره پروژه</h2>
+            <p class="ct-form-card__lead">چند فیلد ضروری کافی است. جزئیات بودجه و زمان‌بندی اختیاری‌اند.</p>
+            <form id="contact-form" class="ct-form" novalidate data-cta-location="contact-form">
               <div class="ct-form__row">
                 <div class="ct-form__field">
                   <label class="ct-form__label" for="name">نام و نام خانوادگی</label>
@@ -162,64 +163,75 @@
                   <input class="ct-form__input" type="email" id="email" name="email" placeholder="example@domain.com" required autocomplete="email">
                 </div>
                 <div class="ct-form__field">
-                  <label class="ct-form__label" for="company">نام شرکت / استارتاپ</label>
+                  <label class="ct-form__label" for="company">شرکت / برند <span class="ct-form__optional">(اختیاری)</span></label>
                   <input class="ct-form__input" type="text" id="company" name="company" placeholder="نام کسب‌وکارتان" autocomplete="organization">
                 </div>
               </div>
 
-              <div class="ct-form__row">
-                <div class="ct-form__field">
-                  <label class="ct-form__label" for="project-type">نوع پروژه</label>
-                  <select class="ct-form__select" id="project-type" name="projectType" required>
-                    <option value="" disabled selected>وب‌سایت، اپلیکیشن، MVP...</option>
-                    <option value="website">وب‌سایت</option>
-                    <option value="app">اپلیکیشن موبایل</option>
-                    <option value="mvp">MVP</option>
-                    <option value="product">طراحی محصول</option>
-                    <option value="ai">هوش مصنوعی</option>
-                    <option value="other">سایر</option>
-                  </select>
-                </div>
-                <div class="ct-form__field">
-                  <label class="ct-form__label" for="budget">بودجه تقریبی</label>
-                  <select class="ct-form__select" id="budget" name="budget" required>
-                    <option value="" disabled selected>بازه بودجه را انتخاب کنید</option>
-                    <option value="under-100">کمتر از ۱۰۰ میلیون</option>
-                    <option value="100-300">۱۰۰ تا ۳۰۰ میلیون</option>
-                    <option value="300-700">۳۰۰ تا ۷۰۰ میلیون</option>
-                    <option value="700-plus">بیش از ۷۰۰ میلیون</option>
-                    <option value="unsure">هنوز مشخص نیست</option>
-                  </select>
-                </div>
-              </div>
-
               <div class="ct-form__field">
-                <label class="ct-form__label" for="timeline">زمان‌بندی مورد نظر برای شروع</label>
-                <select class="ct-form__select" id="timeline" name="timeline" required>
-                  <option value="" disabled selected>زمان مورد انتظار خود را انتخاب کنید</option>
-                  <option value="asap">در اسرع وقت</option>
-                  <option value="1-month">حدود یک ماه آینده</option>
-                  <option value="1-3-months">۱ تا ۳ ماه آینده</option>
-                  <option value="exploring">فعلاً در حال بررسی هستم</option>
+                <label class="ct-form__label" for="project-type">نوع پروژه</label>
+                <select class="ct-form__select" id="project-type" name="projectType" required>
+                  <option value="" disabled selected>انتخاب کنید</option>
+                  <option value="product">طراحی محصول</option>
+                  <option value="ui-ux">UI/UX</option>
+                  <option value="website">توسعه وب</option>
+                  <option value="app">اپلیکیشن موبایل</option>
+                  <option value="mvp">MVP</option>
+                  <option value="ai">هوش مصنوعی</option>
+                  <option value="seo">سئو و رشد</option>
+                  <option value="consulting">مشاوره محصول</option>
+                  <option value="other">سایر</option>
                 </select>
               </div>
 
               <div class="ct-form__field">
-                <label class="ct-form__label" for="message">توضیحات پروژه</label>
-                <textarea class="ct-form__textarea" id="message" name="message" placeholder="کمی درباره ایده، فیچرهای کلیدی و اهداف محصولتان بنویسید..." required></textarea>
+                <label class="ct-form__label" for="message">مسئله یا ایده محصول</label>
+                <textarea class="ct-form__textarea" id="message" name="message" placeholder="کاربران کی‌اند؟ الان چه مشکلی هست؟ چه چیزی می‌خواهید بسازید؟" required></textarea>
               </div>
 
-              <div class="ct-upload" id="ct-upload" role="button" tabindex="0" aria-controls="attachment">
-                <input type="file" id="attachment" name="attachment" accept=".pdf,.zip,.png,.jpg,.jpeg" hidden>
-                <span class="ct-upload__icon" aria-hidden="true">
-                  <img src="assets/icons/contact/clip.svg" alt="" width="20" height="20">
-                </span>
-                <span class="ct-upload__text">یا فایل را اینجا رها کنید — <span class="ct-upload__link">آپلود فایل پروپوزال یا مستندات</span></span>
-                <span class="ct-upload__hint">حداکثر حجم فایل ۱۰ مگابایت (PDF, ZIP, PNG)</span>
-                <span class="ct-upload__file" id="ct-upload-name" hidden></span>
-              </div>
+              <details class="ct-form__details" id="ct-details">
+                <summary class="ct-form__details-summary">جزئیات بیشتر (اختیاری)</summary>
+                <div class="ct-form__details-body">
+                  <div class="ct-form__field">
+                    <label class="ct-form__label" for="goal">هدف اصلی پروژه</label>
+                    <input class="ct-form__input" type="text" id="goal" name="goal" placeholder="مثلاً لانچ MVP، بازطراحی قیف خرید، پورتال داخلی…">
+                  </div>
+                  <div class="ct-form__row">
+                    <div class="ct-form__field">
+                      <label class="ct-form__label" for="budget">بودجه تقریبی</label>
+                      <select class="ct-form__select" id="budget" name="budget">
+                        <option value="" selected>هنوز مشخص نیست / ترجیح می‌دهم بعداً بگویم</option>
+                        <option value="under-100">کمتر از ۱۰۰ میلیون</option>
+                        <option value="100-300">۱۰۰ تا ۳۰۰ میلیون</option>
+                        <option value="300-700">۳۰۰ تا ۷۰۰ میلیون</option>
+                        <option value="700-plus">بیش از ۷۰۰ میلیون</option>
+                      </select>
+                    </div>
+                    <div class="ct-form__field">
+                      <label class="ct-form__label" for="timeline">زمان‌بندی شروع</label>
+                      <select class="ct-form__select" id="timeline" name="timeline">
+                        <option value="" selected>هنوز مشخص نیست</option>
+                        <option value="asap">در اسرع وقت</option>
+                        <option value="1-month">حدود یک ماه آینده</option>
+                        <option value="1-3-months">۱ تا ۳ ماه آینده</option>
+                        <option value="exploring">فعلاً در حال بررسی هستم</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="ct-upload" id="ct-upload" role="button" tabindex="0" aria-controls="attachment">
+                    <input type="file" id="attachment" name="attachment" accept=".pdf,.zip,.png,.jpg,.jpeg" hidden>
+                    <span class="ct-upload__icon" aria-hidden="true">
+                      <img src="assets/icons/contact/clip.svg" alt="" width="20" height="20">
+                    </span>
+                    <span class="ct-upload__text">اشاره به فایل مستندات — <span class="ct-upload__link">انتخاب نام فایل</span></span>
+                    <span class="ct-upload__hint">mailto پیوست واقعی ندارد؛ نام فایل در متن ایمیل می‌آید و فایل را جدا بفرستید. حداکثر ۱۰ مگابایت.</span>
+                    <span class="ct-upload__file" id="ct-upload-name" hidden></span>
+                  </div>
+                </div>
+              </details>
 
-              <button type="submit" class="ct-form__submit">ارسال درخواست پروژه</button>
+              <button type="submit" class="ct-form__submit" data-cta="start-project" data-cta-location="contact-form">ادامه با ایمیل</button>
+              <p class="ct-form__footnote">ارسال سروری نیست. دکمه، پیش‌نویس ایمیل به info@hashstudio.ir را در کلاینت ایمیل شما باز می‌کند.</p>
             </form>
           </div>
         </div>

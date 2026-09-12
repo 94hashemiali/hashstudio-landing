@@ -250,7 +250,49 @@
 }
 
 .ct-form-card__title {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ct-form-card__lead {
+  margin: 0 0 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--color-ink, #17252b) 68%, transparent);
+}
+
+.ct-form__optional {
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.ct-form__details {
+  margin: 0 0 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--color-ink, #17252b) 12%, transparent);
+  border-radius: 0.75rem;
+  padding: 0.35rem 0.85rem 0.85rem;
+  background: color-mix(in srgb, var(--color-bg, #fff) 96%, #f3f0ea);
+}
+
+.ct-form__details-summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.65rem 0;
+  list-style: none;
+}
+
+.ct-form__details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.ct-form__details-body {
+  padding-top: 0.35rem;
+}
+
+.ct-form__footnote {
+  margin: 0.85rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--color-ink, #17252b) 55%, transparent);
 }
 
 .ct-form__row {

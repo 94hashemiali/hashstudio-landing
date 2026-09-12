@@ -294,6 +294,13 @@
   padding: 3rem 1rem;
   text-align: center;
   color: var(--color-text-secondary);
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.proj-empty .btn {
+  margin-top: 0.25rem;
 }
 
 .projects-page .home-final-cta__card {

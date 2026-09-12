@@ -135,6 +135,12 @@
             '<h3 class="project-card__title">' +
             escapeHtml(p.name) +
             '</h3>' +
+            '<p class="project-card__role">' +
+            escapeHtml(p.role || p.services || '') +
+            '</p>' +
+            '<p class="project-card__lead">' +
+            escapeHtml(p.lead || '') +
+            '</p>' +
             '<div class="project-card__tags">' +
             tags +
             '</div>' +

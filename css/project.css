@@ -982,6 +982,12 @@
   color: color-mix(in srgb, var(--color-ink, #111) 55%, transparent);
 }
 
+.pd-outcome__caption {
+  margin: 0 0 1rem;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--color-ink, #111) 55%, transparent);
+}
+
 .pd-quote__eyebrow {
   margin: 0 0 0.75rem;
   font-size: 0.8125rem;

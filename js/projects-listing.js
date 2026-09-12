@@ -18,6 +18,34 @@
   var filterHost = document.querySelector('.proj-filters');
   var state = { filter: 'all', page: 1 };
 
+  function readUrlState() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var filter = params.get('filter') || 'all';
+      if (!FILTER_LABELS[filter]) filter = 'all';
+      if (filter !== 'all' && availableFilters().indexOf(filter) === -1) filter = 'all';
+      state.filter = filter;
+      var page = parseInt(params.get('page') || '1', 10);
+      state.page = page > 0 ? page : 1;
+    } catch (err) {
+      state.filter = 'all';
+      state.page = 1;
+    }
+  }
+
+  function writeUrlState() {
+    try {
+      var params = new URLSearchParams();
+      if (state.filter && state.filter !== 'all') params.set('filter', state.filter);
+      if (state.page > 1) params.set('page', String(state.page));
+      var qs = params.toString();
+      var next = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', next);
+      }
+    } catch (err) {}
+  }
+
   function escapeHtml(value) {
     return String(value)
       .replace(/&/g, '&amp;')
@@ -75,7 +103,11 @@
     var pageItems = list.slice(start, start + PAGE_SIZE);
 
     if (!pageItems.length) {
-      grid.innerHTML = '<p class="proj-empty">پروژه‌ای با این فیلتر پیدا نشد.</p>';
+      grid.innerHTML =
+        '<div class="proj-empty">' +
+        '<p>پروژه‌ای با این فیلتر پیدا نشد.</p>' +
+        '<button type="button" class="btn btn--outline" data-proj-filter-reset>نمایش همه پروژه‌ها</button>' +
+        '</div>';
       renderPager(0);
       return;
     }
@@ -202,6 +234,20 @@
         item.classList.toggle('is-active', on);
         item.setAttribute('aria-pressed', String(on));
       });
+      writeUrlState();
+      renderCards();
+    });
+  }
+
+  if (grid) {
+    grid.addEventListener('click', function (event) {
+      var reset = event.target.closest('[data-proj-filter-reset]');
+      if (!reset) return;
+      event.preventDefault();
+      state.filter = 'all';
+      state.page = 1;
+      writeUrlState();
+      renderFilters();
       renderCards();
     });
   }
@@ -215,11 +261,21 @@
       if (value === 'prev') state.page = Math.max(1, state.page - 1);
       else if (value === 'next') state.page = Math.min(totalPages, state.page + 1);
       else state.page = Number(value) || 1;
+      writeUrlState();
       renderCards();
       var listing = document.getElementById('listing');
-      if (listing) listing.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (listing) {
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        listing.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      }
     });
   }
+
+  window.addEventListener('popstate', function () {
+    readUrlState();
+    renderFilters();
+    renderCards();
+  });
 
   if (!projects.length) {
     if (grid) {
@@ -228,6 +284,7 @@
     return;
   }
 
+  readUrlState();
   renderFilters();
   renderCards();
 })();

@@ -966,6 +966,23 @@ a.service-mini:focus-visible {
   line-height: var(--line-height-tight);
 }
 
+.project-card__role {
+  margin: 0.4rem 0 0;
+  font-size: 0.8125rem;
+  color: #546e7a;
+}
+
+.project-card__lead {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #455a64;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .project-card__tags {
   display: flex;
   flex-wrap: wrap;

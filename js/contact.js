@@ -10,6 +10,7 @@
   var fileName = document.getElementById('ct-upload-name');
   var MAX_BYTES = 10 * 1024 * 1024;
   var studioEmail = (window.HASH_STUDIO && window.HASH_STUDIO.email) || 'info@hashstudio.ir';
+  var details = document.getElementById('ct-details');
 
   function showError(input, message) {
     input.classList.add('is-error');
@@ -66,7 +67,7 @@
       return;
     }
     fileName.hidden = false;
-    fileName.textContent = file.name;
+    fileName.textContent = 'نام فایل در ایمیل ذکر می‌شود: ' + file.name;
   }
 
   if (fileInput) {
@@ -129,42 +130,46 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    var fields = form.querySelectorAll('.ct-form__input, .ct-form__select, .ct-form__textarea');
+    var required = form.querySelectorAll('[required]');
     var isValid = true;
-
-    fields.forEach(function (field) {
+    required.forEach(function (field) {
       if (!validateField(field)) isValid = false;
     });
 
-    if (!isValid) return;
+    if (!isValid) {
+      var firstBad = form.querySelector('.is-error');
+      if (firstBad) firstBad.focus();
+      return;
+    }
 
     var name = fieldValue('name');
     var phone = fieldValue('phone');
     var email = fieldValue('email');
+    var company = fieldValue('company');
     var projectType = fieldLabel('project-type');
+    var goal = fieldValue('goal');
     var budget = fieldLabel('budget');
     var timeline = fieldLabel('timeline');
     var message = fieldValue('message');
     var attachmentNote = (fileInput && fileInput.files && fileInput.files[0])
-      ? ('فایل پیوست در مرورگر انتخاب شد: ' + fileInput.files[0].name + ' (لازم است جداگانه ایمیل شود)')
-      : 'بدون پیوست';
+      ? ('نام فایل انتخاب‌شده: ' + fileInput.files[0].name + ' — فایل را جداگانه به همین ایمیل پیوست کنید (mailto پیوست ندارد).')
+      : 'بدون اشاره به فایل';
 
-    var body = [
+    var lines = [
       'نام: ' + name,
       'تلفن: ' + phone,
-      'ایمیل: ' + email,
-      'نوع پروژه: ' + projectType,
-      'بودجه: ' + budget,
-      'بازه زمانی: ' + timeline,
-      '',
-      'شرح:',
-      message,
-      '',
-      attachmentNote
-    ].join('\n');
+      'ایمیل: ' + email
+    ];
+    if (company) lines.push('شرکت / برند: ' + company);
+    lines.push('نوع پروژه: ' + projectType);
+    if (goal) lines.push('هدف پروژه: ' + goal);
+    if (budget && budget.indexOf('انتخاب') === -1) lines.push('بودجه تقریبی: ' + budget);
+    if (timeline && timeline.indexOf('انتخاب') === -1) lines.push('زمان‌بندی: ' + timeline);
+    lines.push('', 'شرح:', message, '', attachmentNote);
 
+    var body = lines.join('\n');
     if (body.length > 1600) {
-      body = body.slice(0, 1600) + '\n…(ادامه در صورت نیاز جداگانه ارسال شود)';
+      body = body.slice(0, 1600) + '\n…(ادامه را در ایمیل کامل کنید)';
     }
 
     var mailto = 'mailto:' + studioEmail +
@@ -180,10 +185,19 @@
     }
 
     successEl.innerHTML =
-      'فرم آماده ارسال است. پنجره ایمیل باز می‌شود تا پیام به <strong dir="ltr">' +
+      'پنجره ایمیل باز می‌شود تا پیام به <strong dir="ltr">' +
       studioEmail +
-      '</strong> برسد. اگر باز نشد، همین اطلاعات را مستقیم به همین آدرس بفرستید.';
+      '</strong> برسد. ارسال خودکار سروری نیست — اگر پنجره باز نشد، همین متن را دستی بفرستید.';
 
     window.location.href = mailto;
   });
+
+  if (details) {
+    details.addEventListener('toggle', function () {
+      if (details.open) {
+        var first = details.querySelector('select, input, textarea');
+        if (first) first.focus();
+      }
+    });
+  }
 })();

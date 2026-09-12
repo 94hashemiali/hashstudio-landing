@@ -98,16 +98,16 @@
             استودیو هش همراه استارتاپ‌ها و شرکت‌هاست: کشف مسئله، طراحی تجربه، و توسعه قابل‌اتکا — تا محصولی بسازید که کاربر بفهمد و کسب‌وکار رشد کند.
           </p>
           <div class="home-hero__actions">
-            <a href="contact.html" class="btn btn--primary btn--lg">شروع پروژه</a>
-            <a href="projects.html" class="btn btn--outline btn--lg">مشاهده پروژه‌ها</a>
+            <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="hero">شروع پروژه</a>
+            <a href="projects.html" class="btn btn--outline btn--lg" data-cta="view-projects" data-cta-location="hero">مشاهده پروژه‌ها</a>
           </div>
           <div class="home-hero__proof">
-            <div class="home-hero__avatars">
+            <div class="home-hero__avatars" aria-hidden="true">
               <img src="assets/images/home/avatar-1.png" alt="" width="34" height="34">
               <img src="assets/images/home/avatar-2.png" alt="" width="34" height="34">
               <img src="assets/images/home/avatar-3.png" alt="" width="34" height="34">
             </div>
-            <p class="home-hero__proof-text">سال‌ها تجربه در ساخت<br>محصولات دیجیتال جدی</p>
+            <p class="home-hero__proof-text">۱۷ کیس‌استادی منتشرشده<br>از فین‌تک تا آموزش و فروشگاه</p>
           </div>
         </div>
         <div class="home-hero__visual">
@@ -228,83 +228,6 @@
       </div>
     </section>
 
-    <!-- Process -->
-    <!-- Process — desgin/process-section.svg (1440×524) -->
-    <section class="home-section home-section--cream process" id="process">
-      <div class="container">
-        <div class="section-head process__head">
-          <span class="process__badge">فرآیند کار ما</span>
-          <h2 class="process__title">از ایده تا انتشار؛ مسیر ساخت محصول</h2>
-        </div>
-
-        <div class="process-steps">
-          <article class="process-step is-active">
-            <div class="process-step__rail">
-              <div class="process-step__circle">۰۱</div>
-            </div>
-            <div class="process-step__body">
-              <h3 class="process-step__title">تحقیق و کشف</h3>
-              <p class="process-step__desc">شناخت نیازها</p>
-            </div>
-          </article>
-          <article class="process-step">
-            <div class="process-step__rail">
-              <div class="process-step__circle">۰۲</div>
-            </div>
-            <div class="process-step__body">
-              <h3 class="process-step__title">استراتژی</h3>
-              <p class="process-step__desc">تعریف مسیر</p>
-            </div>
-          </article>
-          <article class="process-step">
-            <div class="process-step__rail">
-              <div class="process-step__circle">۰۳</div>
-            </div>
-            <div class="process-step__body">
-              <h3 class="process-step__title">معماری اطلاعات</h3>
-              <p class="process-step__desc">ساختار اولیه</p>
-            </div>
-          </article>
-          <article class="process-step">
-            <div class="process-step__rail">
-              <div class="process-step__circle">۰۴</div>
-            </div>
-            <div class="process-step__body">
-              <h3 class="process-step__title">طراحی UI</h3>
-              <p class="process-step__desc">بصری‌سازی نهایی</p>
-            </div>
-          </article>
-          <article class="process-step">
-            <div class="process-step__rail">
-              <div class="process-step__circle">۰۵</div>
-            </div>
-            <div class="process-step__body">
-              <h3 class="process-step__title">توسعه</h3>
-              <p class="process-step__desc">کدنویسی اصولی</p>
-            </div>
-          </article>
-          <article class="process-step">
-            <div class="process-step__rail">
-              <div class="process-step__circle">۰۶</div>
-            </div>
-            <div class="process-step__body">
-              <h3 class="process-step__title">تست و لانچ</h3>
-              <p class="process-step__desc">کنترل کیفیت نهایی</p>
-            </div>
-          </article>
-          <article class="process-step">
-            <div class="process-step__rail">
-              <div class="process-step__circle">۰۷</div>
-            </div>
-            <div class="process-step__body">
-              <h3 class="process-step__title">رشد و پشتیبانی</h3>
-              <p class="process-step__desc">بهبود مستمر</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- Portfolio — featured + supporting projects -->
     <section class="home-section home-section--white portfolio" id="portfolio">
       <div class="container">
@@ -421,6 +344,83 @@
 
         <div class="portfolio__more">
           <a href="projects.html" class="btn btn--outline portfolio__more-btn" data-cta="view-projects" data-cta-location="home-portfolio">مشاهده همه پروژه‌ها</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <!-- Process — desgin/process-section.svg (1440×524) -->
+    <section class="home-section home-section--cream process" id="process">
+      <div class="container">
+        <div class="section-head process__head">
+          <span class="process__badge">فرآیند کار ما</span>
+          <h2 class="process__title">از ایده تا انتشار؛ مسیر ساخت محصول</h2>
+        </div>
+
+        <div class="process-steps">
+          <article class="process-step is-active">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۱</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">تحقیق و کشف</h3>
+              <p class="process-step__desc">شناخت نیازها</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۲</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">استراتژی</h3>
+              <p class="process-step__desc">تعریف مسیر</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۳</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">معماری اطلاعات</h3>
+              <p class="process-step__desc">ساختار اولیه</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۴</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">طراحی UI</h3>
+              <p class="process-step__desc">بصری‌سازی نهایی</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۵</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">توسعه</h3>
+              <p class="process-step__desc">کدنویسی اصولی</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۶</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">تست و لانچ</h3>
+              <p class="process-step__desc">کنترل کیفیت نهایی</p>
+            </div>
+          </article>
+          <article class="process-step">
+            <div class="process-step__rail">
+              <div class="process-step__circle">۰۷</div>
+            </div>
+            <div class="process-step__body">
+              <h3 class="process-step__title">رشد و پشتیبانی</h3>
+              <p class="process-step__desc">بهبود مستمر</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -577,7 +577,7 @@
             </div>
             <span class="industry-featured__badge">حوزه تخصصی</span>
             <h3 class="industry-featured__title">فین‌تک</h3>
-            <p class="industry-featured__desc">پرداخت، کیف پول دیجیتال، لندتک و سامانه‌های مالی امن — از MVP تا مقیاس میلیونی تراکنش.</p>
+            <p class="industry-featured__desc">پرداخت، کیف پول دیجیتال، لندتک و سامانه‌های مالی — از MVP تا محصول در حال استفاده واقعی.</p>
             <div class="industry-featured__tags">
               <span class="industry-featured__tag">بانکداری دیجیتال</span>
               <span class="industry-featured__tag">کیف پول</span>
@@ -785,7 +785,7 @@
               <span class="faq-item__label">ساخت یک MVP چقدر زمان می‌برد؟</span>
               <span class="faq-item__icon" aria-hidden="true"></span>
             </summary>
-            <p class="faq-item__answer">بسته به ویژگی‌های کلیدی مدنظر، فرآیند توسعه چابک یک محصول کمینه ارزشمند (MVP) در استودیو هش معمولاً بین ۶ تا ۱۲ هفته زمان می‌برد. ما تمام تلاشمان را می‌کنیم تا در کوتاه‌ترین زمان ممکن، بهترین خروجی را به بازار بفرستید.</p>
+            <p class="faq-item__answer">بسته به دامنه فیچر و آمادگی تیم شما، MVP معمولاً در چند اسپرینت کوتاه شکل می‌گیرد. بازه دقیق بعد از جلسه کشف و نقشه دامنه مشخص می‌شود — نه با عدد ثابت تبلیغاتی.</p>
           </details>
           <details class="faq-item">
             <summary class="faq-item__question">
@@ -820,7 +820,7 @@
               <span class="faq-item__label">آیا با استارتاپ‌های Early Stage کار می‌کنید؟</span>
               <span class="faq-item__icon" aria-hidden="true"></span>
             </summary>
-            <p class="faq-item__answer">بله. بسیاری از پروژه‌های ما با تیم‌های دو تا پنج نفره شروع شده و تا مرحله رشد و جذب سرمایه همراهی کرده‌ایم.</p>
+            <p class="faq-item__answer">بله. با تیم‌های کوچک و Early Stage کار می‌کنیم؛ مسیر از کشف مسئله و دامنه MVP تا ساخت و لانچ ادامه پیدا می‌کند — بدون وعده جذب سرمایه به‌عنوان خدمت استودیو.</p>
           </details>
         </div>
       </div>
@@ -833,8 +833,8 @@
           <h2 class="home-final-cta__title">پروژه بعدی شما می‌تواند از همین‌جا شروع شود.</h2>
           <p class="home-final-cta__desc">اگر ایده‌ای دارید یا به دنبال تیمی برای ساخت محصول دیجیتال هستید، درباره مسئله‌تان حرف بزنیم.</p>
           <div class="home-final-cta__actions">
-            <a href="contact.html" class="btn btn--primary btn--lg">شروع پروژه</a>
-            <a href="projects.html" class="btn btn--outline btn--lg">مشاهده پروژه‌ها</a>
+            <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="footer-cta">شروع پروژه</a>
+            <a href="projects.html" class="btn btn--outline btn--lg" data-cta="view-projects" data-cta-location="footer-cta">مشاهده پروژه‌ها</a>
           </div>
         </article>
       </div>
