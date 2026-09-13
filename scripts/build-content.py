@@ -569,6 +569,7 @@ def render_article(
   </footer>
 
   <script src="js/studio-info.js"></script>
+  <script src="js/analytics.js"></script>
   <script src="js/studio-chrome.js"></script>
   <script src="js/main.js"></script>
   <script src="js/article.js"></script>

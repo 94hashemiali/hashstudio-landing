@@ -69,6 +69,29 @@ Detail pages ship progressive enhancement only (`article.js`, `project.js`). The
 
 Listing pages (`projects.html`, `services.html`, `blog.html`, home) still load the data files they need for filters/cards.
 
+## Conversion & attribution (Phase 10)
+
+Provider-neutral layer: `js/analytics.js` → `window.HashAnalytics`.
+
+| Concern | Behavior |
+|---------|----------|
+| Events | `cta_click`, `project_view`, `service_view`, `article_view`, `external_project_click`, form funnel, FAQ, outbound |
+| CTA markup | `data-cta` + `data-cta-location` (+ optional slug attrs) |
+| Attribution | first/last UTM + referrer + landing path in `localStorage` key `hashstudio_attribution` |
+| Lead context | last project/service/article path in `sessionStorage` for mailto enrichment |
+| Contact | still `mailto:` — attribution block appended to email body only |
+| Privacy | never track name/email/phone/company/message |
+
+Connect a provider later:
+
+```js
+window.HASH_ANALYTICS_PROVIDER = {
+  track: function (event, props) { /* forward */ }
+};
+```
+
+If no provider is set, tracking is a silent no-op.
+
 ## Deploy
 
 Run `npm run build` before deploy. Repo root is the static site.

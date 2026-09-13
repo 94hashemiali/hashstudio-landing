@@ -11,6 +11,21 @@
   var MAX_BYTES = 10 * 1024 * 1024;
   var studioEmail = (window.HASH_STUDIO && window.HASH_STUDIO.email) || 'info@hashstudio.ir';
   var details = document.getElementById('ct-details');
+  var formStarted = false;
+  var analytics = window.HashAnalytics;
+
+  function track(eventName, props) {
+    if (!analytics || typeof analytics.track !== 'function') return;
+    try {
+      analytics.track(eventName, props || {});
+    } catch (err) {}
+  }
+
+  function markFormStart() {
+    if (formStarted) return;
+    formStarted = true;
+    track('contact_form_start', { location: 'contact-form' });
+  }
 
   function showError(input, message) {
     input.classList.add('is-error');
@@ -48,6 +63,8 @@
   }
 
   form.querySelectorAll('.ct-form__input, .ct-form__select, .ct-form__textarea').forEach(function (input) {
+    input.addEventListener('focus', markFormStart, { once: false });
+    input.addEventListener('input', markFormStart, { once: false });
     input.addEventListener('blur', function () {
       validateField(input);
     });
@@ -72,6 +89,7 @@
 
   if (fileInput) {
     fileInput.addEventListener('change', function () {
+      markFormStart();
       setFile(fileInput.files && fileInput.files[0]);
     });
   }
@@ -109,6 +127,7 @@
         dt.items.add(file);
         fileInput.files = dt.files;
       } catch (err) {}
+      markFormStart();
       setFile(file);
     });
   }
@@ -127,16 +146,60 @@
     return fieldValue(id);
   }
 
+  function selectValue(id) {
+    var el = document.getElementById(id);
+    return el ? String(el.value || '').trim() : '';
+  }
+
+  function attributionLines() {
+    var lines = [];
+    var attr = analytics && analytics.getAttribution ? analytics.getAttribution() : null;
+    var lead = analytics && analytics.getLeadContext ? analytics.getLeadContext() : null;
+    if (!attr && !lead) return lines;
+
+    lines.push('', 'اطلاعات منبع:');
+    if (attr) {
+      if (attr.first_utm_source) lines.push('منبع ورود: ' + attr.first_utm_source);
+      if (attr.first_utm_medium) lines.push('رسانه: ' + attr.first_utm_medium);
+      if (attr.first_utm_campaign) lines.push('کمپین: ' + attr.first_utm_campaign);
+      if (attr.first_utm_content) lines.push('محتوای UTM: ' + attr.first_utm_content);
+      if (attr.first_utm_term) lines.push('عبارت UTM: ' + attr.first_utm_term);
+      if (attr.first_referrer) lines.push('ارجاع اولیه: ' + attr.first_referrer);
+      if (attr.first_landing_path) lines.push('صفحه ورود: ' + attr.first_landing_path);
+    }
+    lines.push('صفحه فعلی: ' + (location.pathname || '/contact.html'));
+
+    if (lead) {
+      var related = lead.url || '';
+      if (!related) {
+        if (lead.project_slug) related = 'https://hashstudio.ir/project/' + lead.project_slug + '/';
+        else if (lead.service_slug) related = 'https://hashstudio.ir/service/' + lead.service_slug + '/';
+        else if (lead.article_slug) related = 'https://hashstudio.ir/article/' + lead.article_slug + '/';
+      }
+      if (related) {
+        lines.push('', 'صفحه مرتبط:');
+        lines.push(related);
+      }
+    }
+    return lines;
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    markFormStart();
 
     var required = form.querySelectorAll('[required]');
     var isValid = true;
+    var firstBadField = '';
     required.forEach(function (field) {
-      if (!validateField(field)) isValid = false;
+      if (!validateField(field)) {
+        isValid = false;
+        if (!firstBadField) firstBadField = field.id || field.name || 'unknown';
+      }
     });
 
     if (!isValid) {
+      track('contact_form_validation_error', { field: firstBadField });
       var firstBad = form.querySelector('.is-error');
       if (firstBad) firstBad.focus();
       return;
@@ -147,13 +210,23 @@
     var email = fieldValue('email');
     var company = fieldValue('company');
     var projectType = fieldLabel('project-type');
+    var projectTypeValue = selectValue('project-type');
     var goal = fieldValue('goal');
     var budget = fieldLabel('budget');
     var timeline = fieldLabel('timeline');
     var message = fieldValue('message');
-    var attachmentNote = (fileInput && fileInput.files && fileInput.files[0])
+    var hasAttachment = !!(fileInput && fileInput.files && fileInput.files[0]);
+    var attachmentNote = hasAttachment
       ? ('نام فایل انتخاب‌شده: ' + fileInput.files[0].name + ' — فایل را جداگانه به همین ایمیل پیوست کنید (mailto پیوست ندارد).')
       : 'بدون اشاره به فایل';
+
+    track('contact_form_submit_intent', {
+      project_type: projectTypeValue || 'unknown',
+      has_company: !!company,
+      has_budget: !!(budget && budget.indexOf('انتخاب') === -1),
+      has_timeline: !!(timeline && timeline.indexOf('انتخاب') === -1),
+      has_attachment: hasAttachment
+    });
 
     var lines = [
       'نام: ' + name,
@@ -166,10 +239,11 @@
     if (budget && budget.indexOf('انتخاب') === -1) lines.push('بودجه تقریبی: ' + budget);
     if (timeline && timeline.indexOf('انتخاب') === -1) lines.push('زمان‌بندی: ' + timeline);
     lines.push('', 'شرح:', message, '', attachmentNote);
+    lines = lines.concat(attributionLines());
 
     var body = lines.join('\n');
-    if (body.length > 1600) {
-      body = body.slice(0, 1600) + '\n…(ادامه را در ایمیل کامل کنید)';
+    if (body.length > 1800) {
+      body = body.slice(0, 1800) + '\n…(ادامه را در ایمیل کامل کنید)';
     }
 
     var mailto = 'mailto:' + studioEmail +
@@ -189,12 +263,18 @@
       studioEmail +
       '</strong> برسد. ارسال خودکار سروری نیست — اگر پنجره باز نشد، همین متن را دستی بفرستید.';
 
+    track('contact_email_open', {
+      project_type: projectTypeValue || 'unknown',
+      has_attribution: !!(analytics && analytics.getAttribution && analytics.getAttribution())
+    });
+
     window.location.href = mailto;
   });
 
   if (details) {
     details.addEventListener('toggle', function () {
       if (details.open) {
+        markFormStart();
         var first = details.querySelector('select, input, textarea');
         if (first) first.focus();
       }

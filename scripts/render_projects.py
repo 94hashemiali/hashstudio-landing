@@ -313,13 +313,17 @@ def render_project(
         for item in kpis
     )
     service_links_html = "".join(
-        f'<a class="pd-service-link" href="{_attr(SERVICE_CATALOG[s]["href"])}">'
+        f'<a class="pd-service-link" href="{_attr(SERVICE_CATALOG[s]["href"])}" '
+        f'data-cta="view-service" data-cta-location="project-service" '
+        f'data-service-slug="{_attr(s)}" data-project-slug="{_attr(slug)}">'
         f'{escape_html(SERVICE_CATALOG[s]["name"])}</a>'
         for s in service_slugs
         if s in SERVICE_CATALOG
     )
     related_html = "".join(
-        f'<a class="pd-related__card pd-reveal" href="/project/{_attr(item["slug"])}/">'
+        f'<a class="pd-related__card pd-reveal" href="/project/{_attr(item["slug"])}/" '
+        f'data-cta="view-project" data-cta-location="project-related" '
+        f'data-project-slug="{_attr(item["slug"])}">'
         f'<figure class="pd-related__media"><img src="{_attr((item.get("images") or {}).get("hero") or "")}" '
         f'alt="{_attr(item.get("name") or "")}" width="640" height="400" loading="lazy" decoding="async"></figure>'
         f'<div class="pd-related__body">'
@@ -341,7 +345,8 @@ def render_project(
     if live_url:
         live_btn = (
             f'<a class="btn btn--primary btn--lg" href="{_attr(live_url)}" '
-            f'target="_blank" rel="noopener noreferrer" aria-label="{_attr(f"مشاهده وب‌سایت {name}")}">'
+            f'target="_blank" rel="noopener noreferrer" aria-label="{_attr(f"مشاهده وب‌سایت {name}")}" '
+            f'data-cta="external-project" data-cta-location="project-hero" data-project-slug="{_attr(slug)}">'
             f"مشاهده وب‌سایت</a>"
         )
     else:
@@ -683,12 +688,12 @@ def render_project(
 
     <nav class="pd-pager" aria-label="ناوبری پروژه‌ها">
       <div class="container pd-pager__inner">
-        <a class="pd-pager__link pd-pager__link--prev" href="{prev_href}"{_hidden(bool(prev))}>
+        <a class="pd-pager__link pd-pager__link--prev" href="{prev_href}"{_hidden(bool(prev))} data-cta="view-project" data-cta-location="project-pager" data-project-slug="{_attr(prev["slug"]) if prev else ""}">
           <span class="pd-pager__dir">← پروژه قبلی</span>
           <span class="pd-pager__name">{escape_html(prev_name or "")}</span>
         </a>
-        <a class="pd-pager__home" href="projects.html">همه پروژه‌ها</a>
-        <a class="pd-pager__link pd-pager__link--next" href="{next_href}">
+        <a class="pd-pager__home" href="projects.html" data-cta="view-projects" data-cta-location="project-pager">همه پروژه‌ها</a>
+        <a class="pd-pager__link pd-pager__link--next" href="{next_href}" data-cta="view-project" data-cta-location="project-pager" data-project-slug="{_attr(nxt["slug"]) if nxt else ""}">
           <span class="pd-pager__dir">پروژه بعدی →</span>
           <span class="pd-pager__name">{escape_html(next_name or "")}</span>
         </a>
@@ -697,7 +702,7 @@ def render_project(
 
     <section class="pd-next" data-block="next"{_hidden(show_next)}>
       <div class="container">
-        <a class="pd-next__card" href="{next_href}">
+        <a class="pd-next__card" href="{next_href}" data-cta="view-project" data-cta-location="project-next" data-project-slug="{_attr(nxt["slug"]) if nxt else ""}">
           <div class="pd-next__copy">
             <span class="pd-next__label">پروژه بعدی</span>
             <span class="pd-next__pill">{escape_html(next_industry or "")}</span>
@@ -767,6 +772,7 @@ def render_project(
   <script src="js/project.js"></script>
   <script src="js/main.js"></script>
   <script src="/js/studio-info.js"></script>
+  <script src="/js/analytics.js"></script>
   <script src="/js/studio-chrome.js"></script>
 </body>
 </html>

@@ -218,7 +218,9 @@ def render_service(
     cases = resolve_cases(svc, projects)
     cases_html = "".join(
         (
-            f'<a class="sd-case" href="/project/{_attr(item["slug"])}/">'
+            f'<a class="sd-case" href="/project/{_attr(item["slug"])}/" '
+            f'data-cta="view-project" data-cta-location="service-cases" '
+            f'data-project-slug="{_attr(item["slug"])}" data-service-slug="{_attr(slug)}">'
             f'<div class="sd-case__media"><div class="site-preview">'
             f'<div class="site-preview__pixel" aria-hidden="true">'
             f'<img src="assets/images/home/projects/{_attr(item["slug"])}-pixel.webp" '
@@ -351,7 +353,7 @@ def render_service(
           </h1>
           <p class="sd-hero__lead">{escape_html(page_desc)}</p>
           <div class="sd-hero__actions">
-            <a href="contact.html" class="btn btn--primary btn--lg">{escape_html(svc.get("ctaPrimary") or "شروع پروژه")}</a>
+            <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="service-hero" data-service-slug="{_attr(slug)}">{escape_html(svc.get("ctaPrimary") or "شروع پروژه")}</a>
             <a href="projects.html" class="btn btn--outline btn--lg">نمونه‌کارها</a>
           </div>
         </div>
@@ -454,7 +456,7 @@ def render_service(
           <h2 class="home-final-cta__title">{escape_html(svc.get("ctaTitle") or "")}</h2>
           <p class="home-final-cta__desc">{escape_html(svc.get("ctaBody") or "")}</p>
           <div class="home-final-cta__actions">
-            <a href="contact.html" class="btn btn--primary btn--lg">درباره پروژه شما صحبت کنیم</a>
+            <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="service-cta" data-service-slug="{_attr(slug)}">درباره پروژه شما صحبت کنیم</a>
             <a href="projects.html" class="btn btn--outline btn--lg">مشاهده پروژه‌ها</a>
           </div>
         </article>
@@ -516,6 +518,7 @@ def render_service(
 
   <script src="js/main.js"></script>
   <script src="/js/studio-info.js"></script>
+  <script src="/js/analytics.js"></script>
   <script src="/js/studio-chrome.js"></script>
 </body>
 </html>

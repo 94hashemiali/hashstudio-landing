@@ -68,7 +68,9 @@
       featuredHost.innerHTML =
         '<a href="' +
         escapeHtml(href) +
-        '" class="portfolio-featured">' +
+        '" class="portfolio-featured" data-cta="view-project" data-cta-location="home-featured" data-project-slug="' +
+        escapeHtml(featured.slug) +
+        '">' +
         '<div class="portfolio-featured__visual">' +
         '<div class="site-preview">' +
         '<div class="site-preview__pixel" aria-hidden="true">' +
@@ -112,7 +114,9 @@
           return (
             '<a href="' +
             escapeHtml(href) +
-            '" class="project-card">' +
+            '" class="project-card" data-cta="view-project" data-cta-location="home-portfolio" data-project-slug="' +
+            escapeHtml(p.slug) +
+            '">' +
             '<div class="project-card__visual ' +
             tone +
             '">' +

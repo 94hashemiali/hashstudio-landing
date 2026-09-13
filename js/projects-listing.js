@@ -127,7 +127,9 @@
         return (
           '<a href="' +
           escapeHtml(href) +
-          '" class="proj-card">' +
+          '" class="proj-card" data-cta="view-project" data-cta-location="projects-grid" data-project-slug="' +
+          escapeHtml(p.slug) +
+          '">' +
           '<div class="proj-card__visual" style="background:' +
           visual +
           '">' +

@@ -48,6 +48,21 @@ IMG_RE = re.compile(r"<img\b[^>]*>", re.I)
 WIDTH_RE = re.compile(r"\bwidth=", re.I)
 HEIGHT_RE = re.compile(r"\bheight=", re.I)
 SLUG_RE = re.compile(r"^[a-z0-9-]+$")
+CTA_RE = re.compile(r'\bdata-cta=["\']([^"\']+)["\']', re.I)
+ALLOWED_CTAS = {
+    "start-project",
+    "view-projects",
+    "view-project",
+    "view-service",
+    "view-article",
+    "view-blog",
+    "external-project",
+    "contact-form",
+}
+SENSITIVE_TRACK_RE = re.compile(
+    r"""\.track\s*\(\s*['\"][^'\"]+['\"]\s*,\s*\{[^}]*(?:email|phone|message|filename)\s*:""",
+    re.I,
+)
 OG_RE = re.compile(r'<meta\s+[^>]*property=["\']og:(title|description|image|url|type)["\']', re.I)
 LD_RE = re.compile(r'<script[^>]*type=["\']application/ld\+json["\']', re.I)
 LANG_RE = re.compile(r'<html[^>]*\blang=["\']fa["\']', re.I)
@@ -342,6 +357,76 @@ def main() -> int:
     for c, files in sorted(canon_map.items()):
         if len(files) > 1:
             errors.append(f"duplicate canonical {c}: {', '.join(files)}")
+
+    # Conversion / analytics integrity
+    analytics_js = ROOT / "js" / "analytics.js"
+    contact_js = ROOT / "js" / "contact.js"
+    if not analytics_js.is_file():
+        errors.append("js/analytics.js missing")
+    else:
+        atext = analytics_js.read_text(encoding="utf-8")
+        if "hashstudio_attribution" not in atext:
+            errors.append("js/analytics.js: missing hashstudio_attribution key")
+        if "HashAnalytics" not in atext:
+            errors.append("js/analytics.js: missing HashAnalytics export")
+        if atext.count("HashAnalytics.__booted") < 1:
+            errors.append("js/analytics.js: missing boot guard")
+        if SENSITIVE_TRACK_RE.search(atext):
+            errors.append("js/analytics.js: possible sensitive field in track payload")
+    if contact_js.is_file():
+        ctext = contact_js.read_text(encoding="utf-8")
+        for required in (
+            "contact_form_start",
+            "contact_form_validation_error",
+            "contact_form_submit_intent",
+            "contact_email_open",
+            "اطلاعات منبع",
+        ):
+            if required not in ctext:
+                errors.append(f"js/contact.js: missing {required}")
+        if SENSITIVE_TRACK_RE.search(ctext):
+            errors.append("js/contact.js: possible sensitive field in track payload")
+        # Ensure personal values are not passed as track props by name
+        if re.search(r"track\([^)]*fieldValue\(['\"]email", ctext):
+            errors.append("js/contact.js: must not track email value")
+
+    # Key pages must load analytics abstraction
+    for rel in (
+        "index.html",
+        "contact.html",
+        "projects.html",
+        "services.html",
+        "blog.html",
+        "about.html",
+    ):
+        html = (ROOT / rel).read_text(encoding="utf-8")
+        if "analytics.js" not in html:
+            errors.append(f"{rel}: missing analytics.js")
+        for cta in CTA_RE.findall(html):
+            if cta not in ALLOWED_CTAS:
+                errors.append(f"{rel}: unknown data-cta={cta}")
+
+    # Generated detail pages: analytics + CTA hygiene
+    for kind, dirs in (
+        ("project", project_dirs),
+        ("service", service_dirs),
+        ("article", article_dirs),
+    ):
+        for d in dirs:
+            rel = f"{kind}/{d.name}/index.html"
+            html = (d / "index.html").read_text(encoding="utf-8")
+            if "analytics.js" not in html:
+                errors.append(f"{rel}: missing analytics.js")
+            if html.count("analytics.js") > 2:
+                errors.append(f"{rel}: duplicated analytics.js include")
+            for cta in CTA_RE.findall(html):
+                if cta not in ALLOWED_CTAS:
+                    errors.append(f"{rel}: unknown data-cta={cta}")
+            if kind == "project":
+                if 'data-cta="start-project"' not in html:
+                    errors.append(f"{rel}: missing start-project CTA")
+                if re.search(r'id="project-root"[^>]*\bhidden\b', html):
+                    errors.append(f"{rel}: #project-root is hidden")
 
     # Friendly summary
     err_mark = "✓" if not errors else "✗"
