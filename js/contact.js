@@ -13,6 +13,83 @@
   var details = document.getElementById('ct-details');
   var formStarted = false;
   var analytics = window.HashAnalytics;
+  var userChoseProjectType = false;
+
+  var SERVICE_LABELS = {
+    product: 'طراحی محصول',
+    'ui-ux': 'طراحی UI/UX',
+    web: 'توسعه وب',
+    mobile: 'توسعه موبایل',
+    mvp: 'ساخت MVP',
+    ai: 'هوش مصنوعی',
+    seo: 'سئو و رشد',
+    consulting: 'مشاوره محصول'
+  };
+
+  var SOLUTION_LABELS = {
+    'product-redesign': 'بازطراحی محصول و وب‌سایت',
+    'corporate-website': 'طراحی و توسعه سایت شرکتی',
+    'mvp-launch': 'راه‌اندازی MVP قابل‌ساخت',
+    'fintech-product': 'طراحی محصول فین‌تک'
+  };
+
+  var SOLUTION_PRIMARY = {
+    'product-redesign': 'product',
+    'corporate-website': 'web',
+    'mvp-launch': 'mvp',
+    'fintech-product': 'product'
+  };
+
+  var FIT_INTENT_LABELS = {
+    idea: 'شروع از ایده جدید',
+    existing: 'بهبود محصول موجود',
+    website: 'سایت یا حضور آنلاین',
+    technical: 'پیاده‌سازی فنی',
+    unknown: 'شفاف‌سازی مسیر'
+  };
+
+  var KNOWN_INTENTS = {
+    idea: 1,
+    existing: 1,
+    website: 1,
+    technical: 1,
+    unknown: 1,
+    'product-redesign': 1,
+    'corporate-website': 1,
+    'mvp-launch': 1,
+    'fintech-product': 1
+  };
+
+  var SERVICE_TO_FORM = {
+    product: 'product',
+    'ui-ux': 'ui-ux',
+    web: 'website',
+    mobile: 'app',
+    mvp: 'mvp',
+    ai: 'ai',
+    seo: 'seo',
+    consulting: 'consulting'
+  };
+
+  var MESSAGE_PROMPTS = {
+    'mvp-launch':
+      'چه چیزی می‌خواهید بسازید؟ کاربر اصلی کیست و نسخه اول باید چه کاری را انجام دهد؟',
+    'product-redesign':
+      'الان چه چیزی در محصول یا سایت خوب کار نمی‌کند و می‌خواهید چه چیزی بهتر شود؟',
+    'corporate-website':
+      'هدف سایت چیست؟ چه مخاطبی باید به تماس، خرید یا درخواست مشاوره برسد؟',
+    'fintech-product':
+      'هسته معامله یا پرداخت چیست و بزرگ‌ترین اصطکاک اعتماد کاربر کجاست؟',
+    idea: 'ایده چیست، برای چه کسی است، و نسخه اول باید چه فرضیه‌ای را بیازماید؟',
+    existing: 'الان چه چیزی در محصول خوب کار نمی‌کند و اولویت اول بهبود چیست؟',
+    website: 'هدف سایت چیست؟ چه مخاطبی باید به تماس، خرید یا درخواست مشاوره برسد؟',
+    technical: 'چه چیزی باید ساخته شود و محدودیت فنی یا زمان‌بندی اصلی چیست؟',
+    seo: 'الان مشکل سئو چیست و چه صفحات یا مسیرهایی برای کسب‌وکار مهم‌ترند؟',
+    mvp: 'چه چیزی می‌خواهید بسازید؟ کاربر اصلی کیست و نسخه اول باید چه کاری را انجام دهد؟',
+    product: 'مسئله کاربر چیست و چه خروجی ملموسی از همکاری می‌خواهید؟',
+    'ui-ux': 'کدام جریان یا صفحه گیر دارد و موفقیت تجربه جدید چه شکلی است؟',
+    web: 'هدف سایت یا محصول وب چیست و مسیر اقدام اصلی کاربر کدام است؟'
+  };
 
   // Analytics: contextual flags only. Form values go to mailto body, never to track().
   function track(eventName, props) {
@@ -171,12 +248,15 @@
 
   function relatedPath(lead) {
     if (!lead) return '';
-    if (lead.page_path && /^\/(project|service|article)\//.test(lead.page_path)) {
+    if (lead.page_path && /^\/(project|service|article|solutions|for)\//.test(lead.page_path)) {
       return lead.page_path;
     }
     if (lead.project_slug) return '/project/' + lead.project_slug + '/';
     if (lead.service_slug) return '/service/' + lead.service_slug + '/';
     if (lead.article_slug) return '/article/' + lead.article_slug + '/';
+    if (lead.intent && SOLUTION_LABELS[lead.intent]) {
+      return '/solutions/' + lead.intent + '/';
+    }
     return '';
   }
 
@@ -246,6 +326,8 @@
     var projectType = fieldLabel('project-type');
     var projectTypeValue = selectValue('project-type');
     var goal = fieldValue('goal');
+    var budgetValue = selectValue('budget');
+    var timelineValue = selectValue('timeline');
     var budget = fieldLabel('budget');
     var timeline = fieldLabel('timeline');
     var message = fieldValue('message');
@@ -258,9 +340,15 @@
       project_type: projectTypeValue || 'unknown',
       has_company: !!company,
       has_goal: !!goal,
-      has_budget: !!(budget && budget.indexOf('انتخاب') === -1),
-      has_timeline: !!(timeline && timeline.indexOf('انتخاب') === -1),
+      has_budget: !!budgetValue,
+      has_timeline: !!timelineValue,
       has_attachment: hasAttachment
+    });
+    track('contact_form_completed', {
+      project_type: projectTypeValue || 'unknown',
+      has_budget: !!budgetValue,
+      has_timeline: !!timelineValue,
+      location: 'contact-form'
     });
 
     var lines = [
@@ -271,8 +359,8 @@
     if (company) lines.push('شرکت / برند: ' + company);
     lines.push('نوع پروژه: ' + projectType);
     if (goal) lines.push('هدف پروژه: ' + goal);
-    if (budget && budget.indexOf('انتخاب') === -1) lines.push('بودجه تقریبی: ' + budget);
-    if (timeline && timeline.indexOf('انتخاب') === -1) lines.push('زمان‌بندی: ' + timeline);
+    if (budgetValue) lines.push('بودجه تقریبی: ' + budget);
+    if (timelineValue) lines.push('زمان‌بندی: ' + timeline);
     lines.push('', 'شرح:', message, '', attachmentNote);
     lines = lines.concat(attributionLines());
 
@@ -316,40 +404,83 @@
     });
   }
 
-  var SERVICE_LABELS = {
-    product: 'طراحی محصول',
-    'ui-ux': 'طراحی UI/UX',
-    web: 'توسعه وب',
-    mobile: 'توسعه موبایل',
-    mvp: 'ساخت MVP',
-    ai: 'هوش مصنوعی',
-    seo: 'سئو و رشد',
-    consulting: 'مشاوره محصول'
-  };
+  function solutionIntentConflicts(service, intent, urlService) {
+    if (!intent || !SOLUTION_LABELS[intent]) return false;
+    var primary = SOLUTION_PRIMARY[intent] || '';
+    // Explicit URL service that disagrees with solution primary → ignore stale solution intent
+    return !!(urlService && primary && urlService !== primary);
+  }
 
-  var KNOWN_INTENTS = {
-    idea: 1,
-    existing: 1,
-    website: 1,
-    technical: 1,
-    unknown: 1,
-    // Phase 14 high-intent proposal pages
-    'product-redesign': 1,
-    'corporate-website': 1,
-    'mvp-launch': 1,
-    'fintech-product': 1
-  };
+  function buildContextHint(service, intent, lead, urlService) {
+    if (intent && SOLUTION_LABELS[intent] && !solutionIntentConflicts(service, intent, urlService)) {
+      return {
+        text:
+          'این گفتگو از مسیر <strong>' +
+          SOLUTION_LABELS[intent] +
+          '</strong> شروع شده است.',
+        source: 'solution'
+      };
+    }
+    if (intent && FIT_INTENT_LABELS[intent] && service && SERVICE_LABELS[service]) {
+      return {
+        text:
+          'مسیر پیشنهادی شما: <strong>' +
+          SERVICE_LABELS[service] +
+          '</strong> <span class="ct-fit-hint__quiet">(' +
+          FIT_INTENT_LABELS[intent] +
+          ')</span>',
+        source: 'service-fit'
+      };
+    }
+    if (lead && lead.project_slug && service && SERVICE_LABELS[service]) {
+      return {
+        text:
+          'این گفتگو از بررسی یک نمونه‌کار مرتبط شروع شده و احتمالاً <strong>' +
+          SERVICE_LABELS[service] +
+          '</strong> نقطه شروع مناسبی است.',
+        source: 'project'
+      };
+    }
+    if (lead && lead.article_slug && service && SERVICE_LABELS[service]) {
+      return {
+        text:
+          'از مسیر مطالعه وارد شده‌اید؛ احتمالاً <strong>' +
+          SERVICE_LABELS[service] +
+          '</strong> نزدیک‌ترین خدمت به موضوع شماست.',
+        source: 'article'
+      };
+    }
+    if (service && SERVICE_LABELS[service]) {
+      return {
+        text:
+          'به نظر می‌رسد درباره <strong>' +
+          SERVICE_LABELS[service] +
+          '</strong> با ما وارد گفتگو شده‌اید.',
+        source: 'service'
+      };
+    }
+    return null;
+  }
 
-  var SERVICE_TO_FORM = {
-    product: 'product',
-    'ui-ux': 'ui-ux',
-    web: 'website',
-    mobile: 'app',
-    mvp: 'mvp',
-    ai: 'ai',
-    seo: 'seo',
-    consulting: 'consulting'
-  };
+  function applyMessagePrompt(intent, service, urlService) {
+    var message = document.getElementById('message');
+    var hint = document.getElementById('ct-message-hint');
+    var promptIntent = intent;
+    if (solutionIntentConflicts(service, intent, urlService)) {
+      promptIntent = '';
+    }
+    var prompt =
+      (promptIntent && MESSAGE_PROMPTS[promptIntent]) ||
+      (service && MESSAGE_PROMPTS[service]) ||
+      '';
+    if (!prompt) return;
+    if (message && !message.value) {
+      message.setAttribute('placeholder', prompt);
+    }
+    if (hint) {
+      hint.textContent = prompt;
+    }
+  }
 
   function applyFitContext() {
     var params = new URLSearchParams(window.location.search || '');
@@ -359,40 +490,73 @@
     if (qIntent && !KNOWN_INTENTS[qIntent]) qIntent = '';
 
     var lead =
-      analytics && analytics.getLeadContext ? analytics.getLeadContext() : null;
+      analytics && analytics.ensureLeadContext
+        ? analytics.ensureLeadContext()
+        : analytics && analytics.getLeadContext
+          ? analytics.getLeadContext()
+          : null;
 
     var service = qService || (lead && (lead.recommended_service || lead.service_slug)) || '';
     var intent = qIntent || (lead && lead.intent) || '';
     if (service && !SERVICE_TO_FORM[service]) service = '';
     if (intent && !KNOWN_INTENTS[intent]) intent = '';
 
+    // Only persist when URL carries context — avoid rewriting page_path to /contact.html
     if (qService || qIntent) {
       if (analytics && typeof analytics.rememberLeadContext === 'function') {
         analytics.rememberLeadContext({
           intent: intent || undefined,
           service_slug: service || undefined,
-          recommended_service: service || undefined
+          recommended_service: service || undefined,
+          project_slug: (lead && lead.project_slug) || undefined,
+          article_slug: (lead && lead.article_slug) || undefined
         });
       }
     }
 
+    if (service || intent) {
+      track('lead_context_applied', {
+        intent: intent || '',
+        service_slug: service || '',
+        has_project: !!(lead && lead.project_slug),
+        has_article: !!(lead && lead.article_slug),
+        location: 'contact'
+      });
+    }
+
     var select = document.getElementById('project-type');
-    if (select && service && SERVICE_TO_FORM[service]) {
-      var mapped = SERVICE_TO_FORM[service];
-      // Do not overwrite an explicit user choice already made
-      if (!select.value) {
-        select.value = mapped;
+    if (select) {
+      select.addEventListener('change', function () {
+        userChoseProjectType = true;
+      });
+      if (!userChoseProjectType && service && SERVICE_TO_FORM[service] && !select.value) {
+        select.value = SERVICE_TO_FORM[service];
+        track('contact_project_type_prefilled', {
+          project_type: SERVICE_TO_FORM[service],
+          service_slug: service,
+          intent: intent || '',
+          location: 'contact'
+        });
       }
     }
 
+    applyMessagePrompt(intent, service, qService);
+
     var hint = document.getElementById('ct-fit-hint');
-    if (hint && service && SERVICE_LABELS[service]) {
+    var summary = buildContextHint(service, intent, lead, qService);
+    if (hint && summary) {
       hint.hidden = false;
       hint.innerHTML =
-        '<p class="ct-fit-hint__text">بر اساس انتخاب شما، احتمالاً <strong>' +
-        SERVICE_LABELS[service] +
-        '</strong> نقطه شروع مناسبی است.</p>' +
-        '<p class="ct-fit-hint__sub">اگر هنوز مطمئن نیستید، مشکلی نیست؛ مسئله‌تان را توضیح دهید تا مسیر مناسب را با هم مشخص کنیم.</p>';
+        '<p class="ct-fit-hint__text">' +
+        summary.text +
+        '</p>' +
+        '<p class="ct-fit-hint__sub">اگر نوع پروژه یا مسیر فرق دارد، همین‌جا عوضش کنید — انتخاب شما اولویت دارد.</p>';
+      track('contact_context_viewed', {
+        source: summary.source,
+        intent: intent || '',
+        service_slug: service || '',
+        location: 'contact'
+      });
     }
   }
 

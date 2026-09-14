@@ -275,7 +275,14 @@
 
   function ensureLeadContext() {
     var existing = readSession(LEAD_KEY);
-    if (existing && (existing.project_slug || existing.service_slug || existing.article_slug)) {
+    if (
+      existing &&
+      (existing.project_slug ||
+        existing.service_slug ||
+        existing.article_slug ||
+        existing.intent ||
+        existing.recommended_service)
+    ) {
       return existing;
     }
 
@@ -350,13 +357,14 @@
       cta: el.getAttribute('data-cta') || '',
       location: el.getAttribute('data-cta-location') || 'page'
     };
-    ['project-slug', 'service-slug', 'content-slug', 'article-slug', 'fit-intent'].forEach(function (attr) {
+    ['project-slug', 'service-slug', 'content-slug', 'article-slug', 'fit-intent', 'solution-slug'].forEach(function (attr) {
       var val = el.getAttribute('data-' + attr);
       if (!val) return;
       if (attr === 'content-slug' || attr === 'article-slug') props.article_slug = val;
       if (attr === 'project-slug') props.project_slug = val;
       if (attr === 'service-slug') props.service_slug = val;
       if (attr === 'fit-intent') props.intent = val;
+      if (attr === 'solution-slug') props.solution_slug = val;
     });
     if (el.getAttribute('data-recommended-service')) {
       props.recommended_service = el.getAttribute('data-recommended-service');
@@ -449,6 +457,22 @@
       track('service_fit_cta_click', {
         location: props.location || 'page',
         action: 'guide'
+      });
+    }
+    if (cta === 'service-fit-solution') {
+      track('service_fit_cta_click', {
+        intent: props.intent || '',
+        recommended_service: props.recommended_service || props.service_slug || '',
+        project_slug: props.project_slug || '',
+        solution_slug: props.solution_slug || '',
+        location: props.location || 'homepage',
+        action: 'view-solution'
+      });
+      rememberLeadContext({
+        intent: props.solution_slug || props.intent,
+        service_slug: props.recommended_service || props.service_slug,
+        recommended_service: props.recommended_service || props.service_slug,
+        project_slug: props.project_slug
       });
     }
     if (cta === 'high-intent-cta') {

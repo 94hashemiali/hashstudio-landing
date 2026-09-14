@@ -22,6 +22,7 @@
       service: 'product',
       secondary: 'mvp',
       project: 'zarafe',
+      solution: 'mvp-launch',
       reason:
         'اگر هنوز دامنه محصول، تجربه کاربر یا مسیر ساخت کاملاً روشن نیست، از طراحی محصول شروع کنید — نه از فهرست فیچر.'
     },
@@ -29,6 +30,7 @@
       service: 'ui-ux',
       secondary: 'product',
       project: 'moniaz',
+      solution: 'product-redesign',
       reason:
         'وقتی محصول هست ولی تجربه گیر دارد یا تبدیل پایین است، اول جریان و رابط را درست می‌کنیم؛ در صورت نیاز مسیر محصول را هم بازمی‌کنیم.'
     },
@@ -36,6 +38,7 @@
       service: 'web',
       secondary: 'seo',
       project: 'khosravani',
+      solution: 'corporate-website',
       reason:
         'برای سایت جدید، فروشگاه یا بازطراحی حضور آنلاین، توسعه وب نقطه شروع روشن است؛ رشد ارگانیک را در صورت نیاز با سئو همراه می‌کنیم.'
     },
@@ -53,6 +56,13 @@
       reason:
         'وقتی مشکل هست ولی خدمت دقیق روشن نیست، اول مسئله را با مشاوره محصول شفاف می‌کنیم — بعد مسیر ساخت.'
     }
+  };
+
+  var SOLUTION_LABELS = {
+    'mvp-launch': 'پیشنهاد همکاری: راه‌اندازی MVP',
+    'product-redesign': 'پیشنهاد همکاری: بازطراحی محصول',
+    'corporate-website': 'پیشنهاد همکاری: سایت شرکتی',
+    'fintech-product': 'پیشنهاد همکاری: محصول فین‌تک'
   };
 
   function escapeHtml(value) {
@@ -130,6 +140,27 @@
       '&intent=' +
       encodeURIComponent(intent);
 
+    var solutionHtml = '';
+    if (map.solution && SOLUTION_LABELS[map.solution]) {
+      var solutionHref = '/solutions/' + encodeURIComponent(map.solution) + '/';
+      solutionHtml =
+        '<p class="home-fit__solution">اگر می‌خواهید مسیر را به‌صورت پیشنهاد همکاری ببینید: <a href="' +
+        escapeHtml(solutionHref) +
+        '" data-cta="service-fit-solution" data-cta-location="home-fit" data-fit-intent="' +
+        escapeHtml(intent) +
+        '" data-service-slug="' +
+        escapeHtml(map.service) +
+        '" data-recommended-service="' +
+        escapeHtml(map.service) +
+        '" data-project-slug="' +
+        escapeHtml(map.project) +
+        '" data-solution-slug="' +
+        escapeHtml(map.solution) +
+        '">' +
+        escapeHtml(SOLUTION_LABELS[map.solution]) +
+        '</a></p>';
+    }
+
     var secondaryHtml = secondaryLabel
       ? '<p class="home-fit__secondary">خدمت پشتیبان: <a href="' +
         escapeHtml(secondaryHref) +
@@ -155,6 +186,7 @@
       escapeHtml(map.reason) +
       '</p>' +
       secondaryHtml +
+      solutionHtml +
       '<div class="home-fit__proof">' +
       '<p class="home-fit__proof-label">نمونه نزدیک به مسئله شما</p>' +
       '<a class="home-fit__proof-link" href="' +
@@ -204,6 +236,7 @@
       intent: intent,
       service_slug: map.service,
       project_slug: map.project,
+      solution_slug: map.solution || '',
       location: 'homepage'
     });
     rememberFit(intent, map);

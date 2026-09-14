@@ -1668,6 +1668,18 @@ a.service-mini:focus-visible {
   font-weight: var(--font-weight-bold);
 }
 
+.home-fit__solution {
+  margin: 0.65rem 0 0;
+  font-size: var(--font-size-caption);
+  color: #687278;
+  line-height: 1.7;
+}
+
+.home-fit__solution a {
+  color: #bc8e19;
+  font-weight: var(--font-weight-bold);
+}
+
 .home-fit__proof {
   margin-top: 1.35rem;
   padding-top: 1.25rem;

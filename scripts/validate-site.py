@@ -64,6 +64,7 @@ ALLOWED_CTAS = {
     "service-fit-service",
     "service-fit-contact",
     "service-fit-guide",
+    "service-fit-solution",
     "high-intent-cta",
     "high-intent-project",
 }
@@ -555,10 +556,46 @@ def main() -> int:
             if proj not in folder_project_slugs:
                 errors.append(f"js/service-fit.js: unknown project slug {proj}")
 
+        hi_slugs_set = set()
+        if (ROOT / "js" / "high-intent-data.js").is_file():
+            try:
+                sys.path.insert(0, str(ROOT / "scripts"))
+                from render_high_intent import load_high_intent_pages
+
+                hi_slugs_set = {
+                    p.get("slug") for p in load_high_intent_pages() if p.get("slug")
+                }
+            except Exception:  # noqa: BLE001
+                hi_slugs_set = set()
+        for sol in re.findall(r"solution:\s*'([a-z0-9-]+)'", fit_text):
+            if sol not in hi_slugs_set:
+                errors.append(f"js/service-fit.js: unknown solution slug {sol}")
+
         if "project_slug: map.project" not in fit_text:
             errors.append(
                 "js/service-fit.js: rememberFit must persist project_slug from FIT_MAP"
             )
+
+        contact_js = (ROOT / "js" / "contact.js").read_text(encoding="utf-8")
+        analytics_blob = analytics_text + "\n" + contact_js
+        for event in (
+            "lead_context_applied",
+            "contact_context_viewed",
+            "contact_project_type_prefilled",
+            "contact_form_start",
+            "contact_form_completed",
+            "contact_email_open",
+        ):
+            if event not in analytics_blob:
+                errors.append(f"Phase 15 analytics: missing event {event}")
+
+        contact_html = (ROOT / "contact.html").read_text(encoding="utf-8")
+        if 'id="ct-message-hint"' not in contact_html:
+            errors.append("contact.html: missing ct-message-hint for contextual prompt")
+        if "حدود بودجه یا زمان" not in contact_html:
+            errors.append("contact.html: missing budget/timeline helper copy")
+        if "service-fit-solution" not in fit_text:
+            errors.append("js/service-fit.js: missing service-fit-solution bridge CTA")
 
     # High-intent proposal pages (Phase 14)
     hi_data = ROOT / "js" / "high-intent-data.js"

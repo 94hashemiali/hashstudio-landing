@@ -187,12 +187,14 @@
 
               <div class="ct-form__field">
                 <label class="ct-form__label" for="message">مسئله یا ایده محصول</label>
-                <textarea class="ct-form__textarea" id="message" name="message" placeholder="کاربران کی‌اند؟ الان چه مشکلی هست؟ چه چیزی می‌خواهید بسازید؟" required></textarea>
+                <textarea class="ct-form__textarea" id="message" name="message" placeholder="کاربران کی‌اند؟ الان چه مشکلی هست؟ چه چیزی می‌خواهید بسازید؟" required aria-describedby="ct-message-hint"></textarea>
+                <p class="ct-form__hint" id="ct-message-hint">بریف کامل لازم نیست؛ چند جمله درباره وضعیت فعلی کافی است.</p>
               </div>
 
               <details class="ct-form__details" id="ct-details">
                 <summary class="ct-form__details-summary">جزئیات بیشتر (اختیاری)</summary>
                 <div class="ct-form__details-body">
+                  <p class="ct-form__hint ct-form__hint--block">اگر حدود بودجه یا زمان شروع را می‌دانید، گفتنش کمک می‌کند پیشنهاد اولیه دقیق‌تر باشد. الزامی نیست.</p>
                   <div class="ct-form__field">
                     <label class="ct-form__label" for="goal">هدف اصلی پروژه</label>
                     <input class="ct-form__input" type="text" id="goal" name="goal" placeholder="مثلاً لانچ MVP، بازطراحی قیف خرید، پورتال داخلی…">

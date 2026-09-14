@@ -126,6 +126,13 @@ If no provider is set, tracking is a silent no-op.
 - Contact CTA: `contact.html?service=<primary>&intent=<solutions-slug>`.
 - Soft links from matching service pages; Service Fit guide via `/#service-fit`.
 
+## Lead qualification (Phase 15)
+
+- Contact shows calm context summary from `hashstudio_lead_context` (no slugs/PII).
+- Prefills project type; adaptive message prompt; optional budget/timeline helper.
+- Service Fit may link a matching `/solutions/<slug>/` without replacing service/project proof.
+- Funnel events: `lead_context_applied`, `contact_context_viewed`, `contact_project_type_prefilled`, `contact_form_completed` (plus existing start/email).
+
 ## Deploy
 
 Run `npm run build` before deploy. Repo root is the static site.

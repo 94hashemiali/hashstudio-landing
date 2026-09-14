@@ -91,6 +91,22 @@
   line-height: 1.65;
 }
 
+.ct-fit-hint__quiet {
+  font-weight: 400;
+  color: #5a6b73;
+}
+
+.ct-form__hint {
+  margin: 0.45rem 0 0;
+  color: #5a6b73;
+  font-size: var(--font-size-caption);
+  line-height: 1.65;
+}
+
+.ct-form__hint--block {
+  margin: 0 0 1rem;
+}
+
 .ct-process {
   margin: 1.75rem auto 0;
   max-width: 36rem;
