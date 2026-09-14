@@ -441,6 +441,52 @@ def main() -> int:
     contact_html = (ROOT / "contact.html").read_text(encoding="utf-8")
     if 'data-cta="contact-submit"' not in contact_html:
         errors.append("contact.html: submit button missing data-cta=contact-submit")
+    if 'id="ct-fit-hint"' not in contact_html:
+        warnings.append("contact.html: missing ct-fit-hint for service-fit context")
+
+    # Service Fit homepage experience
+    index_html = (ROOT / "index.html").read_text(encoding="utf-8")
+    fit_js = ROOT / "js" / "service-fit.js"
+    if 'data-service-fit' not in index_html or 'id="service-fit"' not in index_html:
+        errors.append("index.html: missing Service Fit section (data-service-fit / #service-fit)")
+    if 'id="fit"' not in index_html:
+        warnings.append("index.html: missing Who we help section (#fit) before Service Fit")
+    if "js/service-fit.js" not in index_html:
+        errors.append("index.html: must load js/service-fit.js")
+    if not fit_js.is_file():
+        errors.append("js/service-fit.js missing")
+    else:
+        fit_text = fit_js.read_text(encoding="utf-8")
+        for event in (
+            "service_fit_started",
+            "service_fit_recommendation_viewed",
+        ):
+            if event not in fit_text:
+                errors.append(f"js/service-fit.js: missing event {event}")
+        analytics_text = (
+            analytics_js.read_text(encoding="utf-8") if analytics_js.is_file() else ""
+        )
+        if "service_fit_selected" not in analytics_text and "service-fit-select" not in analytics_text:
+            errors.append("js/analytics.js: missing service_fit_selected wiring")
+        if "service_fit_cta_click" not in analytics_text:
+            errors.append("js/analytics.js: missing service_fit_cta_click")
+        # Map must reference real services + projects
+        for svc in re.findall(r"service:\s*'([a-z0-9-]+)'", fit_text):
+            if svc not in folder_service_slugs:
+                errors.append(f"js/service-fit.js: unknown service slug {svc}")
+        for sec in re.findall(r"secondary:\s*'([a-z0-9-]+)'", fit_text):
+            if sec not in folder_service_slugs:
+                errors.append(f"js/service-fit.js: unknown secondary service {sec}")
+        for proj in re.findall(r"project:\s*'([a-z0-9-]+)'", fit_text):
+            if proj not in folder_project_slugs:
+                errors.append(f"js/service-fit.js: unknown project slug {proj}")
+        # Intent buttons on homepage must match map keys
+        for intent in ("new-product", "existing-product", "website", "technical", "unknown"):
+            if f'data-fit-intent="{intent}"' not in index_html:
+                errors.append(f"index.html: missing fit intent button {intent}")
+            # keys may be quoted or bare identifiers
+            if not re.search(rf"['\"]?{re.escape(intent)}['\"]?\s*:", fit_text):
+                errors.append(f"js/service-fit.js: missing FIT_MAP intent {intent}")
 
     # Generated detail pages: analytics + CTA hygiene
     for kind, dirs in (

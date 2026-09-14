@@ -149,34 +149,63 @@
     </section>
 
 
-    <!-- Project fit — one question, one recommendation -->
+    <!-- Who we help -->
+    <section class="home-section home-section--white home-audience" id="fit" aria-labelledby="audience-title">
+      <div class="container">
+        <header class="section-head section-head--start">
+          <span class="badge badge--section">مناسب کیست؟</span>
+          <h2 class="section-head__title" id="audience-title">استودیو هش برای چه تیم‌هایی کار می‌کند؟</h2>
+          <p class="section-head__desc">اگر یکی از این موقعیت‌ها را دارید، مسیر روشنی برای همکاری داریم.</p>
+        </header>
+        <div class="home-audience__grid">
+          <article class="home-audience__card">
+            <h3 class="home-audience__title">استارتاپ در شروع محصول</h3>
+            <p class="home-audience__desc">ایده یا فرضیه دارید و می‌خواهید دامنه MVP و مسیر ساخت روشن شود.</p>
+          </article>
+          <article class="home-audience__card">
+            <h3 class="home-audience__title">محصول موجود، نیاز به بهبود</h3>
+            <p class="home-audience__desc">تجربه کاربر گیر دارد، تبدیل پایین است، یا نقشه محصول مبهم مانده.</p>
+          </article>
+          <article class="home-audience__card">
+            <h3 class="home-audience__title">سایت یا فروشگاه برای رشد</h3>
+            <p class="home-audience__desc">طراحی/توسعه وب یا بازطراحی تجربه خرید و حضور آنلاین.</p>
+          </article>
+          <article class="home-audience__card">
+            <h3 class="home-audience__title">مسیر نامشخص</h3>
+            <p class="home-audience__desc">می‌دانید مشکل هست؛ هنوز نمی‌دانید اول طراحی، کد، یا استراتژی است.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Fit — consultation shortcut -->
     <section class="home-section home-section--cream home-fit" id="service-fit" aria-labelledby="service-fit-title" data-service-fit>
       <div class="container">
         <header class="section-head section-head--start">
-          <span class="badge badge--section">مسیر مناسب</span>
-          <h2 class="section-head__title" id="service-fit-title">الان در چه نقطه‌ای هستید؟</h2>
-          <p class="section-head__desc">یک انتخاب کافی است — خدمت پیشنهادی، یک نمونه واقعی، و قدم بعدی را می‌بینید.</p>
+          <span class="badge badge--section">اگر مسیر هنوز روشن نیست</span>
+          <h2 class="section-head__title" id="service-fit-title">نمی‌دانید از کجا شروع کنید؟</h2>
+          <p class="section-head__desc">یک انتخاب کافی است؛ مسیر مناسب را بر اساس مسئله‌تان پیشنهاد می‌دهیم.</p>
         </header>
 
         <div class="home-fit__chooser" role="group" aria-label="انتخاب وضعیت فعلی">
-          <button type="button" class="home-fit__option" data-cta="service-fit-select" data-cta-location="home-fit" data-fit-intent="idea" aria-pressed="false">
-            <span class="home-fit__option-label">یک ایده دارم</span>
+          <button type="button" class="home-fit__option" data-cta="service-fit-select" data-cta-location="home-fit" data-fit-intent="new-product" aria-pressed="false">
+            <span class="home-fit__option-label">ایده یا محصول جدید دارم</span>
             <span class="home-fit__option-hint">محصول جدید / MVP</span>
           </button>
-          <button type="button" class="home-fit__option" data-cta="service-fit-select" data-cta-location="home-fit" data-fit-intent="existing" aria-pressed="false">
-            <span class="home-fit__option-label">محصول دارم؛ می‌خواهم بهترش کنم</span>
+          <button type="button" class="home-fit__option" data-cta="service-fit-select" data-cta-location="home-fit" data-fit-intent="existing-product" aria-pressed="false">
+            <span class="home-fit__option-label">محصول موجودم نیاز به بهبود دارد</span>
             <span class="home-fit__option-hint">بازطراحی تجربه / رشد</span>
           </button>
           <button type="button" class="home-fit__option" data-cta="service-fit-select" data-cta-location="home-fit" data-fit-intent="website" aria-pressed="false">
-            <span class="home-fit__option-label">سایت جدید یا بازطراحی می‌خواهم</span>
+            <span class="home-fit__option-label">سایت یا فروشگاه می‌خواهم</span>
             <span class="home-fit__option-hint">وب / فروشگاه / حضور آنلاین</span>
           </button>
           <button type="button" class="home-fit__option" data-cta="service-fit-select" data-cta-location="home-fit" data-fit-intent="technical" aria-pressed="false">
-            <span class="home-fit__option-label">نیاز به توسعه فنی دارم</span>
+            <span class="home-fit__option-label">توسعه فنی یا اپلیکیشن می‌خواهم</span>
             <span class="home-fit__option-hint">وب، موبایل یا پیاده‌سازی</span>
           </button>
           <button type="button" class="home-fit__option" data-cta="service-fit-select" data-cta-location="home-fit" data-fit-intent="unknown" aria-pressed="false">
-            <span class="home-fit__option-label">هنوز دقیق نمی‌دانم</span>
+            <span class="home-fit__option-label">هنوز دقیق نمی‌دانم چه خدمتی نیاز دارم</span>
             <span class="home-fit__option-hint">مشاوره برای روشن‌کردن مسیر</span>
           </button>
         </div>
@@ -196,7 +225,7 @@
           </div>
         </noscript>
 
-        <p class="home-fit__alt">یا مستقیم <a href="contact.html" data-cta="start-project" data-cta-location="home-fit">گفت‌وگو را شروع کنید</a> — بریف کامل لازم نیست.</p>
+        <p class="home-fit__alt">یا مستقیم <a href="contact.html" data-cta="start-project" data-cta-location="home-fit">شروع پروژه</a> — بریف کامل لازم نیست.</p>
       </div>
     </section>
 
@@ -869,9 +898,11 @@
 
   <script src="js/projects-data.js"></script>
   <script src="js/articles-index.js"></script>
+  <script src="js/content-graph.js"></script>
   <script src="js/studio-info.js"></script>
   <script src="js/analytics.js"></script>
   <script src="js/home.js"></script>
+  <script src="js/service-fit.js"></script>
   <script src="js/studio-chrome.js"></script>
   <script src="js/main.js"></script>
 </body>

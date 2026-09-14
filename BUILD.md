@@ -110,10 +110,10 @@ If no provider is set, tracking is a silent no-op.
 
 ## Project fit (Phase 13)
 
-- Homepage `#service-fit`: one intent choice → recommended service + one project proof.
-- Mapping lives in `js/home.js` (`FIT_MAP`); uses `HASH_PROJECTS` for proof lines.
-- Lead context may store `intent` + `recommended_service` (no PII).
-- Contact preselects project type from query/lead; shows guidance banner.
+- Homepage: `#fit` (who we help) → `#service-fit` (one question → recommendation).
+- Logic in `js/service-fit.js` (`FIT_MAP`); labels from `content-graph.js`; proof from `HASH_PROJECTS`.
+- Lead context stores `intent` + `recommended_service` (no PII / no proof project slug).
+- Contact shows `ct-fit-hint` and may preselect project type; user choice wins.
 - Events: `service_fit_started`, `service_fit_selected`, `service_fit_recommendation_viewed`, `service_fit_cta_click`.
 
 ## Deploy
