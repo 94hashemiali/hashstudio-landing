@@ -180,6 +180,31 @@
   line-height: var(--line-height-relaxed);
 }
 
+.sd-fit {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sd-fit__item {
+  padding: 1.25rem 1.35rem;
+  background: #fff;
+  border: 1px solid #e9e1d5;
+  border-radius: 1rem;
+  color: var(--color-dark);
+  font-size: var(--font-size-body);
+  line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+  .sd-fit {
+    grid-template-columns: 1fr;
+  }
+}
+
 .sd-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -343,6 +343,7 @@
     if (cta === 'view-project') track('project_view_click', props);
     if (cta === 'view-service') track('service_view_click', props);
     if (cta === 'view-article') track('article_view_click', props);
+    if (cta === 'service-fit-selector') track('service_fit_selector_click', props);
   }
 
   function bindClicks() {

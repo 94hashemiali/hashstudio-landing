@@ -150,6 +150,13 @@
   line-height: var(--line-height-relaxed);
 }
 
+.pd-hero__role {
+  margin: 0.85rem 0 0;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  color: #687278;
+}
+
 .pd-hero__actions {
   display: flex;
   flex-wrap: wrap;

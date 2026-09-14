@@ -288,6 +288,12 @@ def render_service(
         for i, item in enumerate(svc.get("faqs") or [])
     )
 
+    fit_items = svc.get("fitFor") or []
+    fit_html = "".join(
+        f'<li class="sd-fit__item">{escape_html(item)}</li>' for item in fit_items
+    )
+    show_fit = len(fit_items) > 0
+
     return f"""<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -376,7 +382,7 @@ def render_service(
           <p class="sd-hero__lead">{escape_html(page_desc)}</p>
           <div class="sd-hero__actions">
             <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="service-hero" data-service-slug="{_attr(slug)}">{escape_html(svc.get("ctaPrimary") or "شروع پروژه")}</a>
-            <a href="projects.html" class="btn btn--outline btn--lg">نمونه‌کارها</a>
+            <a href="/service/{_attr(slug)}/#cases" class="btn btn--outline btn--lg">نمونه‌کارهای مرتبط</a>
           </div>
         </div>
         <figure class="sd-hero__media{media_mod}" data-hero-media>
@@ -394,6 +400,16 @@ def render_service(
           </div>
           <ul class="sd-stats" data-list="stats">{stats_html}</ul>
         </article>
+      </div>
+    </section>
+
+    <section class="sd-section sd-section--cream" data-block="fit"{_hidden(show_fit)}>
+      <div class="container">
+        <div class="section-head section-head--start">
+          <span class="badge badge--section">مناسب کیست؟</span>
+          <h2 class="section-head__title">{escape_html(svc.get("fitTitle") or "این خدمت برای چه تیم‌هایی است؟")}</h2>
+        </div>
+        <ul class="sd-fit" data-list="fitFor">{fit_html}</ul>
       </div>
     </section>
 
@@ -442,7 +458,7 @@ def render_service(
       </div>
     </section>
 
-    <section class="sd-section sd-section--white">
+    <section class="sd-section sd-section--white" id="cases">
       <div class="container">
         <div class="section-head">
           <span class="badge badge--section">{escape_html(svc.get("casesBadge") or "")}</span>

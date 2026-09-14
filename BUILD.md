@@ -101,6 +101,13 @@ If no provider is set, tracking is a silent no-op.
 - `robots.txt` disallows legacy `project.html` / `service.html` / `article.html`.
 - Site validation warns on duplicate titles/descriptions, sitemap gaps, and weak inbound links.
 
+## Positioning & conversion (Phase 12)
+
+- Homepage hierarchy: hero → fit → proof → services → process → principles → credibility → discovery → CTA.
+- Service pages: optional `fitFor` / `fitTitle` in `js/services-data.js`.
+- Project closing CTA is case-aware; contact copy reduces brief friction.
+- CTA `service-fit-selector` maps to `service_fit_selector_click` in `js/analytics.js`.
+
 ## Deploy
 
 Run `npm run build` before deploy. Repo root is the static site.

@@ -59,6 +59,7 @@ ALLOWED_CTAS = {
     "external-project",
     "contact-form",
     "contact-submit",
+    "service-fit-selector",
 }
 SENSITIVE_TRACK_RE = re.compile(
     r"""\.track\s*\(\s*['\"][^'\"]+['\"]\s*,\s*\{[^}]*(?:email|phone|message|filename)\s*:""",
