@@ -57,7 +57,9 @@ const payload = {
     articles: {},
     projects: {},
     services: {},
-    serviceLabels: graph.serviceLabels || {}
+    topics: graph.topics || {},
+    serviceLabels: graph.serviceLabels || {},
+    solutionLabels: graph.solutionLabels || {}
   }
 };
 
@@ -65,17 +67,17 @@ const payload = {
 for (const slug of Object.keys(articles)) {
   payload.graph.articles[slug] = graph.articleRel
     ? graph.articleRel(slug)
-    : { projects: [], services: [], ctaTitle: '', ctaBody: '' };
+    : { projects: [], services: [], solutions: [], ctaTitle: '', ctaBody: '' };
 }
 for (const p of projects) {
   payload.graph.projects[p.slug] = graph.projectRel
     ? graph.projectRel(p.slug)
-    : { articles: [] };
+    : { articles: [], solutions: [] };
 }
 for (const s of services) {
   payload.graph.services[s.slug] = graph.serviceRel
     ? graph.serviceRel(s.slug)
-    : { articles: [] };
+    : { articles: [], solutions: [] };
 }
 
 fs.mkdirSync(path.dirname(outPath), { recursive: true });

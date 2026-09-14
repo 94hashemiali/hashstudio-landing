@@ -500,6 +500,16 @@
         project_slug: props.project_slug
       });
     }
+    if (cta === 'content-bridge') {
+      track('content_bridge_click', {
+        from_type: el.getAttribute('data-from-type') || ctx.page_type || '',
+        from_slug: el.getAttribute('data-from-slug') || '',
+        to_type: el.getAttribute('data-to-type') || '',
+        to_slug: el.getAttribute('data-to-slug') || '',
+        topic: el.getAttribute('data-topic') || '',
+        location: props.location || 'page'
+      });
+    }
   }
 
   function bindClicks() {

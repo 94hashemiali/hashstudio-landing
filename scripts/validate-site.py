@@ -67,6 +67,7 @@ ALLOWED_CTAS = {
     "service-fit-solution",
     "high-intent-cta",
     "high-intent-project",
+    "content-bridge",
 }
 SENSITIVE_TRACK_RE = re.compile(
     r"""\.track\s*\(\s*['\"][^'\"]+['\"]\s*,\s*\{[^}]*(?:email|phone|message|filename)\s*:""",
@@ -189,6 +190,8 @@ def validate_detail_page(
         errors.append(f"{rel}: missing service breadcrumb")
     if kind == "solutions" and "sd-breadcrumb" not in html:
         errors.append(f"{rel}: missing solution breadcrumb")
+    if kind == "solutions" and "راهکارها" not in html:
+        errors.append(f"{rel}: solution breadcrumb should include راهکارها")
     if kind == "project" and "CreativeWork" not in html:
         errors.append(f"{rel}: missing CreativeWork JSON-LD")
     if kind == "service" and '"@type":"Service"' not in html.replace(" ", ""):

@@ -207,21 +207,44 @@ def render_project(
 
     article_slugs = (graph_projects.get(slug) or {}).get("articles") or []
     article_cards: list[str] = []
-    for aslug in article_slugs:
+    for aslug in article_slugs[:3]:
         a = articles.get(aslug)
         if not a:
             continue
         article_cards.append(
             f'<a class="pd-article" href="/article/{_attr(a["slug"])}/" '
-            f'data-cta="view-article" data-cta-location="project" '
+            f'data-cta="content-bridge" data-cta-location="project-bridge" '
+            f'data-from-type="project" data-from-slug="{_attr(slug)}" '
+            f'data-to-type="article" data-to-slug="{_attr(a["slug"])}" '
             f'data-content-slug="{_attr(a["slug"])}" data-project-slug="{_attr(slug)}">'
             f'<span class="pd-article__tag">{escape_html(a.get("tag") or "")}</span>'
             f'<h3 class="pd-article__title">{escape_html(a.get("title") or "")}</h3>'
             f'<p class="pd-article__lead">{escape_html((a.get("lead") or "")[:140])}</p>'
-            f'<span class="pd-article__cta">از نگاه استودیو هش</span></a>'
+            f'<span class="pd-article__cta">مطالعه {escape_html(a.get("title") or "مقاله")}</span></a>'
         )
     show_articles = len(article_cards) > 0
 
+    solution_slugs = (graph_projects.get(slug) or {}).get("solutions") or []
+    SOLUTION_FALLBACK = {
+        "product-redesign": "بازطراحی محصول و وب‌سایت",
+        "corporate-website": "طراحی و توسعه سایت شرکتی",
+        "mvp-launch": "راه‌اندازی MVP قابل‌ساخت",
+        "fintech-product": "طراحی محصول فین‌تک",
+    }
+    solution_cards: list[str] = []
+    for sslug in solution_slugs[:2]:
+        label = SOLUTION_FALLBACK.get(sslug, sslug)
+        solution_cards.append(
+            f'<a class="pd-solution" href="/solutions/{_attr(sslug)}/" '
+            f'data-cta="content-bridge" data-cta-location="project-bridge" '
+            f'data-from-type="project" data-from-slug="{_attr(slug)}" '
+            f'data-to-type="solution" data-to-slug="{_attr(sslug)}" '
+            f'data-project-slug="{_attr(slug)}">'
+            f'<span class="pd-solution__label">مسیر پیشنهاد مرتبط</span>'
+            f'<strong class="pd-solution__title">{escape_html(label)}</strong>'
+            f'<span class="pd-solution__cta">بررسی مسیر {escape_html(label)}</span></a>'
+        )
+    show_solutions = len(solution_cards) > 0
     toc_candidates = [
         ("pd-intro", "مقدمه", True),
         ("pd-summary", "خلاصه", show_summary),
@@ -321,9 +344,11 @@ def render_project(
     )
     service_links_html = "".join(
         f'<a class="pd-service-link" href="{_attr(SERVICE_CATALOG[s]["href"])}" '
-        f'data-cta="view-service" data-cta-location="project-service" '
+        f'data-cta="content-bridge" data-cta-location="project-bridge" '
+        f'data-from-type="project" data-from-slug="{_attr(slug)}" '
+        f'data-to-type="service" data-to-slug="{_attr(s)}" '
         f'data-service-slug="{_attr(s)}" data-project-slug="{_attr(slug)}">'
-        f'{escape_html(SERVICE_CATALOG[s]["name"])}</a>'
+        f'آشنایی با خدمت {escape_html(SERVICE_CATALOG[s]["name"])}</a>'
         for s in service_slugs
         if s in SERVICE_CATALOG
     )
@@ -664,13 +689,16 @@ def render_project(
       </div>
     </section>
 
-    <section class="pd-section pd-section--cream" data-block="service-links"{_hidden(show_services)}>
+    <section class="pd-section pd-section--cream" data-block="service-links"{_hidden(show_services or show_solutions)}>
       <div class="container">
         <div class="section-head section-head--start">
-          <span class="badge badge--section">خدمات مرتبط</span>
-          <h2 class="section-head__title">این پروژه با کدام قابلیت‌های استودیو ساخته شد؟</h2>
+          <span class="badge badge--section">خدمات و مسیر مرتبط</span>
+          <h2 class="section-head__title">این پروژه به چه مسئله‌ای مرتبط است؟</h2>
         </div>
-        <div class="pd-service-links" data-list="service-links">{service_links_html}</div>
+        <div class="pd-service-links" data-list="service-links"{_hidden(show_services)}>{service_links_html}</div>
+        <div class="pd-solutions" data-list="project-solutions"{_hidden(show_solutions)}>
+          {"".join(solution_cards)}
+        </div>
       </div>
     </section>
 
@@ -690,7 +718,7 @@ def render_project(
     <section class="pd-section pd-section--cream" data-block="project-articles"{_hidden(show_articles)}>
       <div class="container">
         <div class="section-head section-head--start">
-          <span class="badge badge--section">از نگاه استودیو هش</span>
+          <span class="badge badge--section">دانش مرتبط</span>
           <h2 class="section-head__title">مقالاتی مرتبط با این مسئله</h2>
         </div>
         <div class="pd-articles" data-list="project-articles">{"".join(article_cards)}</div>

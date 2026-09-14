@@ -50,6 +50,10 @@ def service_url(slug: str) -> str:
     return f"{BASE}/service/{slug}/"
 
 
+def solutions_url(slug: str) -> str:
+    return f"{BASE}/solutions/{slug}/"
+
+
 def load_articles() -> dict[str, dict[str, Any]]:
     text = (ROOT / "js/articles-data.js").read_text(encoding="utf-8")
     match = re.search(r"var BY_SLUG = (\{.*?\n\});", text, re.S)
@@ -71,19 +75,61 @@ def load_article_graph() -> dict[str, dict[str, Any]]:
         r"'([a-z0-9-]+)':\s*\{\s*"
         r"projects:\s*\[([^\]]*)\]\s*,\s*"
         r"services:\s*\[([^\]]*)\]\s*,\s*"
+        r"(?:solutions:\s*\[([^\]]*)\]\s*,\s*)?"
         r"ctaTitle:\s*'((?:\\'|[^'])*)'\s*,\s*"
         r"ctaBody:\s*'((?:\\'|[^'])*)'",
         block.group(1),
     ):
-        slug, projects, services, cta_title, cta_body = m.groups()
+        slug, projects, services, solutions, cta_title, cta_body = m.groups()
         out[slug] = {
             "projects": re.findall(r"'([a-z0-9-]+)'", projects),
             "services": re.findall(r"'([a-z0-9-]+)'", services),
+            "solutions": re.findall(r"'([a-z0-9-]+)'", solutions or ""),
             "ctaTitle": cta_title.replace("\\'", "'"),
             "ctaBody": cta_body.replace("\\'", "'"),
         }
     if not out:
         raise RuntimeError("Parsed zero ARTICLES entries from content-graph.js")
+    return out
+
+
+def load_solution_labels() -> dict[str, str]:
+    text = (ROOT / "js/content-graph.js").read_text(encoding="utf-8")
+    block = re.search(r"var SOLUTION_LABELS = \{(.*?)\n  \};", text, re.S)
+    if not block:
+        return {}
+    return {
+        m.group(1): m.group(2).replace("\\'", "'")
+        for m in re.finditer(
+            r"'([a-z0-9-]+)':\s*'((?:\\'|[^'])*)'",
+            block.group(1),
+        )
+    }
+
+
+def load_topics() -> dict[str, dict[str, Any]]:
+    text = (ROOT / "js/content-graph.js").read_text(encoding="utf-8")
+    block = re.search(r"var TOPICS = \{(.*?)\n  \};", text, re.S)
+    if not block:
+        return {}
+    out: dict[str, dict[str, Any]] = {}
+    for m in re.finditer(
+        r"'([a-z0-9-]+)':\s*\{\s*"
+        r"label:\s*'((?:\\'|[^'])*)'\s*,\s*"
+        r"service:\s*'([a-z0-9-]*)'\s*,\s*"
+        r"solution:\s*'([a-z0-9-]*)'\s*,\s*"
+        r"articles:\s*\[([^\]]*)\]\s*,\s*"
+        r"projects:\s*\[([^\]]*)\]",
+        block.group(1),
+    ):
+        slug, label, service, solution, articles, projects = m.groups()
+        out[slug] = {
+            "label": label.replace("\\'", "'"),
+            "service": service,
+            "solution": solution,
+            "articles": re.findall(r"'([a-z0-9-]+)'", articles),
+            "projects": re.findall(r"'([a-z0-9-]+)'", projects),
+        }
     return out
 
 

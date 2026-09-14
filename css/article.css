@@ -891,6 +891,11 @@
   color: #17252b;
 }
 
+.article-service-link--solution {
+  background: rgba(255, 184, 24, 0.18);
+  border: 1px solid rgba(255, 184, 24, 0.45);
+}
+
 .article-newsletter__submit {
   display: inline-flex;
   align-items: center;

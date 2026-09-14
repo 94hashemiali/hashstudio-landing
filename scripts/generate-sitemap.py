@@ -8,6 +8,7 @@ Usage:
 from __future__ import annotations
 
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -94,10 +95,12 @@ def main() -> None:
             print(f"WARN: failed to load high-intent pages: {exc}")
             data_for = []
         for slug in sorted(set(for_slugs) - set(data_for)):
-            print(f"WARN: solutions/ folder without data entry: {slug}")
+            print(f"ERROR: solutions/ folder without data entry: {slug}", file=sys.stderr)
         for slug in sorted(set(data_for) - set(for_slugs)):
-            print(f"WARN: high-intent-data slug without folder: {slug}")
-        urls.extend(f"{BASE}/solutions/{slug}/" for slug in sorted(set(for_slugs) & set(data_for)) or for_slugs)
+            print(f"ERROR: high-intent-data slug without folder: {slug}", file=sys.stderr)
+        if set(for_slugs) != set(data_for):
+            raise SystemExit("sitemap: solutions folder ↔ high-intent-data out of sync")
+        urls.extend(f"{BASE}/solutions/{slug}/" for slug in sorted(set(for_slugs) & set(data_for)))
 
     seen: set[str] = set()
     unique_urls: list[str] = []

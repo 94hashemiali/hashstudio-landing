@@ -158,6 +158,107 @@ def main() -> int:
                 if slug not in article_set:
                     errors.append(f"content-graph service {service} → missing article {slug}")
 
+    # solution set from high-intent data (top-level page slugs only)
+    hi_js = (ROOT / "js/high-intent-data.js").read_text(encoding="utf-8")
+    solution_set = set(re.findall(r"^    slug:\s*'([a-z0-9-]+)',\s*$", hi_js, flags=re.M))
+    if not solution_set:
+        errors.append("high-intent-data.js: no top-level solution slugs found")
+    solution_dirs = {
+        d.name for d in (ROOT / "solutions").iterdir() if d.is_dir()
+    } if (ROOT / "solutions").is_dir() else set()
+    for slug in sorted(solution_set - solution_dirs):
+        errors.append(f"solution missing generated page: solutions/{slug}/")
+    for slug in sorted(solution_dirs - solution_set):
+        errors.append(f"orphan solution folder: solutions/{slug}/")
+
+    # article → solutions
+    for article, projects, services, solutions in re.findall(
+        r"'([a-z0-9-]+)':\s*\{\s*"
+        r"projects:\s*\[([^\]]*)\]\s*,\s*"
+        r"services:\s*\[([^\]]*)\]\s*,\s*"
+        r"solutions:\s*\[([^\]]*)\]",
+        graph_js,
+    ):
+        if article not in article_set:
+            continue
+        for slug in re.findall(r"'([a-z0-9-]+)'", solutions):
+            if slug not in solution_set:
+                errors.append(f"content-graph article {article} → missing solution {slug}")
+        seen_p = re.findall(r"'([a-z0-9-]+)'", projects)
+        if len(seen_p) != len(set(seen_p)):
+            errors.append(f"content-graph article {article}: duplicate project refs")
+        seen_s = re.findall(r"'([a-z0-9-]+)'", services)
+        if len(seen_s) != len(set(seen_s)):
+            errors.append(f"content-graph article {article}: duplicate service refs")
+        seen_sol = re.findall(r"'([a-z0-9-]+)'", solutions)
+        if len(seen_sol) != len(set(seen_sol)):
+            errors.append(f"content-graph article {article}: duplicate solution refs")
+
+    # project → solutions
+    if proj_block:
+        for project, arts, solutions in re.findall(
+            r"['\"]?([a-z0-9-]+)['\"]?:\s*\{\s*"
+            r"articles:\s*\[([^\]]*)\]\s*,\s*"
+            r"solutions:\s*\[([^\]]*)\]",
+            proj_block.group(1),
+        ):
+            for slug in re.findall(r"['\"]([a-z0-9-]+)['\"]", solutions):
+                if slug not in solution_set:
+                    errors.append(f"content-graph project {project} → missing solution {slug}")
+
+    # service → solutions
+    if svc_block:
+        for service, arts, solutions in re.findall(
+            r"['\"]?([a-z0-9-]+)['\"]?:\s*\{\s*"
+            r"articles:\s*\[([^\]]*)\]\s*,\s*"
+            r"solutions:\s*\[([^\]]*)\]",
+            svc_block.group(1),
+        ):
+            for slug in re.findall(r"['\"]([a-z0-9-]+)['\"]", solutions):
+                if slug not in solution_set:
+                    errors.append(f"content-graph service {service} → missing solution {slug}")
+
+    # TOPICS integrity (internal cluster layer — no /topics/ pages)
+    topics_block = re.search(r"var TOPICS = \{(.*?)\n  \};", graph_js, re.S)
+    if not topics_block:
+        errors.append("content-graph missing TOPICS cluster map")
+    else:
+        topic_entries = list(
+            re.finditer(
+                r"'([a-z0-9-]+)':\s*\{\s*"
+                r"label:\s*'((?:\\'|[^'])*)'\s*,\s*"
+                r"service:\s*'([a-z0-9-]*)'\s*,\s*"
+                r"solution:\s*'([a-z0-9-]*)'\s*,\s*"
+                r"articles:\s*\[([^\]]*)\]\s*,\s*"
+                r"projects:\s*\[([^\]]*)\]",
+                topics_block.group(1),
+            )
+        )
+        if not topic_entries:
+            errors.append("content-graph TOPICS parsed empty")
+        for m in topic_entries:
+            topic, _label, service, solution, articles, projects = m.groups()
+            if service and service not in service_set:
+                errors.append(f"topic {topic}: unknown service {service}")
+            if solution and solution not in solution_set:
+                errors.append(f"topic {topic}: unknown solution {solution}")
+            art_list = re.findall(r"'([a-z0-9-]+)'", articles)
+            proj_list = re.findall(r"'([a-z0-9-]+)'", projects)
+            if len(art_list) != len(set(art_list)):
+                errors.append(f"topic {topic}: duplicate article refs")
+            if len(proj_list) != len(set(proj_list)):
+                errors.append(f"topic {topic}: duplicate project refs")
+            for slug in art_list:
+                if slug not in article_set:
+                    errors.append(f"topic {topic}: missing article {slug}")
+            for slug in proj_list:
+                if slug not in project_set:
+                    errors.append(f"topic {topic}: missing project {slug}")
+            if len(art_list) < 2:
+                warnings.append(f"topic {topic}: thin article cluster ({len(art_list)})")
+            if len(proj_list) < 2:
+                warnings.append(f"topic {topic}: thin project cluster ({len(proj_list)})")
+
     # service seo fields
     for slug in sorted(service_set):
         # crude check: seo block near slug in services-data
@@ -178,6 +279,7 @@ def main() -> int:
     print(f"✓ {len(project_set)} projects validated")
     print(f"✓ {len(service_set)} services validated")
     print(f"✓ {len(article_set)} articles validated")
+    print(f"✓ {len(solution_set)} solutions validated")
     print(f"{mark} {len(errors)} broken relationships / field errors")
     print(f"{'✓' if not warnings else '⚠'} {len(warnings)} warnings")
     for item in errors[:60]:

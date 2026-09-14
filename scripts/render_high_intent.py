@@ -70,12 +70,7 @@ def _json_ld(page: dict[str, Any], canonical: str, page_desc: str) -> str:
             "@type": "BreadcrumbList",
             "itemListElement": [
                 {"@type": "ListItem", "position": 1, "name": "خانه", "item": f"{BASE}/"},
-                {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "خدمات",
-                    "item": f"{BASE}/services.html",
-                },
+                {"@type": "ListItem", "position": 2, "name": "راهکارها"},
                 {"@type": "ListItem", "position": 3, "name": name, "item": canonical},
             ],
         },
@@ -241,27 +236,31 @@ def render_high_intent(
     )
 
     article_cards: list[str] = []
-    for aslug in page.get("articles") or []:
+    for aslug in (page.get("articles") or [])[:3]:
         a = articles_by.get(aslug)
         if not a:
             continue
         article_cards.append(
             f'<a class="sd-article" href="/article/{_attr(aslug)}/" '
-            f'data-cta="view-article" data-cta-location="high-intent-page" '
+            f'data-cta="content-bridge" data-cta-location="high-intent-bridge" '
+            f'data-from-type="solution" data-from-slug="{_attr(slug)}" '
+            f'data-to-type="article" data-to-slug="{_attr(aslug)}" '
             f'data-content-slug="{_attr(aslug)}" data-fit-intent="{_attr(slug)}" '
             f'data-service-slug="{_attr(primary)}">'
             f'<span class="sd-article__tag">{escape_html(a.get("tag") or "")}</span>'
             f'<h3 class="sd-article__title">{escape_html(a.get("title") or "")}</h3>'
             f'<p class="sd-article__lead">{escape_html((a.get("lead") or "")[:140])}</p>'
-            f'<span class="sd-article__cta">خواندن مقاله</span></a>'
+            f'<span class="sd-article__cta">مطالعه {escape_html(a.get("title") or "مقاله")}</span></a>'
         )
 
     related_svc = "".join(
         f'<a class="hi-related__link" href="/service/{_attr(s)}/" '
-        f'data-cta="view-service" data-cta-location="high-intent-page" '
+        f'data-cta="content-bridge" data-cta-location="high-intent-bridge" '
+        f'data-from-type="solution" data-from-slug="{_attr(slug)}" '
+        f'data-to-type="service" data-to-slug="{_attr(s)}" '
         f'data-service-slug="{_attr(s)}" data-fit-intent="{_attr(slug)}">'
-        f"{escape_html(SERVICE_LABELS.get(s, s))}</a>"
-        for s in (page.get("relatedServices") or [])
+        f"آشنایی با خدمت {escape_html(SERVICE_LABELS.get(s, s))}</a>"
+        for s in (page.get("relatedServices") or [])[:3]
         if s in SERVICE_LABELS
     )
     primary_label = SERVICE_LABELS.get(primary, primary)
@@ -349,9 +348,9 @@ def render_high_intent(
       <div class="container sd-hero__grid">
         <div class="sd-hero__copy">
           <nav class="sd-breadcrumb" aria-label="مسیر">
-            <a href="index.html">خانه</a>
+            <a href="/">خانه</a>
             <span class="sd-breadcrumb__sep" aria-hidden="true">‹</span>
-            <a href="services.html">خدمات</a>
+            <span>راهکارها</span>
             <span class="sd-breadcrumb__sep" aria-hidden="true">‹</span>
             <span class="sd-breadcrumb__current">{escape_html(name)}</span>
           </nav>

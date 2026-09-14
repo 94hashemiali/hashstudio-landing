@@ -33,6 +33,7 @@ from hash_content import (  # noqa: E402
     load_article_graph,
     load_articles,
     load_project_cards,
+    load_solution_labels,
     local_asset_path,
 )
 GENERATED_BANNER = (
@@ -196,7 +197,9 @@ def render_projects(
             continue
         cards.append(
             f'<a class="article-proof__card" href="/project/{escape_html(p["slug"])}/" '
-            f'data-cta="view-project" data-cta-location="article" '
+            f'data-cta="content-bridge" data-cta-location="article-bridge" '
+            f'data-from-type="article" data-from-slug="{escape_html(article["slug"])}" '
+            f'data-to-type="project" data-to-slug="{escape_html(p["slug"])}" '
             f'data-content-slug="{escape_html(article["slug"])}" '
             f'data-project-slug="{escape_html(p["slug"])}">'
             f'<figure class="article-proof__media">'
@@ -207,7 +210,7 @@ def render_projects(
             f'<h3 class="article-proof__title">{escape_html(p["name"])}</h3>'
             f'<p class="article-proof__meta">{escape_html(p["services"])}</p>'
             f'<p class="article-proof__lead">{escape_html(p["lead"])}</p>'
-            f'<span class="article-proof__cta">مطالعه کیس‌استادی</span></div></a>'
+            f'<span class="article-proof__cta">مطالعه کیس‌استادی {escape_html(p["name"])}</span></div></a>'
         )
     return "\n          ".join(cards), bool(cards)
 
@@ -218,9 +221,28 @@ def render_services(article: dict[str, Any], rel: dict[str, Any]) -> tuple[str, 
         label = SERVICE_LABELS.get(sslug, sslug)
         cards.append(
             f'<a class="article-service-link" href="/service/{escape_html(sslug)}/" '
-            f'data-cta="view-service" data-cta-location="article" '
+            f'data-cta="content-bridge" data-cta-location="article-bridge" '
+            f'data-from-type="article" data-from-slug="{escape_html(article["slug"])}" '
+            f'data-to-type="service" data-to-slug="{escape_html(sslug)}" '
             f'data-content-slug="{escape_html(article["slug"])}" '
-            f'data-service-slug="{escape_html(sslug)}">{escape_html(label)}</a>'
+            f'data-service-slug="{escape_html(sslug)}">آشنایی با خدمت {escape_html(label)}</a>'
+        )
+    return "\n            ".join(cards), bool(cards)
+
+
+def render_solutions(article: dict[str, Any], rel: dict[str, Any]) -> tuple[str, bool]:
+    labels = load_solution_labels()
+    cards = []
+    for sslug in (rel.get("solutions") or [])[:2]:
+        label = labels.get(sslug, sslug)
+        cards.append(
+            f'<a class="article-service-link article-service-link--solution" '
+            f'href="/solutions/{escape_html(sslug)}/" '
+            f'data-cta="content-bridge" data-cta-location="article-bridge" '
+            f'data-from-type="article" data-from-slug="{escape_html(article["slug"])}" '
+            f'data-to-type="solution" data-to-slug="{escape_html(sslug)}" '
+            f'data-content-slug="{escape_html(article["slug"])}">'
+            f'بررسی مسیر {escape_html(label)}</a>'
         )
     return "\n            ".join(cards), bool(cards)
 
@@ -261,7 +283,7 @@ def json_ld(article: dict[str, Any], canonical: str, page_desc: str, og_image: s
                 {
                     "@type": "ListItem",
                     "position": 2,
-                    "name": "بلاگ",
+                    "name": "مقالات",
                     "item": f"{BASE}/blog.html",
                 },
                 {
@@ -294,6 +316,7 @@ def render_article(
     related = render_related(article)
     project_html, has_projects = render_projects(article, rel, projects)
     service_html, has_services = render_services(article, rel)
+    solution_html, has_solutions = render_solutions(article, rel)
     cta_title = (rel.get("ctaTitle") or "").strip()
     cta_body = (rel.get("ctaBody") or "").strip()
     if not cta_title or not cta_body:
@@ -317,16 +340,19 @@ def render_article(
       </div>
     </section>"""
 
+    bridge_links = "\n            ".join(
+        x for x in [service_html, solution_html] if x
+    )
     service_section = ""
-    if has_services:
+    if has_services or has_solutions:
         service_section = f"""
     <section class="article-service-cta" data-block="article-services">
       <div class="container">
         <div class="article-service-cta__card">
-          <h2 class="article-service-cta__title">خدمت مرتبط با این موضوع</h2>
+          <h2 class="article-service-cta__title">اگر این مسئله برای محصول شما هم وجود دارد…</h2>
           <p class="article-service-cta__body" data-field="service-context">{escape_html(cta_body)}</p>
           <div class="article-service-cta__links" data-list="article-services">
-            {service_html}
+            {bridge_links}
           </div>
           <p class="article-service-cta__fit"><a href="/#service-fit" data-cta="service-fit-guide" data-cta-location="article">نمی‌دانید کدام خدمت مناسب است؟</a></p>
         </div>
@@ -425,7 +451,7 @@ def render_article(
         <nav class="article-breadcrumb" aria-label="مسیر">
           <a href="index.html">خانه</a>
           <span class="article-breadcrumb__sep" aria-hidden="true">›</span>
-          <a href="blog.html">بلاگ</a>
+          <a href="blog.html">مقالات</a>
           <span class="article-breadcrumb__sep" aria-hidden="true">›</span>
           <span class="article-breadcrumb__current">{escape_html(title)}</span>
         </nav>

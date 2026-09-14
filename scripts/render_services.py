@@ -264,18 +264,20 @@ def render_service(
 
     article_slugs = (graph_services.get(slug) or {}).get("articles") or []
     article_cards: list[str] = []
-    for aslug in article_slugs:
+    for aslug in article_slugs[:3]:
         a = articles.get(aslug)
         if not a:
             continue
         article_cards.append(
             f'<a class="sd-article" href="/article/{_attr(a["slug"])}/" '
-            f'data-cta="view-article" data-cta-location="service" '
+            f'data-cta="content-bridge" data-cta-location="service-bridge" '
+            f'data-from-type="service" data-from-slug="{_attr(slug)}" '
+            f'data-to-type="article" data-to-slug="{_attr(a["slug"])}" '
             f'data-content-slug="{_attr(a["slug"])}" data-service-slug="{_attr(slug)}">'
             f'<span class="sd-article__tag">{escape_html(a.get("tag") or "")}</span>'
             f'<h3 class="sd-article__title">{escape_html(a.get("title") or "")}</h3>'
             f'<p class="sd-article__lead">{escape_html((a.get("lead") or "")[:120])}</p>'
-            f'<span class="sd-article__cta">خواندن مقاله</span></a>'
+            f'<span class="sd-article__cta">مطالعه {escape_html(a.get("title") or "مقاله")}</span></a>'
         )
     show_articles = len(article_cards) > 0
 
@@ -298,17 +300,23 @@ def render_service(
     from render_high_intent import load_high_intent_pages
 
     related_offers = []
+    graph_solutions = (graph_services.get(slug) or {}).get("solutions") or []
     for offer in load_high_intent_pages():
         primary = offer.get("primaryService")
         related = list(offer.get("relatedServices") or [])
-        if slug == primary or slug in related:
-            related_offers.append((0 if slug == primary else 1, offer))
+        oslug = offer.get("slug") or ""
+        if slug == primary or slug in related or oslug in graph_solutions:
+            related_offers.append((0 if slug == primary or oslug in graph_solutions else 1, offer))
     related_offers.sort(key=lambda item: (item[0], item[1].get("slug") or ""))
-    # Prefer primary matches; show up to 4 so vertical offers aren't dropped
-    shown = [o for _, o in related_offers[:4]]
+    shown = [o for _, o in related_offers[:2]]
     if shown:
         links = " · ".join(
-            f'<a href="/solutions/{_attr(o["slug"])}/">{escape_html(o.get("name") or o["slug"])}</a>'
+            f'<a href="/solutions/{_attr(o["slug"])}/" '
+            f'data-cta="content-bridge" data-cta-location="service-bridge" '
+            f'data-from-type="service" data-from-slug="{_attr(slug)}" '
+            f'data-to-type="solution" data-to-slug="{_attr(o["slug"])}" '
+            f'data-service-slug="{_attr(slug)}">'
+            f'بررسی مسیر {escape_html(o.get("name") or o["slug"])}</a>'
             for o in shown
         )
         offers_html = (
