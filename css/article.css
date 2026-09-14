@@ -864,6 +864,16 @@
   gap: 0.65rem;
 }
 
+.article-service-cta__fit {
+  margin: 1.15rem 0 0;
+  font-size: var(--font-size-caption);
+}
+
+.article-service-cta__fit a {
+  color: #ffb818;
+  font-weight: var(--font-weight-bold);
+}
+
 .article-service-link {
   display: inline-flex;
   align-items: center;

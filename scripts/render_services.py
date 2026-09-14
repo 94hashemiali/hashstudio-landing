@@ -493,9 +493,14 @@ def render_service(
         <article class="home-final-cta__card">
           <h2 class="home-final-cta__title">{escape_html(svc.get("ctaTitle") or "")}</h2>
           <p class="home-final-cta__desc">{escape_html(svc.get("ctaBody") or "")}</p>
+          <div class="sd-fit-note" data-block="fit-note"{_hidden(show_fit)}>
+            <p class="sd-fit-note__title">این خدمت برای شما مناسب است اگر…</p>
+            <ul class="sd-fit-note__list">{fit_html}</ul>
+            <p class="sd-fit-note__alt">اگر هنوز مطمئن نیستید کدام مسیر مناسب شماست، از <a href="/#service-fit" data-cta="service-fit-guide" data-cta-location="service-cta">راهنمای انتخاب خدمت</a> استفاده کنید.</p>
+          </div>
           <div class="home-final-cta__actions">
             <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="service-cta" data-service-slug="{_attr(slug)}">درباره پروژه شما صحبت کنیم</a>
-            <a href="projects.html" class="btn btn--outline btn--lg">مشاهده پروژه‌ها</a>
+            <a href="/#service-fit" class="btn btn--outline btn--lg" data-cta="service-fit-guide" data-cta-location="service-cta">راهنمای انتخاب خدمت</a>
           </div>
         </article>
       </div>

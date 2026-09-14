@@ -68,6 +68,29 @@
   line-height: var(--line-height-relaxed);
 }
 
+.ct-fit-hint {
+  margin: 1.35rem auto 0;
+  max-width: 36rem;
+  padding: 1rem 1.25rem;
+  background: #fff9f0;
+  border: 1px solid #e9e1d5;
+  border-radius: 0.85rem;
+  text-align: center;
+}
+
+.ct-fit-hint__text {
+  margin: 0;
+  color: var(--color-dark);
+  line-height: 1.65;
+}
+
+.ct-fit-hint__sub {
+  margin: 0.5rem 0 0;
+  color: #5a6b73;
+  font-size: var(--font-size-caption);
+  line-height: 1.65;
+}
+
 .ct-process {
   margin: 1.75rem auto 0;
   max-width: 36rem;

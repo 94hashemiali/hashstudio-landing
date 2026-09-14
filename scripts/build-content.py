@@ -328,6 +328,7 @@ def render_article(
           <div class="article-service-cta__links" data-list="article-services">
             {service_html}
           </div>
+          <p class="article-service-cta__fit"><a href="/#service-fit" data-cta="service-fit-guide" data-cta-location="article">نمی‌دانید کدام خدمت مناسب است؟</a></p>
         </div>
       </div>
     </section>"""

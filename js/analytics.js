@@ -194,12 +194,19 @@
 
   function rememberLeadContext(extra) {
     var ctx = pageContext();
-    // Never let contact/home overwrite a richer content context unless explicit slugs given
+    var existing = readSession(LEAD_KEY) || {};
+    extra = extra || {};
+
+    var hasSlugExtra = !!(extra.project_slug || extra.service_slug || extra.article_slug);
+    var hasFitExtra = !!(extra.intent || extra.recommended_service);
+
+    // Never let contact/home wipe richer content with an empty call
     if (ctx.page_type === 'contact' || ctx.page_type === 'home' || ctx.page_type === 'other') {
-      var existing = readSession(LEAD_KEY);
-      var hasExplicit =
-        (extra && (extra.project_slug || extra.service_slug || extra.article_slug));
-      if (existing && (existing.project_slug || existing.service_slug || existing.article_slug) && !hasExplicit) {
+      if (
+        (existing.project_slug || existing.service_slug || existing.article_slug) &&
+        !hasSlugExtra &&
+        !hasFitExtra
+      ) {
         return existing;
       }
     }
@@ -210,15 +217,32 @@
       url: safe(function () {
         return location.origin + ctx.page_path;
       }) || '',
-      project_slug: ctx.project_slug || (extra && extra.project_slug) || '',
-      service_slug: ctx.service_slug || (extra && extra.service_slug) || '',
-      article_slug: ctx.article_slug || (extra && extra.article_slug) || '',
+      // Detail page context wins; otherwise merge extra over prior lead
+      project_slug: ctx.project_slug || extra.project_slug || existing.project_slug || '',
+      service_slug: ctx.service_slug || extra.service_slug || existing.service_slug || '',
+      article_slug: ctx.article_slug || extra.article_slug || existing.article_slug || '',
       saved_at: Date.now()
     };
 
-    if (!payload.project_slug && !payload.service_slug && !payload.article_slug) {
+    if (extra.intent) {
+      payload.intent = String(extra.intent).slice(0, 40);
+    } else if (existing.intent) {
+      payload.intent = existing.intent;
+    }
+
+    if (extra.recommended_service) {
+      payload.recommended_service = String(extra.recommended_service).slice(0, 40);
+    } else if (hasFitExtra && extra.service_slug) {
+      payload.recommended_service = String(extra.service_slug).slice(0, 40);
+    } else if (existing.recommended_service) {
+      payload.recommended_service = existing.recommended_service;
+    } else if (payload.service_slug) {
+      payload.recommended_service = payload.service_slug;
+    }
+
+    if (!payload.project_slug && !payload.service_slug && !payload.article_slug && !payload.intent) {
       if (ctx.page_type !== 'project' && ctx.page_type !== 'service' && ctx.page_type !== 'article') {
-        return readSession(LEAD_KEY);
+        return existing.saved_at ? existing : null;
       }
     }
 
@@ -303,13 +327,17 @@
       cta: el.getAttribute('data-cta') || '',
       location: el.getAttribute('data-cta-location') || 'page'
     };
-    ['project-slug', 'service-slug', 'content-slug', 'article-slug'].forEach(function (attr) {
+    ['project-slug', 'service-slug', 'content-slug', 'article-slug', 'fit-intent'].forEach(function (attr) {
       var val = el.getAttribute('data-' + attr);
       if (!val) return;
       if (attr === 'content-slug' || attr === 'article-slug') props.article_slug = val;
       if (attr === 'project-slug') props.project_slug = val;
       if (attr === 'service-slug') props.service_slug = val;
+      if (attr === 'fit-intent') props.intent = val;
     });
+    if (el.getAttribute('data-recommended-service')) {
+      props.recommended_service = el.getAttribute('data-recommended-service');
+    }
     return props;
   }
 
@@ -344,6 +372,61 @@
     if (cta === 'view-service') track('service_view_click', props);
     if (cta === 'view-article') track('article_view_click', props);
     if (cta === 'service-fit-selector') track('service_fit_selector_click', props);
+    if (cta === 'service-fit-select') {
+      track('service_fit_selected', {
+        intent: props.intent || '',
+        location: props.location
+      });
+    }
+    if (cta === 'service-fit-recommendation') {
+      track('service_fit_cta_click', {
+        intent: props.intent || '',
+        recommended_service: props.recommended_service || props.service_slug || '',
+        project_slug: props.project_slug || '',
+        location: props.location,
+        action: 'view-project'
+      });
+      rememberLeadContext({
+        intent: props.intent,
+        service_slug: props.recommended_service || props.service_slug,
+        recommended_service: props.recommended_service || props.service_slug
+      });
+    }
+    if (cta === 'service-fit-contact') {
+      track('service_fit_cta_click', {
+        intent: props.intent || '',
+        recommended_service: props.recommended_service || props.service_slug || '',
+        project_slug: props.project_slug || '',
+        location: props.location,
+        action: 'contact'
+      });
+      rememberLeadContext({
+        intent: props.intent,
+        service_slug: props.recommended_service || props.service_slug,
+        recommended_service: props.recommended_service || props.service_slug
+      });
+    }
+    if (cta === 'service-fit-service') {
+      track('service_fit_cta_click', {
+        intent: props.intent || '',
+        recommended_service: props.recommended_service || props.service_slug || '',
+        project_slug: props.project_slug || '',
+        location: props.location,
+        action: 'view-service'
+      });
+      rememberLeadContext({
+        intent: props.intent,
+        service_slug: props.recommended_service || props.service_slug,
+        recommended_service: props.recommended_service || props.service_slug
+      });
+      track('service_view_click', props);
+    }
+    if (cta === 'service-fit-guide') {
+      track('service_fit_cta_click', {
+        location: props.location,
+        action: 'guide'
+      });
+    }
   }
 
   function bindClicks() {

@@ -395,6 +395,18 @@ def render_project(
         ]
     )
 
+    challenge_hint = str(challenge.get("heading") or "").strip()
+    fit_desc = (
+        f"اگر مسئله‌ای نزدیک به «{challenge_hint}» دارید، یا در حوزه "
+        f"{project.get('industry') or 'محصول دیجیتال'} به "
+        f"{project.get('services') or 'طراحی و توسعه'} نیاز دارید، گفتگو را شروع کنید. بریف کامل لازم نیست."
+        if challenge_hint
+        else (
+            f"از {project.get('industry') or 'مسئله محصول'} تا "
+            f"{project.get('services') or 'طراحی و توسعه'} — درباره گلوگاه واقعی‌تان حرف بزنیم. بریف کامل لازم نیست."
+        )
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -666,10 +678,10 @@ def render_project(
       <div class="container">
         <article class="home-final-cta__card">
           <h2 class="home-final-cta__title">اگر مسئله‌ای شبیه {escape_html(name)} دارید</h2>
-          <p class="home-final-cta__desc">از {escape_html(project.get("industry") or "مسئله محصول")} تا {escape_html(project.get("services") or "طراحی و توسعه")} — درباره گلوگاه واقعی‌تان حرف بزنیم. بریف کامل لازم نیست.</p>
+          <p class="home-final-cta__desc">{escape_html(fit_desc)}</p>
           <div class="home-final-cta__actions">
-            <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="project-cta" data-project-slug="{_attr(slug)}">شروع پروژه</a>
-            <a href="projects.html" class="btn btn--outline btn--lg" data-cta="view-projects" data-cta-location="project-cta">بازگشت به پروژه‌ها</a>
+            <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="project-cta" data-project-slug="{_attr(slug)}">بررسی پروژه من</a>
+            <a href="/#service-fit" class="btn btn--outline btn--lg" data-cta="service-fit-guide" data-cta-location="project-cta">هنوز مطمئن نیستم</a>
           </div>
         </article>
       </div>

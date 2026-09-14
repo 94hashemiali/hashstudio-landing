@@ -205,6 +205,8 @@
     }
     var related = relatedPath(lead);
     if (related) lines.push('صفحه مرتبط: ' + related);
+    if (lead && lead.intent) lines.push('نیت بازدیدکننده: ' + lead.intent);
+    if (lead && lead.recommended_service) lines.push('خدمت پیشنهادی: ' + lead.recommended_service);
     return lines;
   }
 
@@ -313,4 +315,69 @@
       }
     });
   }
+
+  var SERVICE_LABELS = {
+    product: 'طراحی محصول',
+    'ui-ux': 'طراحی UI/UX',
+    web: 'توسعه وب',
+    mobile: 'توسعه موبایل',
+    mvp: 'ساخت MVP',
+    ai: 'هوش مصنوعی',
+    seo: 'سئو و رشد',
+    consulting: 'مشاوره محصول'
+  };
+
+  var SERVICE_TO_FORM = {
+    product: 'product',
+    'ui-ux': 'ui-ux',
+    web: 'website',
+    mobile: 'app',
+    mvp: 'mvp',
+    ai: 'ai',
+    seo: 'seo',
+    consulting: 'consulting'
+  };
+
+  function applyFitContext() {
+    var params = new URLSearchParams(window.location.search || '');
+    var qService = (params.get('service') || '').trim();
+    var qIntent = (params.get('intent') || '').trim();
+    var lead =
+      analytics && analytics.getLeadContext ? analytics.getLeadContext() : null;
+
+    var service = qService || (lead && (lead.recommended_service || lead.service_slug)) || '';
+    var intent = qIntent || (lead && lead.intent) || '';
+
+    if (qService || qIntent) {
+      if (analytics && typeof analytics.rememberLeadContext === 'function') {
+        var patch = {
+          intent: intent || undefined,
+          service_slug: service || undefined,
+          recommended_service: service || undefined
+        };
+        analytics.rememberLeadContext(patch);
+      }
+    }
+
+    var select = document.getElementById('project-type');
+    if (select && service && SERVICE_TO_FORM[service]) {
+      var mapped = SERVICE_TO_FORM[service];
+      // Do not overwrite an explicit user choice already made
+      if (!select.value) {
+        select.value = mapped;
+      }
+    }
+
+    var hint = document.getElementById('ct-fit-hint');
+    if (hint && service && SERVICE_LABELS[service]) {
+      hint.hidden = false;
+      hint.innerHTML =
+        '<p class="ct-fit-hint__text">بر اساس انتخاب شما، احتمالاً <strong>' +
+        SERVICE_LABELS[service] +
+        '</strong> نقطه شروع مناسبی است.</p>' +
+        '<p class="ct-fit-hint__sub">اگر هنوز مطمئن نیستید، مشکلی نیست؛ مسئله‌تان را توضیح دهید تا مسیر مناسب را با هم مشخص کنیم.</p>';
+    }
+  }
+
+  applyFitContext();
 })();

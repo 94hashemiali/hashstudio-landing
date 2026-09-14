@@ -108,6 +108,14 @@ If no provider is set, tracking is a silent no-op.
 - Project closing CTA is case-aware; contact copy reduces brief friction.
 - CTA `service-fit-selector` maps to `service_fit_selector_click` in `js/analytics.js`.
 
+## Project fit (Phase 13)
+
+- Homepage `#service-fit`: one intent choice → recommended service + one project proof.
+- Mapping lives in `js/home.js` (`FIT_MAP`); uses `HASH_PROJECTS` for proof lines.
+- Lead context may store `intent` + `recommended_service` (no PII).
+- Contact preselects project type from query/lead; shows guidance banner.
+- Events: `service_fit_started`, `service_fit_selected`, `service_fit_recommendation_viewed`, `service_fit_cta_click`.
+
 ## Deploy
 
 Run `npm run build` before deploy. Repo root is the static site.
