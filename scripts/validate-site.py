@@ -497,6 +497,32 @@ def main() -> int:
                 f"Service Fit mismatch: FIT_MAP intent '{intent}' missing homepage button"
             )
 
+        canonical_intents = ("idea", "existing", "website", "technical", "unknown")
+        obsolete_intents = ("new-product", "existing-product")
+        for intent in canonical_intents:
+            count = len(
+                re.findall(
+                    rf'data-fit-intent=["\']{re.escape(intent)}["\']',
+                    index_html,
+                )
+            )
+            if count != 1:
+                errors.append(
+                    f"index.html: canonical fit intent '{intent}' must appear exactly once, found {count}"
+                )
+            if intent not in map_keys:
+                errors.append(f"js/service-fit.js: FIT_MAP missing canonical intent '{intent}'")
+        for intent in obsolete_intents:
+            if intent in map_keys or re.search(
+                rf"['\"]?{re.escape(intent)}['\"]?\s*:\s*\{{",
+                fit_text,
+            ):
+                errors.append(
+                    f"js/service-fit.js: obsolete FIT_MAP intent '{intent}' must be removed"
+                )
+            if f'data-fit-intent="{intent}"' in index_html or f"data-fit-intent='{intent}'" in index_html:
+                errors.append(f"index.html: obsolete fit intent '{intent}' must be removed")
+
         for svc in re.findall(r"service:\s*'([a-z0-9-]+)'", fit_text):
             if svc not in folder_service_slugs:
                 errors.append(f"js/service-fit.js: unknown service slug {svc}")

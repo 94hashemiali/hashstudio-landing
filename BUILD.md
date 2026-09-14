@@ -106,13 +106,12 @@ If no provider is set, tracking is a silent no-op.
 - Homepage hierarchy: hero → fit → proof → services → process → principles → credibility → discovery → CTA.
 - Service pages: optional `fitFor` / `fitTitle` in `js/services-data.js`.
 - Project closing CTA is case-aware; contact copy reduces brief friction.
-- CTA `service-fit-selector` maps to `service_fit_selector_click` in `js/analytics.js`.
 
 ## Project fit (Phase 13)
 
 - Homepage: `#fit` (who we help) → `#service-fit` (one question → recommendation).
 - Logic in `js/service-fit.js`. Canonical intents: `idea`, `existing`, `website`, `technical`, `unknown`.
-- Labels local to module; proof from `HASH_PROJECTS`. Script order: projects-data → analytics → service-fit.
+- Labels local to module; proof from `HASH_PROJECTS`. Script order: projects-data → analytics → service-fit → home.
 - Lead context stores `intent` + `service_slug` + `recommended_service` + `project_slug` (no PII).
 - Contact validates query params, shows hint, may preselect project type; user choice wins.
 - Events: `service_fit_started`, `service_fit_selected`, `service_fit_recommendation_viewed`, `service_fit_cta_click`.
