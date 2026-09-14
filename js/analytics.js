@@ -371,11 +371,10 @@
     if (cta === 'view-project') track('project_view_click', props);
     if (cta === 'view-service') track('service_view_click', props);
     if (cta === 'view-article') track('article_view_click', props);
-    if (cta === 'service-fit-selector') track('service_fit_selector_click', props);
     if (cta === 'service-fit-select') {
       track('service_fit_selected', {
         intent: props.intent || '',
-        location: props.location
+        location: props.location || 'homepage'
       });
     }
     if (cta === 'service-fit-recommendation') {
@@ -383,13 +382,14 @@
         intent: props.intent || '',
         recommended_service: props.recommended_service || props.service_slug || '',
         project_slug: props.project_slug || '',
-        location: props.location,
+        location: props.location || 'homepage',
         action: 'view-project'
       });
       rememberLeadContext({
         intent: props.intent,
         service_slug: props.recommended_service || props.service_slug,
-        recommended_service: props.recommended_service || props.service_slug
+        recommended_service: props.recommended_service || props.service_slug,
+        project_slug: props.project_slug
       });
     }
     if (cta === 'service-fit-contact') {
@@ -397,13 +397,14 @@
         intent: props.intent || '',
         recommended_service: props.recommended_service || props.service_slug || '',
         project_slug: props.project_slug || '',
-        location: props.location,
+        location: props.location || 'homepage',
         action: 'contact'
       });
       rememberLeadContext({
         intent: props.intent,
         service_slug: props.recommended_service || props.service_slug,
-        recommended_service: props.recommended_service || props.service_slug
+        recommended_service: props.recommended_service || props.service_slug,
+        project_slug: props.project_slug
       });
     }
     if (cta === 'service-fit-service') {
@@ -411,19 +412,19 @@
         intent: props.intent || '',
         recommended_service: props.recommended_service || props.service_slug || '',
         project_slug: props.project_slug || '',
-        location: props.location,
+        location: props.location || 'homepage',
         action: 'view-service'
       });
       rememberLeadContext({
         intent: props.intent,
         service_slug: props.recommended_service || props.service_slug,
-        recommended_service: props.recommended_service || props.service_slug
+        recommended_service: props.recommended_service || props.service_slug,
+        project_slug: props.project_slug
       });
-      track('service_view_click', props);
     }
     if (cta === 'service-fit-guide') {
       track('service_fit_cta_click', {
-        location: props.location,
+        location: props.location || 'page',
         action: 'guide'
       });
     }

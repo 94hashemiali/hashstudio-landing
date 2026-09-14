@@ -59,7 +59,6 @@ ALLOWED_CTAS = {
     "external-project",
     "contact-form",
     "contact-submit",
-    "service-fit-selector",
     "service-fit-select",
     "service-fit-recommendation",
     "service-fit-service",
@@ -453,6 +452,13 @@ def main() -> int:
         warnings.append("index.html: missing Who we help section (#fit) before Service Fit")
     if "js/service-fit.js" not in index_html:
         errors.append("index.html: must load js/service-fit.js")
+    # Script order: projects-data + analytics before service-fit
+    if "js/service-fit.js" in index_html:
+        sf_pos = index_html.find("js/service-fit.js")
+        if index_html.find("js/projects-data.js") > sf_pos or index_html.find("js/projects-data.js") < 0:
+            errors.append("index.html: projects-data.js must load before service-fit.js")
+        if index_html.find("js/analytics.js") > sf_pos or index_html.find("js/analytics.js") < 0:
+            errors.append("index.html: analytics.js must load before service-fit.js")
     if not fit_js.is_file():
         errors.append("js/service-fit.js missing")
     else:
@@ -466,11 +472,31 @@ def main() -> int:
         analytics_text = (
             analytics_js.read_text(encoding="utf-8") if analytics_js.is_file() else ""
         )
-        if "service_fit_selected" not in analytics_text and "service-fit-select" not in analytics_text:
-            errors.append("js/analytics.js: missing service_fit_selected wiring")
+        if "service_fit_selected" not in analytics_text:
+            errors.append("js/analytics.js: missing service_fit_selected")
         if "service_fit_cta_click" not in analytics_text:
             errors.append("js/analytics.js: missing service_fit_cta_click")
-        # Map must reference real services + projects
+        if "service_fit_selector_click" in analytics_text or "service-fit-selector" in analytics_text:
+            warnings.append("js/analytics.js: unused service-fit-selector taxonomy still present")
+
+        # Extract FIT_MAP keys (quoted or bare) that own a service: field
+        map_keys = {
+            a or b
+            for a, b in re.findall(
+                r"(?:['\"]([a-z0-9-]+)['\"]|([a-z]+))\s*:\s*\{\s*\n\s*service:",
+                fit_text,
+            )
+        }
+        html_intents = set(re.findall(r'data-fit-intent=["\']([a-z0-9-]+)["\']', index_html))
+        for intent in sorted(html_intents - map_keys):
+            errors.append(
+                f"Service Fit mismatch: index.html intent '{intent}' missing from FIT_MAP"
+            )
+        for intent in sorted(map_keys - html_intents):
+            errors.append(
+                f"Service Fit mismatch: FIT_MAP intent '{intent}' missing homepage button"
+            )
+
         for svc in re.findall(r"service:\s*'([a-z0-9-]+)'", fit_text):
             if svc not in folder_service_slugs:
                 errors.append(f"js/service-fit.js: unknown service slug {svc}")
@@ -480,13 +506,11 @@ def main() -> int:
         for proj in re.findall(r"project:\s*'([a-z0-9-]+)'", fit_text):
             if proj not in folder_project_slugs:
                 errors.append(f"js/service-fit.js: unknown project slug {proj}")
-        # Intent buttons on homepage must match map keys
-        for intent in ("new-product", "existing-product", "website", "technical", "unknown"):
-            if f'data-fit-intent="{intent}"' not in index_html:
-                errors.append(f"index.html: missing fit intent button {intent}")
-            # keys may be quoted or bare identifiers
-            if not re.search(rf"['\"]?{re.escape(intent)}['\"]?\s*:", fit_text):
-                errors.append(f"js/service-fit.js: missing FIT_MAP intent {intent}")
+
+        if "project_slug: map.project" not in fit_text:
+            errors.append(
+                "js/service-fit.js: rememberFit must persist project_slug from FIT_MAP"
+            )
 
     # Generated detail pages: analytics + CTA hygiene
     for kind, dirs in (

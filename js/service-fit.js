@@ -1,11 +1,11 @@
 /**
  * Homepage Service Fit — one question → one primary recommendation.
- * Progressive enhancement; no deps. Uses HASH_PROJECTS + HASH_CONTENT_GRAPH labels.
+ * Progressive enhancement; no deps. Uses HASH_PROJECTS for proof lines.
  */
 (function (global) {
   'use strict';
 
-  var SERVICE_LABELS = (global.HASH_CONTENT_GRAPH && global.HASH_CONTENT_GRAPH.serviceLabels) || {
+  var SERVICE_LABELS = {
     product: 'طراحی محصول',
     'ui-ux': 'طراحی UI/UX',
     web: 'توسعه وب',
@@ -16,16 +16,16 @@
     consulting: 'مشاوره محصول'
   };
 
-  // Deterministic intent → primary service + optional support + proof project
+  // Canonical intents: idea | existing | website | technical | unknown
   var FIT_MAP = {
-    'new-product': {
+    idea: {
       service: 'product',
       secondary: 'mvp',
       project: 'zarafe',
       reason:
         'اگر هنوز دامنه محصول، تجربه کاربر یا مسیر ساخت کاملاً روشن نیست، از طراحی محصول شروع کنید — نه از فهرست فیچر.'
     },
-    'existing-product': {
+    existing: {
       service: 'ui-ux',
       secondary: 'product',
       project: 'moniaz',
@@ -97,7 +97,8 @@
     analytics.rememberLeadContext({
       intent: intent,
       service_slug: map.service,
-      recommended_service: map.service
+      recommended_service: map.service,
+      project_slug: map.project
     });
   }
 
@@ -107,9 +108,16 @@
     if (!map || !host) return;
 
     var project = findProject(map.project);
-    var name = (project && project.name) || map.project;
-    var industry = (project && project.industry) || '';
-    var services = (project && project.services) || '';
+    if (!project) {
+      host.hidden = false;
+      host.innerHTML =
+        '<p class="home-fit__rec-reason">پروژه نمونه برای این مسیر در دادهٔ سایت یافت نشد.</p>';
+      return;
+    }
+
+    var name = project.name || map.project;
+    var industry = project.industry || '';
+    var services = project.services || '';
     var proof = proofLine(project);
     var primaryLabel = SERVICE_LABELS[map.service] || map.service;
     var secondaryLabel = map.secondary ? SERVICE_LABELS[map.secondary] || map.secondary : '';
@@ -255,6 +263,7 @@
 
   global.HASH_SERVICE_FIT = {
     map: FIT_MAP,
+    intents: Object.keys(FIT_MAP),
     init: initServiceFit
   };
 

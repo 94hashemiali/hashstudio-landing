@@ -327,6 +327,14 @@
     consulting: 'مشاوره محصول'
   };
 
+  var KNOWN_INTENTS = {
+    idea: 1,
+    existing: 1,
+    website: 1,
+    technical: 1,
+    unknown: 1
+  };
+
   var SERVICE_TO_FORM = {
     product: 'product',
     'ui-ux': 'ui-ux',
@@ -342,20 +350,24 @@
     var params = new URLSearchParams(window.location.search || '');
     var qService = (params.get('service') || '').trim();
     var qIntent = (params.get('intent') || '').trim();
+    if (qService && !SERVICE_TO_FORM[qService]) qService = '';
+    if (qIntent && !KNOWN_INTENTS[qIntent]) qIntent = '';
+
     var lead =
       analytics && analytics.getLeadContext ? analytics.getLeadContext() : null;
 
     var service = qService || (lead && (lead.recommended_service || lead.service_slug)) || '';
     var intent = qIntent || (lead && lead.intent) || '';
+    if (service && !SERVICE_TO_FORM[service]) service = '';
+    if (intent && !KNOWN_INTENTS[intent]) intent = '';
 
     if (qService || qIntent) {
       if (analytics && typeof analytics.rememberLeadContext === 'function') {
-        var patch = {
+        analytics.rememberLeadContext({
           intent: intent || undefined,
           service_slug: service || undefined,
           recommended_service: service || undefined
-        };
-        analytics.rememberLeadContext(patch);
+        });
       }
     }
 
