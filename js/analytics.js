@@ -1,11 +1,8 @@
 /**
  * Hash Studio analytics — provider-neutral, fail-silent.
- * Source of conversion signals. No PII. No required third-party SDK.
  *
- * Connect a provider later:
- *   window.HASH_ANALYTICS_PROVIDER = {
- *     track: function (event, props) { ... }
- *   };
+ * Connect later:
+ *   window.HASH_ANALYTICS_PROVIDER = { track: function (event, props) {} };
  */
 (function (global) {
   'use strict';
@@ -16,6 +13,18 @@
   var LEAD_KEY = 'hashstudio_lead_context';
   var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
   var SCROLL_MARKS = [25, 50, 75, 90];
+  var PII_KEYS = {
+    name: 1,
+    email: 1,
+    phone: 1,
+    company: 1,
+    message: 1,
+    filename: 1,
+    value: 1,
+    goal: 1,
+    budget: 1,
+    timeline: 1
+  };
 
   function safe(fn) {
     try {
@@ -112,6 +121,7 @@
     });
 
     var existing = readJson(ATTR_KEY) || {};
+    var lastPath = path;
     var next = {
       first_landing_path: existing.first_landing_path || path,
       first_referrer: existing.first_referrer || referrer || '',
@@ -120,7 +130,9 @@
       first_utm_campaign: existing.first_utm_campaign || '',
       first_utm_content: existing.first_utm_content || '',
       first_utm_term: existing.first_utm_term || '',
-      last_landing_path: path,
+      // last_landing_path kept for backward compat (= last visited page path)
+      last_landing_path: lastPath,
+      last_page_path: lastPath,
       last_referrer: referrer || existing.last_referrer || '',
       last_utm_source: existing.last_utm_source || '',
       last_utm_medium: existing.last_utm_medium || '',
@@ -143,28 +155,127 @@
   }
 
   function getAttribution() {
-    return readJson(ATTR_KEY) || captureAttribution();
+    var attr = readJson(ATTR_KEY) || captureAttribution();
+    if (attr && !attr.last_page_path && attr.last_landing_path) {
+      attr.last_page_path = attr.last_landing_path;
+    }
+    return attr;
+  }
+
+  function parseSameOriginPath(url) {
+    return safe(function () {
+      var u = new URL(url, location.href);
+      if (u.hostname !== location.hostname) return '';
+      return u.pathname || '';
+    }) || '';
+  }
+
+  function contextFromPath(path) {
+    var m = String(path || '').match(/^\/(project|service|article)\/([^/]+)\/?/);
+    if (!m) return null;
+    var kind = m[1];
+    var slug = decodeURIComponent(m[2]);
+    var payload = {
+      page_type: kind,
+      page_path: '/' + kind + '/' + slug + '/',
+      url: safe(function () {
+        return location.origin + '/' + kind + '/' + slug + '/';
+      }) || '',
+      project_slug: '',
+      service_slug: '',
+      article_slug: '',
+      saved_at: Date.now()
+    };
+    if (kind === 'project') payload.project_slug = slug;
+    if (kind === 'service') payload.service_slug = slug;
+    if (kind === 'article') payload.article_slug = slug;
+    return payload;
   }
 
   function rememberLeadContext(extra) {
     var ctx = pageContext();
+    // Never let contact/home overwrite a richer content context unless explicit slugs given
+    if (ctx.page_type === 'contact' || ctx.page_type === 'home' || ctx.page_type === 'other') {
+      var existing = readSession(LEAD_KEY);
+      var hasExplicit =
+        (extra && (extra.project_slug || extra.service_slug || extra.article_slug));
+      if (existing && (existing.project_slug || existing.service_slug || existing.article_slug) && !hasExplicit) {
+        return existing;
+      }
+    }
+
     var payload = {
       page_type: ctx.page_type,
       page_path: ctx.page_path,
       url: safe(function () {
-        return location.href;
+        return location.origin + ctx.page_path;
       }) || '',
       project_slug: ctx.project_slug || (extra && extra.project_slug) || '',
       service_slug: ctx.service_slug || (extra && extra.service_slug) || '',
       article_slug: ctx.article_slug || (extra && extra.article_slug) || '',
       saved_at: Date.now()
     };
+
+    if (!payload.project_slug && !payload.service_slug && !payload.article_slug) {
+      if (ctx.page_type !== 'project' && ctx.page_type !== 'service' && ctx.page_type !== 'article') {
+        return readSession(LEAD_KEY);
+      }
+    }
+
     writeSession(LEAD_KEY, payload);
     return payload;
   }
 
+  function ensureLeadContext() {
+    var existing = readSession(LEAD_KEY);
+    if (existing && (existing.project_slug || existing.service_slug || existing.article_slug)) {
+      return existing;
+    }
+
+    var ctx = pageContext();
+    if (ctx.page_type === 'project' || ctx.page_type === 'service' || ctx.page_type === 'article') {
+      return rememberLeadContext();
+    }
+
+    // Direct nav / same-origin referrer into contact (no CTA click)
+    var refPath = '';
+    safe(function () {
+      refPath = parseSameOriginPath(document.referrer || '');
+    });
+    var inferred = contextFromPath(refPath);
+    if (inferred) {
+      writeSession(LEAD_KEY, inferred);
+      return inferred;
+    }
+    return existing;
+  }
+
   function getLeadContext() {
-    return readSession(LEAD_KEY);
+    return readSession(LEAD_KEY) || ensureLeadContext() || null;
+  }
+
+  function cleanDestination(href) {
+    return safe(function () {
+      var u = new URL(href, location.href);
+      return u.origin + u.pathname;
+    }) || String(href || '').split('?')[0].split('#')[0];
+  }
+
+  function sanitizeProps(props) {
+    var out = {};
+    if (!props || typeof props !== 'object') return out;
+    Object.keys(props).forEach(function (key) {
+      if (PII_KEYS[key]) return;
+      var val = props[key];
+      if (val == null) return;
+      var t = typeof val;
+      if (t === 'string' || t === 'number' || t === 'boolean') {
+        out[key] = val;
+        return;
+      }
+      // Drop nested objects/arrays — avoid accidental PII bags
+    });
+    return out;
   }
 
   function forward(eventName, props) {
@@ -177,12 +288,8 @@
 
   function track(eventName, props) {
     if (!eventName) return;
-    var payload = Object.assign({}, pageContext(), props || {});
+    var payload = Object.assign({}, sanitizeProps(pageContext()), sanitizeProps(props || {}));
     payload.event = eventName;
-    // Never allow accidental PII keys through
-    ['name', 'email', 'phone', 'company', 'message', 'filename', 'value'].forEach(function (k) {
-      if (Object.prototype.hasOwnProperty.call(payload, k)) delete payload[k];
-    });
     forward(eventName, payload);
     if (global.HASH_ANALYTICS_DEBUG) {
       safe(function () {
@@ -207,6 +314,11 @@
   }
 
   function onCtaClick(el) {
+    // Form submit is tracked by contact.js — do not treat as start-project CTA
+    if (el.closest && el.closest('form#contact-form') && (el.type === 'submit' || el.getAttribute('type') === 'submit')) {
+      return;
+    }
+
     var props = enrichCtaProps(el);
     var cta = props.cta;
     if (!cta) return;
@@ -221,22 +333,16 @@
       else if (ctx.page_type === 'article') track('start_project_from_article', props);
     }
 
-    if (cta === 'external-project' || cta === 'external_project') {
+    if (cta === 'external-project') {
       track('external_project_click', {
         project_slug: props.project_slug || ctx.project_slug || '',
-        destination: el.getAttribute('href') || ''
+        destination: cleanDestination(el.getAttribute('href') || '')
       });
     }
 
-    if (cta === 'view-project' || cta === 'view_project') {
-      track('project_view_click', props);
-    }
-    if (cta === 'view-service' || cta === 'view_service') {
-      track('service_view_click', props);
-    }
-    if (cta === 'view-article' || cta === 'view_article') {
-      track('article_view_click', props);
-    }
+    if (cta === 'view-project') track('project_view_click', props);
+    if (cta === 'view-service') track('service_view_click', props);
+    if (cta === 'view-article') track('article_view_click', props);
   }
 
   function bindClicks() {
@@ -260,7 +366,7 @@
         });
         if (!host || host === location.hostname) return;
         track('outbound_click', {
-          destination: href,
+          destination: cleanDestination(href),
           location: a.closest('footer, .home-footer') ? 'footer' : 'page'
         });
       },
@@ -269,31 +375,42 @@
   }
 
   function bindFaq() {
-    document.addEventListener('toggle', function (event) {
-      var details = event.target;
-      if (!details || details.tagName !== 'DETAILS') return;
-      if (!details.open) return;
-      if (!details.classList.contains('faq-item') && !details.closest('.faq-list, .ct-faq, .sd-faq')) {
-        return;
-      }
-      var label = '';
-      safe(function () {
-        var q = details.querySelector('.faq-item__label, summary');
-        label = (q && q.textContent ? q.textContent : '').trim().slice(0, 80);
-      });
-      track('faq_open', { faq_label: label || 'faq' });
-    }, true);
+    document.addEventListener(
+      'toggle',
+      function (event) {
+        var details = event.target;
+        if (!details || details.tagName !== 'DETAILS') return;
+        if (!details.open) return;
+        if (!details.classList.contains('faq-item') && !details.closest('.faq-list, .ct-faq, .sd-faq')) {
+          return;
+        }
+        var label = '';
+        safe(function () {
+          var q = details.querySelector('.faq-item__label, summary');
+          label = (q && q.textContent ? q.textContent : '').trim().slice(0, 80);
+        });
+        track('faq_open', { faq_label: label || 'faq' });
+      },
+      true
+    );
   }
 
   function bindScrollDepth() {
     var ctx = pageContext();
     if (ctx.page_type !== 'article' && ctx.page_type !== 'project') return;
     var fired = {};
-    function check() {
+    var armed = false;
+
+    function measure() {
       var doc = document.documentElement;
       var scrollTop = window.scrollY || doc.scrollTop || 0;
       var height = Math.max(doc.scrollHeight - window.innerHeight, 1);
-      var pct = Math.min(100, Math.max(0, (scrollTop / height) * 100));
+      return Math.min(100, Math.max(0, (scrollTop / height) * 100));
+    }
+
+    function check() {
+      if (!armed) return;
+      var pct = measure();
       SCROLL_MARKS.forEach(function (mark) {
         if (pct < mark || fired[mark]) return;
         fired[mark] = true;
@@ -301,15 +418,35 @@
         track(eventName, { depth: mark });
       });
     }
-    window.addEventListener('scroll', check, { passive: true });
-    check();
+
+    function arm() {
+      if (armed) return;
+      // Ignore tiny bounce / initial layout scroll
+      if ((window.scrollY || 0) < 24) return;
+      armed = true;
+      check();
+    }
+
+    safe(function () {
+      window.addEventListener('scroll', arm, { passive: true });
+      window.addEventListener('scroll', check, { passive: true });
+    });
   }
 
   function firePageViews() {
     var ctx = pageContext();
-    if (ctx.page_type === 'project') track('project_view', { project_slug: ctx.project_slug || '' });
-    else if (ctx.page_type === 'service') track('service_view', { service_slug: ctx.service_slug || '' });
-    else if (ctx.page_type === 'article') track('article_view', { article_slug: ctx.article_slug || '' });
+    if (ctx.page_type === 'project') {
+      rememberLeadContext();
+      track('project_view', { project_slug: ctx.project_slug || '' });
+    } else if (ctx.page_type === 'service') {
+      rememberLeadContext();
+      track('service_view', { service_slug: ctx.service_slug || '' });
+    } else if (ctx.page_type === 'article') {
+      rememberLeadContext();
+      track('article_view', { article_slug: ctx.article_slug || '' });
+    } else if (ctx.page_type === 'contact') {
+      ensureLeadContext();
+    }
   }
 
   function init() {
@@ -329,6 +466,7 @@
     getAttribution: getAttribution,
     captureAttribution: captureAttribution,
     rememberLeadContext: rememberLeadContext,
+    ensureLeadContext: ensureLeadContext,
     getLeadContext: getLeadContext,
     init: init
   };

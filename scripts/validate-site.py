@@ -58,6 +58,7 @@ ALLOWED_CTAS = {
     "view-blog",
     "external-project",
     "contact-form",
+    "contact-submit",
 }
 SENSITIVE_TRACK_RE = re.compile(
     r"""\.track\s*\(\s*['\"][^'\"]+['\"]\s*,\s*\{[^}]*(?:email|phone|message|filename)\s*:""",
@@ -380,15 +381,35 @@ def main() -> int:
             "contact_form_validation_error",
             "contact_form_submit_intent",
             "contact_email_open",
-            "اطلاعات منبع",
+            "اطلاعات مسیر ورود",
+            "has_goal",
+            "method: 'mailto'",
         ):
             if required not in ctext:
                 errors.append(f"js/contact.js: missing {required}")
         if SENSITIVE_TRACK_RE.search(ctext):
             errors.append("js/contact.js: possible sensitive field in track payload")
-        # Ensure personal values are not passed as track props by name
         if re.search(r"track\([^)]*fieldValue\(['\"]email", ctext):
             errors.append("js/contact.js: must not track email value")
+        if re.search(
+            r"contact_form_submit_intent[\s\S]{0,240}\b(name|email|phone|message)\s*:",
+            ctext,
+        ):
+            errors.append("js/contact.js: submit_intent must not include PII keys")
+
+    # analytics hardening markers
+    if analytics_js.is_file():
+        atext = analytics_js.read_text(encoding="utf-8")
+        for required in (
+            "last_page_path",
+            "ensureLeadContext",
+            "sanitizeProps",
+            "cleanDestination",
+        ):
+            if required not in atext:
+                errors.append(f"js/analytics.js: missing {required}")
+        if "external_project" in atext and "cta === 'external_project'" in atext:
+            errors.append("js/analytics.js: drop underscore CTA aliases; use kebab-case only")
 
     # Key pages must load analytics abstraction
     for rel in (
@@ -400,11 +421,18 @@ def main() -> int:
         "about.html",
     ):
         html = (ROOT / rel).read_text(encoding="utf-8")
-        if "analytics.js" not in html:
-            errors.append(f"{rel}: missing analytics.js")
+        script_hits = len(re.findall(r'<script[^>]+src=["\'][^"\']*analytics\.js', html, re.I))
+        if script_hits != 1:
+            errors.append(f"{rel}: expected 1 analytics.js script, found {script_hits}")
         for cta in CTA_RE.findall(html):
             if cta not in ALLOWED_CTAS:
                 errors.append(f"{rel}: unknown data-cta={cta}")
+            if "_" in cta:
+                errors.append(f"{rel}: CTA must be kebab-case, got {cta}")
+
+    contact_html = (ROOT / "contact.html").read_text(encoding="utf-8")
+    if 'data-cta="contact-submit"' not in contact_html:
+        errors.append("contact.html: submit button missing data-cta=contact-submit")
 
     # Generated detail pages: analytics + CTA hygiene
     for kind, dirs in (
@@ -415,13 +443,28 @@ def main() -> int:
         for d in dirs:
             rel = f"{kind}/{d.name}/index.html"
             html = (d / "index.html").read_text(encoding="utf-8")
-            if "analytics.js" not in html:
-                errors.append(f"{rel}: missing analytics.js")
-            if html.count("analytics.js") > 2:
-                errors.append(f"{rel}: duplicated analytics.js include")
+            script_hits = len(
+                re.findall(r'<script[^>]+src=["\'][^"\']*analytics\.js', html, re.I)
+            )
+            if script_hits != 1:
+                errors.append(f"{rel}: expected 1 analytics.js script, found {script_hits}")
+            for banned in (
+                "projects-data.js",
+                "services-data.js",
+                "articles-data.js",
+                "content-graph.js",
+            ):
+                if re.search(
+                    rf'<script[^>]+src=["\'][^"\']*{re.escape(banned)}',
+                    html,
+                    re.I,
+                ):
+                    errors.append(f"{rel}: must not load {banned}")
             for cta in CTA_RE.findall(html):
                 if cta not in ALLOWED_CTAS:
                     errors.append(f"{rel}: unknown data-cta={cta}")
+                if "_" in cta:
+                    errors.append(f"{rel}: CTA must be kebab-case, got {cta}")
             if kind == "project":
                 if 'data-cta="start-project"' not in html:
                     errors.append(f"{rel}: missing start-project CTA")

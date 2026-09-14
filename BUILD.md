@@ -77,10 +77,10 @@ Provider-neutral layer: `js/analytics.js` → `window.HashAnalytics`.
 |---------|----------|
 | Events | `cta_click`, `project_view`, `service_view`, `article_view`, `external_project_click`, form funnel, FAQ, outbound |
 | CTA markup | `data-cta` + `data-cta-location` (+ optional slug attrs) |
-| Attribution | first/last UTM + referrer + landing path in `localStorage` key `hashstudio_attribution` |
-| Lead context | last project/service/article path in `sessionStorage` for mailto enrichment |
-| Contact | still `mailto:` — attribution block appended to email body only |
-| Privacy | never track name/email/phone/company/message |
+| Attribution | first/last UTM + referrer + landing path in `localStorage` key `hashstudio_attribution` (`last_page_path` mirrors `last_landing_path`) |
+| Lead context | project/service/article path in `sessionStorage`; also inferred from same-origin referrer on `/contact.html` |
+| Contact | still `mailto:` — attribution block appended only when useful |
+| Privacy | never track name/email/phone/company/message; nested objects dropped |
 
 Connect a provider later:
 

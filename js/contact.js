@@ -14,6 +14,7 @@
   var formStarted = false;
   var analytics = window.HashAnalytics;
 
+  // Analytics: contextual flags only. Form values go to mailto body, never to track().
   function track(eventName, props) {
     if (!analytics || typeof analytics.track !== 'function') return;
     try {
@@ -51,20 +52,21 @@
 
     if (input.hasAttribute('required') && !value) {
       showError(input, 'این فیلد الزامی است.');
-      return false;
+      return { ok: false, reason: 'required' };
     }
 
     if (input.type === 'email' && value && !emailRegex.test(value)) {
       showError(input, 'ایمیل وارد شده معتبر نیست.');
-      return false;
+      return { ok: false, reason: 'invalid' };
     }
 
-    return true;
+    return { ok: true };
   }
 
   form.querySelectorAll('.ct-form__input, .ct-form__select, .ct-form__textarea').forEach(function (input) {
-    input.addEventListener('focus', markFormStart, { once: false });
-    input.addEventListener('input', markFormStart, { once: false });
+    input.addEventListener('focus', markFormStart);
+    input.addEventListener('input', markFormStart);
+    input.addEventListener('change', markFormStart);
     input.addEventListener('blur', function () {
       validateField(input);
     });
@@ -151,15 +153,49 @@
     return el ? String(el.value || '').trim() : '';
   }
 
+  function hasUsefulAttribution(attr, lead) {
+    if (lead && (lead.project_slug || lead.service_slug || lead.article_slug || lead.page_path)) {
+      return true;
+    }
+    if (!attr) return false;
+    return !!(
+      attr.first_utm_source ||
+      attr.first_utm_medium ||
+      attr.first_utm_campaign ||
+      attr.first_utm_content ||
+      attr.first_utm_term ||
+      attr.first_referrer ||
+      (attr.first_landing_path && attr.first_landing_path !== '/contact.html' && attr.first_landing_path !== '/')
+    );
+  }
+
+  function relatedPath(lead) {
+    if (!lead) return '';
+    if (lead.page_path && /^\/(project|service|article)\//.test(lead.page_path)) {
+      return lead.page_path;
+    }
+    if (lead.project_slug) return '/project/' + lead.project_slug + '/';
+    if (lead.service_slug) return '/service/' + lead.service_slug + '/';
+    if (lead.article_slug) return '/article/' + lead.article_slug + '/';
+    return '';
+  }
+
+  // Mailto body may include user form content. Analytics must not.
   function attributionLines() {
     var lines = [];
     var attr = analytics && analytics.getAttribution ? analytics.getAttribution() : null;
-    var lead = analytics && analytics.getLeadContext ? analytics.getLeadContext() : null;
-    if (!attr && !lead) return lines;
+    var lead =
+      analytics && analytics.ensureLeadContext
+        ? analytics.ensureLeadContext()
+        : analytics && analytics.getLeadContext
+          ? analytics.getLeadContext()
+          : null;
 
-    lines.push('', 'اطلاعات منبع:');
+    if (!hasUsefulAttribution(attr, lead)) return lines;
+
+    lines.push('', 'اطلاعات مسیر ورود:');
     if (attr) {
-      if (attr.first_utm_source) lines.push('منبع ورود: ' + attr.first_utm_source);
+      if (attr.first_utm_source) lines.push('منبع: ' + attr.first_utm_source);
       if (attr.first_utm_medium) lines.push('رسانه: ' + attr.first_utm_medium);
       if (attr.first_utm_campaign) lines.push('کمپین: ' + attr.first_utm_campaign);
       if (attr.first_utm_content) lines.push('محتوای UTM: ' + attr.first_utm_content);
@@ -167,44 +203,40 @@
       if (attr.first_referrer) lines.push('ارجاع اولیه: ' + attr.first_referrer);
       if (attr.first_landing_path) lines.push('صفحه ورود: ' + attr.first_landing_path);
     }
-    lines.push('صفحه فعلی: ' + (location.pathname || '/contact.html'));
-
-    if (lead) {
-      var related = lead.url || '';
-      if (!related) {
-        if (lead.project_slug) related = 'https://hashstudio.ir/project/' + lead.project_slug + '/';
-        else if (lead.service_slug) related = 'https://hashstudio.ir/service/' + lead.service_slug + '/';
-        else if (lead.article_slug) related = 'https://hashstudio.ir/article/' + lead.article_slug + '/';
-      }
-      if (related) {
-        lines.push('', 'صفحه مرتبط:');
-        lines.push(related);
-      }
-    }
+    var related = relatedPath(lead);
+    if (related) lines.push('صفحه مرتبط: ' + related);
     return lines;
   }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    markFormStart();
 
     var required = form.querySelectorAll('[required]');
     var isValid = true;
     var firstBadField = '';
+    var firstReason = '';
     required.forEach(function (field) {
-      if (!validateField(field)) {
+      var result = validateField(field);
+      if (!result.ok) {
         isValid = false;
-        if (!firstBadField) firstBadField = field.id || field.name || 'unknown';
+        if (!firstBadField) {
+          firstBadField = field.id || field.name || 'unknown';
+          firstReason = result.reason || 'invalid';
+        }
       }
     });
 
     if (!isValid) {
-      track('contact_form_validation_error', { field: firstBadField });
+      track('contact_form_validation_error', {
+        field: firstBadField,
+        reason: firstReason || 'invalid'
+      });
       var firstBad = form.querySelector('.is-error');
       if (firstBad) firstBad.focus();
       return;
     }
 
+    // Form content for mailto only — not for analytics
     var name = fieldValue('name');
     var phone = fieldValue('phone');
     var email = fieldValue('email');
@@ -223,6 +255,7 @@
     track('contact_form_submit_intent', {
       project_type: projectTypeValue || 'unknown',
       has_company: !!company,
+      has_goal: !!goal,
       has_budget: !!(budget && budget.indexOf('انتخاب') === -1),
       has_timeline: !!(timeline && timeline.indexOf('انتخاب') === -1),
       has_attachment: hasAttachment
@@ -246,9 +279,13 @@
       body = body.slice(0, 1800) + '\n…(ادامه را در ایمیل کامل کنید)';
     }
 
-    var mailto = 'mailto:' + studioEmail +
-      '?subject=' + encodeURIComponent('درخواست همکاری — ' + (name || 'استودیو هش')) +
-      '&body=' + encodeURIComponent(body);
+    var mailto =
+      'mailto:' +
+      studioEmail +
+      '?subject=' +
+      encodeURIComponent('درخواست همکاری — ' + (name || 'استودیو هش')) +
+      '&body=' +
+      encodeURIComponent(body);
 
     var successEl = form.querySelector('.ct-form__success');
     if (!successEl) {
@@ -263,11 +300,7 @@
       studioEmail +
       '</strong> برسد. ارسال خودکار سروری نیست — اگر پنجره باز نشد، همین متن را دستی بفرستید.';
 
-    track('contact_email_open', {
-      project_type: projectTypeValue || 'unknown',
-      has_attribution: !!(analytics && analytics.getAttribution && analytics.getAttribution())
-    });
-
+    track('contact_email_open', { method: 'mailto' });
     window.location.href = mailto;
   });
 
