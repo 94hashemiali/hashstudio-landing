@@ -4,5 +4,9 @@
 /service.html slug=:slug  /service/:slug/  301!
 /article.html slug=:slug  /article/:slug/  301!
 
+# Phase 14: legacy /for/ → /solutions/
+/for/:slug   /solutions/:slug/  301!
+/for/:slug/  /solutions/:slug/  301!
+
 # Missing URL → branded 404
 /*    /404.html   404

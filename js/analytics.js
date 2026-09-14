@@ -74,7 +74,7 @@
 
     if (body) {
       if (body.classList.contains('project-page') || /^\/project\//.test(path)) type = 'project';
-      else if (body.classList.contains('hi-page') || /^\/for\//.test(path)) type = 'high-intent';
+      else if (body.classList.contains('hi-page') || /^\/solutions\//.test(path) || /^\/for\//.test(path)) type = 'high-intent';
       else if (body.classList.contains('sd-page') || /^\/service\//.test(path)) type = 'service';
       else if (body.classList.contains('article-page') || /^\/article\//.test(path)) type = 'article';
       else if (body.classList.contains('contact-page') || /contact\.html$/.test(path)) type = 'contact';
@@ -86,7 +86,7 @@
     }
 
     if (!slug) {
-      var m = path.match(/^\/(project|service|article|for)\/([^/]+)\/?/);
+      var m = path.match(/^\/(project|service|article|solutions|for)\/([^/]+)\/?/);
       if (m) slug = decodeURIComponent(m[2]);
     }
 
@@ -179,13 +179,13 @@
   }
 
   function contextFromPath(path) {
-    var m = String(path || '').match(/^\/(project|service|article|for)\/([^/]+)\/?/);
+    var m = String(path || '').match(/^\/(project|service|article|solutions|for)\/([^/]+)\/?/);
     if (!m) return null;
     var kind = m[1];
     var slug = decodeURIComponent(m[2]);
-    var pageType = kind === 'for' ? 'high-intent' : kind;
+    var pageType = kind === 'solutions' || kind === 'for' ? 'high-intent' : kind;
     // Keep in sync with js/high-intent-data.js primaryService (validator checks)
-    var FOR_PRIMARY = {
+    var SOLUTIONS_PRIMARY = {
       'product-redesign': 'product',
       'corporate-website': 'web',
       'mvp-launch': 'mvp',
@@ -205,9 +205,9 @@
     if (kind === 'project') payload.project_slug = slug;
     if (kind === 'service') payload.service_slug = slug;
     if (kind === 'article') payload.article_slug = slug;
-    if (kind === 'for') {
+    if (kind === 'solutions' || kind === 'for') {
       payload.intent = slug;
-      payload.service_slug = FOR_PRIMARY[slug] || '';
+      payload.service_slug = SOLUTIONS_PRIMARY[slug] || '';
       if (payload.service_slug) payload.recommended_service = payload.service_slug;
     }
     return payload;

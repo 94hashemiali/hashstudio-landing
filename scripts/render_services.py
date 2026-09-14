@@ -308,7 +308,7 @@ def render_service(
     shown = [o for _, o in related_offers[:4]]
     if shown:
         links = " · ".join(
-            f'<a href="/for/{_attr(o["slug"])}/">{escape_html(o.get("name") or o["slug"])}</a>'
+            f'<a href="/solutions/{_attr(o["slug"])}/">{escape_html(o.get("name") or o["slug"])}</a>'
             for o in shown
         )
         offers_html = (

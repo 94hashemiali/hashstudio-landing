@@ -90,9 +90,43 @@
   outline: none;
 }
 
+.hi-fit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.hi-fit-col__title {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.hi-fit-col--not .sd-fit__item {
+  opacity: 0.9;
+}
+
+.hi-fit-guide {
+  margin: 0;
+  max-width: 40rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-ink-soft, #3a3a3a);
+}
+
+.hi-fit-guide a {
+  font-weight: 600;
+}
+
 @media (max-width: 720px) {
   .hi-page .sd-hero__grid {
     gap: 1.5rem;
+  }
+
+  .hi-fit-grid {
+    grid-template-columns: 1fr;
   }
 
   .hi-prose {

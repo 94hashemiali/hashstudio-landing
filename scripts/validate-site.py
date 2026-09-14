@@ -542,7 +542,7 @@ def main() -> int:
 
     # High-intent proposal pages (Phase 14)
     hi_data = ROOT / "js" / "high-intent-data.js"
-    hi_root = ROOT / "for"
+    hi_root = ROOT / "solutions"
     if hi_data.is_file():
         try:
             sys.path.insert(0, str(ROOT / "scripts"))
@@ -559,6 +559,19 @@ def main() -> int:
         if len(hi_slugs) < 3:
             errors.append("high-intent: expected at least 3 proposal pages")
 
+        if (ROOT / "for").is_dir():
+            errors.append("high-intent: legacy for/ directory must be removed (use solutions/)")
+
+        vercel_txt = (ROOT / "vercel.json").read_text(encoding="utf-8") if (ROOT / "vercel.json").is_file() else ""
+        redirects_txt = (ROOT / "_redirects").read_text(encoding="utf-8") if (ROOT / "_redirects").is_file() else ""
+        htaccess_txt = (ROOT / ".htaccess").read_text(encoding="utf-8") if (ROOT / ".htaccess").is_file() else ""
+        if "/for/:slug" not in vercel_txt or "/solutions/:slug/" not in vercel_txt:
+            errors.append("high-intent: vercel.json missing /for/:slug → /solutions/:slug/ redirect")
+        if "/for/:slug" not in redirects_txt or "/solutions/:slug/" not in redirects_txt:
+            errors.append("high-intent: _redirects missing /for/:slug → /solutions/:slug/ redirect")
+        if "for/" not in htaccess_txt or "solutions/" not in htaccess_txt:
+            errors.append("high-intent: .htaccess missing /for/ → /solutions/ RewriteRule")
+
         folder_hi = {
             d.name
             for d in hi_root.iterdir()
@@ -569,10 +582,10 @@ def main() -> int:
             if not SLUG_RE.match(slug or ""):
                 errors.append(f"high-intent: invalid slug {slug}")
             if slug not in folder_hi:
-                errors.append(f"high-intent: missing generated page for/{slug}/")
+                errors.append(f"high-intent: missing generated page solutions/{slug}/")
 
         for slug in sorted(folder_hi - set(hi_slugs)):
-            errors.append(f"high-intent: orphan for/{slug}/ not in high-intent-data.js")
+            errors.append(f"high-intent: orphan solutions/{slug}/ not in high-intent-data.js")
 
         hi_titles: set[str] = set()
         hi_descs: set[str] = set()
@@ -607,24 +620,30 @@ def main() -> int:
                 if art not in data_article_slugs:
                     errors.append(f"high-intent/{slug}: unknown article {art}")
 
+            fit_not = page.get("fitNotFor") or {}
+            if len(fit_not.get("items") or []) < 2:
+                errors.append(f"high-intent/{slug}: fitNotFor needs at least 2 items")
+
             html_path = hi_root / slug / "index.html"
             if html_path.is_file():
                 html = html_path.read_text(encoding="utf-8")
                 canon = canonical(html)
-                expected_canon = f"{BASE}/for/{slug}/"
+                expected_canon = f"{BASE}/solutions/{slug}/"
                 if canon != expected_canon:
                     errors.append(
-                        f"for/{slug}/: canonical expected {expected_canon}, got {canon}"
+                        f"solutions/{slug}/: canonical expected {expected_canon}, got {canon}"
                     )
                 if 'id="high-intent-jsonld"' not in html and "application/ld+json" not in html:
-                    errors.append(f"for/{slug}/: missing JSON-LD")
+                    errors.append(f"solutions/{slug}/: missing JSON-LD")
                 if f'href="contact.html?service={primary}&intent={slug}"' not in html:
-                    errors.append(f"for/{slug}/: missing contextual contact CTA")
+                    errors.append(f"solutions/{slug}/: missing contextual contact CTA")
+                if 'href="/#service-fit"' not in html:
+                    errors.append(f"solutions/{slug}/: missing Service Fit guide CTA")
                 sm_path = ROOT / "sitemap.xml"
                 if sm_path.is_file():
                     sm = sm_path.read_text(encoding="utf-8")
                     if expected_canon not in sm:
-                        errors.append(f"for/{slug}/: missing from sitemap.xml")
+                        errors.append(f"solutions/{slug}/: missing from sitemap.xml")
 
         analytics_text = (
             analytics_js.read_text(encoding="utf-8") if analytics_js.is_file() else ""
@@ -645,29 +664,28 @@ def main() -> int:
                 )
             if f"'{slug}'" not in analytics_text and f'"{slug}"' not in analytics_text:
                 errors.append(
-                    f"js/analytics.js: FOR_PRIMARY missing high-intent slug '{slug}'"
+                    f"js/analytics.js: SOLUTIONS_PRIMARY missing high-intent slug '{slug}'"
                 )
             page = next(p for p in hi_pages if p.get("slug") == slug)
             primary = page.get("primaryService") or ""
-            if primary and f"'{slug}': '{primary}'" not in analytics_text.replace('"', "'"):
-                # tolerate either quote style after normalize
+            if primary:
                 norm = analytics_text.replace('"', "'")
                 if f"'{slug}': '{primary}'" not in norm:
                     errors.append(
-                        f"js/analytics.js: FOR_PRIMARY['{slug}'] should be '{primary}'"
+                        f"js/analytics.js: SOLUTIONS_PRIMARY['{slug}'] should be '{primary}'"
                     )
 
     # Generated detail pages: analytics + CTA hygiene
-    for_dirs = (
-        sorted([d for d in (ROOT / "for").iterdir() if d.is_dir()])
-        if (ROOT / "for").is_dir()
+    solutions_dirs = (
+        sorted([d for d in (ROOT / "solutions").iterdir() if d.is_dir()])
+        if (ROOT / "solutions").is_dir()
         else []
     )
     for kind, dirs in (
         ("project", project_dirs),
         ("service", service_dirs),
         ("article", article_dirs),
-        ("for", for_dirs),
+        ("solutions", solutions_dirs),
     ):
         for d in dirs:
             rel = f"{kind}/{d.name}/index.html"
@@ -785,11 +803,11 @@ def main() -> int:
             expected_public.add(f"{BASE}/service/{d.name}/")
         for d in article_dirs:
             expected_public.add(f"{BASE}/article/{d.name}/")
-        for_root = ROOT / "for"
+        for_root = ROOT / "solutions"
         if for_root.is_dir():
             for d in sorted(for_root.iterdir()):
                 if d.is_dir() and (d / "index.html").is_file():
-                    expected_public.add(f"{BASE}/for/{d.name}/")
+                    expected_public.add(f"{BASE}/solutions/{d.name}/")
         for url in sorted(expected_public):
             if url not in raw_sitemap:
                 warnings.append(f"SEO: public page missing from sitemap: {url}")
@@ -804,9 +822,9 @@ def main() -> int:
         ("service", service_dirs),
         ("article", article_dirs),
         (
-            "for",
-            sorted([d for d in (ROOT / "for").iterdir() if d.is_dir()])
-            if (ROOT / "for").is_dir()
+            "solutions",
+            sorted([d for d in (ROOT / "solutions").iterdir() if d.is_dir()])
+            if (ROOT / "solutions").is_dir()
             else [],
         ),
     ):

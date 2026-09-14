@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Static HTML renderer for high-intent /for/<slug>/ proposal pages."""
+"""Static HTML renderer for high-intent /solutions/<slug>/ proposal pages."""
 
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -17,8 +18,13 @@ GENERATED_BANNER = (
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def solutions_url(slug: str) -> str:
+    return f"{BASE}/solutions/{slug}/"
+
+
+# Backward-compatible alias (older call sites / docs)
 def for_url(slug: str) -> str:
-    return f"{BASE}/for/{slug}/"
+    return solutions_url(slug)
 
 
 def load_high_intent_pages() -> list[dict[str, Any]]:
@@ -152,7 +158,7 @@ def render_high_intent(
     primary = page.get("primaryService") or ""
     page_title = (seo.get("title") or "").strip() or f"{name} | استودیو هش"
     page_desc = (seo.get("description") or "").strip() or (hero.get("lead") or "")
-    canonical = for_url(slug)
+    canonical = solutions_url(slug)
     theme = page.get("theme") or "product"
     contact_href = (
         f"contact.html?service={_attr(primary)}&intent={_attr(slug)}"
@@ -178,6 +184,11 @@ def render_high_intent(
     fit_html = "".join(
         f'<li class="sd-fit__item">{escape_html(item)}</li>'
         for item in (fit.get("items") or [])
+    )
+    fit_not = page.get("fitNotFor") or {}
+    fit_not_html = "".join(
+        f'<li class="sd-fit__item sd-fit__item--not">{escape_html(item)}</li>'
+        for item in (fit_not.get("items") or [])
     )
     approach = page.get("approach") or {}
     approach_items = "".join(
@@ -281,7 +292,7 @@ def render_high_intent(
   <div class="top-bar">
     <div class="container top-bar__inner">
       <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
-      <a href="{contact_href}" class="top-bar__btn" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">شروع پروژه</a>
+      <a href="{contact_href}" class="top-bar__btn" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">شروع یک پروژه</a>
     </div>
   </div>
 
@@ -300,7 +311,7 @@ def render_high_intent(
         <a href="contact.html" class="home-header__link">تماس با ما</a>
       </nav>
       <div class="home-header__actions">
-        <a href="{contact_href}" class="btn btn--primary btn--header" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">شروع پروژه</a>
+        <a href="{contact_href}" class="btn btn--primary btn--header" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">شروع یک پروژه</a>
         <button class="home-header__toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="main-nav">
           <span></span><span></span><span></span>
         </button>
@@ -326,7 +337,7 @@ def render_high_intent(
           </h1>
           <p class="sd-hero__lead">{escape_html(hero.get("lead") or page_desc)}</p>
           <div class="sd-hero__actions">
-            <a href="{contact_href}" class="btn btn--primary btn--lg" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta.get("primary") or "شروع پروژه")}</a>
+            <a href="{contact_href}" class="btn btn--primary btn--lg" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta.get("primary") or "شروع یک پروژه")}</a>
             <a href="#cases" class="btn btn--outline btn--lg">دیدن نمونه‌کارهای مرتبط</a>
           </div>
         </div>
@@ -350,10 +361,20 @@ def render_high_intent(
     <section class="sd-section sd-section--cream">
       <div class="container">
         <div class="section-head section-head--start">
-          <span class="badge badge--section">مناسب کیست؟</span>
-          <h2 class="section-head__title">{escape_html(fit.get("title") or "")}</h2>
+          <span class="badge badge--section">تناسب</span>
+          <h2 class="section-head__title">چه کسی باید (و نباید) این مسیر را انتخاب کند؟</h2>
         </div>
-        <ul class="sd-fit">{fit_html}</ul>
+        <div class="hi-fit-grid">
+          <div class="hi-fit-col">
+            <h3 class="hi-fit-col__title">{escape_html(fit.get("title") or "مناسب است")}</h3>
+            <ul class="sd-fit">{fit_html}</ul>
+          </div>
+          <div class="hi-fit-col hi-fit-col--not">
+            <h3 class="hi-fit-col__title">{escape_html(fit_not.get("title") or "معمولاً مناسب نیست")}</h3>
+            <ul class="sd-fit">{fit_not_html}</ul>
+          </div>
+        </div>
+        <p class="hi-fit-guide">اگر هنوز مطمئن نیستید این مسیر برای شما مناسب است، <a href="/#service-fit" data-cta="service-fit-guide" data-cta-location="high-intent-page" data-fit-intent="{_attr(slug)}" data-service-slug="{_attr(primary)}">مسیر مناسب را پیدا کنید</a>.</p>
       </div>
     </section>
 
@@ -440,7 +461,7 @@ def render_high_intent(
           <h2 class="home-final-cta__title">{escape_html(cta.get("title") or "")}</h2>
           <p class="home-final-cta__desc">{escape_html(cta.get("body") or "")}</p>
           <div class="home-final-cta__actions">
-            <a href="{contact_href}" class="btn btn--primary btn--lg" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta.get("primary") or "شروع پروژه")}</a>
+            <a href="{contact_href}" class="btn btn--primary btn--lg" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta.get("primary") or "شروع یک پروژه")}</a>
             <a href="/service/{_attr(primary)}/" class="btn btn--outline btn--lg" data-cta="view-service" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}">مشاهده خدمت {escape_html(primary_label)}</a>
           </div>
         </article>
@@ -480,7 +501,7 @@ def render_high_intent(
         <div class="home-footer__newsletter-col">
           <h3 class="home-footer__heading">پروژه بعدی شما</h3>
           <p class="home-footer__newsletter-desc">ایده، محصول نیمه‌کاره یا بازطراحی — مسیر را با هم مشخص می‌کنیم.</p>
-          <a class="btn btn--primary" href="{contact_href}" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">شروع پروژه</a>
+          <a class="btn btn--primary" href="{contact_href}" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">شروع یک پروژه</a>
         </div>
       </div>
       <div class="home-footer__bottom">
@@ -505,7 +526,8 @@ def generate_high_intent(root: Path) -> int:
     pages = load_high_intent_pages()
     projects_by = load_project_cards()
     articles_by = load_articles()
-    out_root = root / "for"
+    out_root = root / "solutions"
+    legacy_for = root / "for"
     if out_root.exists():
         for child in out_root.iterdir():
             if child.is_dir():
@@ -516,6 +538,9 @@ def generate_high_intent(root: Path) -> int:
                     child.rmdir()
                 except OSError:
                     pass
+    # Prefer /solutions/; drop legacy /for/ so sitemap/validators stay clean
+    if legacy_for.exists():
+        shutil.rmtree(legacy_for)
     written = 0
     for page in pages:
         slug = page["slug"]

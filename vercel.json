@@ -18,6 +18,16 @@
       "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[^&]+)" }],
       "destination": "/article/:slug/",
       "permanent": true
+    },
+    {
+      "source": "/for/:slug",
+      "destination": "/solutions/:slug/",
+      "permanent": true
+    },
+    {
+      "source": "/for/:slug/",
+      "destination": "/solutions/:slug/",
+      "permanent": true
     }
   ],
   "routes": [

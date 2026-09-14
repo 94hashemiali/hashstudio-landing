@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate high-intent /for/<slug>/ pages from js/high-intent-data.js.
+"""Generate high-intent /solutions/<slug>/ pages from js/high-intent-data.js.
 
 Usage:
   python3 scripts/build-high-intent.py
@@ -28,7 +28,7 @@ def main() -> int:
         print(f"BUILD FAILED — wrote {count} pages, expected {expected}")
         return 1
 
-    print(f"Generated {count} high-intent pages → for/<slug>/index.html")
+    print(f"Generated {count} high-intent pages → solutions/<slug>/index.html")
     return 0
 
 
