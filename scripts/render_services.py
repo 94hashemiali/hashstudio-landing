@@ -294,6 +294,29 @@ def render_service(
     )
     show_fit = len(fit_items) > 0
 
+    offers_html = ""
+    from render_high_intent import load_high_intent_pages
+
+    related_offers = []
+    for offer in load_high_intent_pages():
+        primary = offer.get("primaryService")
+        related = list(offer.get("relatedServices") or [])
+        if slug == primary or slug in related:
+            related_offers.append((0 if slug == primary else 1, offer))
+    related_offers.sort(key=lambda item: (item[0], item[1].get("slug") or ""))
+    # Prefer primary matches; show up to 4 so vertical offers aren't dropped
+    shown = [o for _, o in related_offers[:4]]
+    if shown:
+        links = " · ".join(
+            f'<a href="/for/{_attr(o["slug"])}/">{escape_html(o.get("name") or o["slug"])}</a>'
+            for o in shown
+        )
+        offers_html = (
+            '<p class="sd-fit-note__alt hi-service-offers">مسیر پیشنهاد مرتبط: '
+            + links
+            + "</p>"
+        )
+
     return f"""<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -497,6 +520,7 @@ def render_service(
             <p class="sd-fit-note__title">این خدمت برای شما مناسب است اگر…</p>
             <ul class="sd-fit-note__list">{fit_html}</ul>
             <p class="sd-fit-note__alt">اگر هنوز مطمئن نیستید کدام مسیر مناسب شماست، از <a href="/#service-fit" data-cta="service-fit-guide" data-cta-location="service-cta">راهنمای انتخاب خدمت</a> استفاده کنید.</p>
+            {offers_html}
           </div>
           <div class="home-final-cta__actions">
             <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="service-cta" data-service-slug="{_attr(slug)}">درباره پروژه شما صحبت کنیم</a>

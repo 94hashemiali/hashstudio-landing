@@ -74,6 +74,7 @@
 
     if (body) {
       if (body.classList.contains('project-page') || /^\/project\//.test(path)) type = 'project';
+      else if (body.classList.contains('hi-page') || /^\/for\//.test(path)) type = 'high-intent';
       else if (body.classList.contains('sd-page') || /^\/service\//.test(path)) type = 'service';
       else if (body.classList.contains('article-page') || /^\/article\//.test(path)) type = 'article';
       else if (body.classList.contains('contact-page') || /contact\.html$/.test(path)) type = 'contact';
@@ -85,7 +86,7 @@
     }
 
     if (!slug) {
-      var m = path.match(/^\/(project|service|article)\/([^/]+)\/?/);
+      var m = path.match(/^\/(project|service|article|for)\/([^/]+)\/?/);
       if (m) slug = decodeURIComponent(m[2]);
     }
 
@@ -93,6 +94,13 @@
     if (type === 'project' && slug) ctx.project_slug = slug;
     if (type === 'service' && slug) ctx.service_slug = slug;
     if (type === 'article' && slug) ctx.article_slug = slug;
+    if (type === 'high-intent') {
+      ctx.intent = slug || (body && body.getAttribute('data-fit-intent')) || '';
+      ctx.service_slug =
+        (body && body.getAttribute('data-service-slug')) ||
+        readQueryParam('service') ||
+        '';
+    }
     return ctx;
   }
 
@@ -171,12 +179,20 @@
   }
 
   function contextFromPath(path) {
-    var m = String(path || '').match(/^\/(project|service|article)\/([^/]+)\/?/);
+    var m = String(path || '').match(/^\/(project|service|article|for)\/([^/]+)\/?/);
     if (!m) return null;
     var kind = m[1];
     var slug = decodeURIComponent(m[2]);
+    var pageType = kind === 'for' ? 'high-intent' : kind;
+    // Keep in sync with js/high-intent-data.js primaryService (validator checks)
+    var FOR_PRIMARY = {
+      'product-redesign': 'product',
+      'corporate-website': 'web',
+      'mvp-launch': 'mvp',
+      'fintech-product': 'product'
+    };
     var payload = {
-      page_type: kind,
+      page_type: pageType,
       page_path: '/' + kind + '/' + slug + '/',
       url: safe(function () {
         return location.origin + '/' + kind + '/' + slug + '/';
@@ -189,6 +205,11 @@
     if (kind === 'project') payload.project_slug = slug;
     if (kind === 'service') payload.service_slug = slug;
     if (kind === 'article') payload.article_slug = slug;
+    if (kind === 'for') {
+      payload.intent = slug;
+      payload.service_slug = FOR_PRIMARY[slug] || '';
+      if (payload.service_slug) payload.recommended_service = payload.service_slug;
+    }
     return payload;
   }
 
@@ -226,6 +247,8 @@
 
     if (extra.intent) {
       payload.intent = String(extra.intent).slice(0, 40);
+    } else if (ctx.intent) {
+      payload.intent = String(ctx.intent).slice(0, 40);
     } else if (existing.intent) {
       payload.intent = existing.intent;
     }
@@ -257,7 +280,7 @@
     }
 
     var ctx = pageContext();
-    if (ctx.page_type === 'project' || ctx.page_type === 'service' || ctx.page_type === 'article') {
+    if (ctx.page_type === 'project' || ctx.page_type === 'service' || ctx.page_type === 'article' || ctx.page_type === 'high-intent') {
       return rememberLeadContext();
     }
 
@@ -428,6 +451,31 @@
         action: 'guide'
       });
     }
+    if (cta === 'high-intent-cta') {
+      track('high_intent_cta_click', {
+        intent: props.intent || '',
+        service_slug: props.recommended_service || props.service_slug || '',
+        location: props.location || 'high-intent-page'
+      });
+      rememberLeadContext({
+        intent: props.intent,
+        service_slug: props.recommended_service || props.service_slug,
+        recommended_service: props.recommended_service || props.service_slug
+      });
+    }
+    if (cta === 'high-intent-project') {
+      track('high_intent_project_click', {
+        intent: props.intent || '',
+        service_slug: props.service_slug || '',
+        project_slug: props.project_slug || '',
+        location: props.location || 'high-intent-page'
+      });
+      rememberLeadContext({
+        intent: props.intent,
+        service_slug: props.service_slug,
+        project_slug: props.project_slug
+      });
+    }
   }
 
   function bindClicks() {
@@ -529,6 +577,17 @@
     } else if (ctx.page_type === 'article') {
       rememberLeadContext();
       track('article_view', { article_slug: ctx.article_slug || '' });
+    } else if (ctx.page_type === 'high-intent') {
+      rememberLeadContext({
+        intent: ctx.intent || '',
+        service_slug: ctx.service_slug || '',
+        recommended_service: ctx.service_slug || ''
+      });
+      track('high_intent_page_view', {
+        intent: ctx.intent || '',
+        service_slug: ctx.service_slug || '',
+        location: 'high-intent-page'
+      });
     } else if (ctx.page_type === 'contact') {
       ensureLeadContext();
     }

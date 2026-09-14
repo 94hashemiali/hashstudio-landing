@@ -332,7 +332,12 @@
     existing: 1,
     website: 1,
     technical: 1,
-    unknown: 1
+    unknown: 1,
+    // Phase 14 high-intent proposal pages
+    'product-redesign': 1,
+    'corporate-website': 1,
+    'mvp-launch': 1,
+    'fintech-product': 1
   };
 
   var SERVICE_TO_FORM = {

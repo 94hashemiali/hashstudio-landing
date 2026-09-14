@@ -117,6 +117,14 @@ If no provider is set, tracking is a silent no-op.
 - Events: `service_fit_started`, `service_fit_selected`, `service_fit_recommendation_viewed`, `service_fit_cta_click`.
 - Validator checks HTML intents ↔ FIT_MAP and referenced service/project slugs.
 
+## High-intent proposal pages (Phase 14)
+
+- Data: `js/high-intent-data.js` → generated `/for/<slug>/`.
+- Build step: `scripts/build-high-intent.py` (also `npm run build:high-intent`).
+- Pages are proposal-style, not service clones. Current set: `product-redesign`, `corporate-website`, `mvp-launch`, `fintech-product`.
+- Events: `high_intent_page_view`, `high_intent_cta_click`, `high_intent_project_click`.
+- Contact CTA: `contact.html?service=<primary>&intent=<for-slug>`.
+
 ## Deploy
 
 Run `npm run build` before deploy. Repo root is the static site.

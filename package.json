@@ -11,6 +11,7 @@
     "build:content": "python3 scripts/build-content.py",
     "build:projects": "python3 scripts/build-projects.py",
     "build:services": "python3 scripts/build-services.py",
+    "build:high-intent": "python3 scripts/build-high-intent.py",
     "sitemap": "python3 scripts/generate-sitemap.py",
     "validate": "python3 scripts/validate-site.py",
     "validate:content": "python3 scripts/validate-content.py"

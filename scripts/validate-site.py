@@ -64,6 +64,8 @@ ALLOWED_CTAS = {
     "service-fit-service",
     "service-fit-contact",
     "service-fit-guide",
+    "high-intent-cta",
+    "high-intent-project",
 }
 SENSITIVE_TRACK_RE = re.compile(
     r"""\.track\s*\(\s*['\"][^'\"]+['\"]\s*,\s*\{[^}]*(?:email|phone|message|filename)\s*:""",
@@ -538,11 +540,134 @@ def main() -> int:
                 "js/service-fit.js: rememberFit must persist project_slug from FIT_MAP"
             )
 
+    # High-intent proposal pages (Phase 14)
+    hi_data = ROOT / "js" / "high-intent-data.js"
+    hi_root = ROOT / "for"
+    if hi_data.is_file():
+        try:
+            sys.path.insert(0, str(ROOT / "scripts"))
+            from render_high_intent import load_high_intent_pages
+
+            hi_pages = load_high_intent_pages()
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"high-intent-data.js: failed to load ({exc})")
+            hi_pages = []
+
+        hi_slugs = [p.get("slug") for p in hi_pages if p.get("slug")]
+        if len(hi_slugs) != len(set(hi_slugs)):
+            errors.append("high-intent: duplicate slugs in HASH_HIGH_INTENT_PAGES")
+        if len(hi_slugs) < 3:
+            errors.append("high-intent: expected at least 3 proposal pages")
+
+        folder_hi = {
+            d.name
+            for d in hi_root.iterdir()
+            if hi_root.is_dir() and d.is_dir() and (d / "index.html").is_file()
+        } if hi_root.is_dir() else set()
+
+        for slug in hi_slugs:
+            if not SLUG_RE.match(slug or ""):
+                errors.append(f"high-intent: invalid slug {slug}")
+            if slug not in folder_hi:
+                errors.append(f"high-intent: missing generated page for/{slug}/")
+
+        for slug in sorted(folder_hi - set(hi_slugs)):
+            errors.append(f"high-intent: orphan for/{slug}/ not in high-intent-data.js")
+
+        hi_titles: set[str] = set()
+        hi_descs: set[str] = set()
+        for page in hi_pages:
+            slug = page.get("slug") or ""
+            seo = page.get("seo") or {}
+            page_title = (seo.get("title") or "").strip()
+            page_desc = (seo.get("description") or "").strip()
+            if not page_title:
+                errors.append(f"high-intent/{slug}: missing seo.title")
+            elif page_title in hi_titles:
+                errors.append(f"high-intent/{slug}: duplicate seo.title")
+            else:
+                hi_titles.add(page_title)
+            if not page_desc:
+                errors.append(f"high-intent/{slug}: missing seo.description")
+            elif page_desc in hi_descs:
+                errors.append(f"high-intent/{slug}: duplicate seo.description")
+            else:
+                hi_descs.add(page_desc)
+
+            primary = page.get("primaryService") or ""
+            if primary not in folder_service_slugs:
+                errors.append(f"high-intent/{slug}: unknown primaryService {primary}")
+            for svc in page.get("relatedServices") or []:
+                if svc not in folder_service_slugs:
+                    errors.append(f"high-intent/{slug}: unknown relatedService {svc}")
+            for proj in page.get("projects") or []:
+                if proj not in folder_project_slugs:
+                    errors.append(f"high-intent/{slug}: unknown project {proj}")
+            for art in page.get("articles") or []:
+                if art not in data_article_slugs:
+                    errors.append(f"high-intent/{slug}: unknown article {art}")
+
+            html_path = hi_root / slug / "index.html"
+            if html_path.is_file():
+                html = html_path.read_text(encoding="utf-8")
+                canon = canonical(html)
+                expected_canon = f"{BASE}/for/{slug}/"
+                if canon != expected_canon:
+                    errors.append(
+                        f"for/{slug}/: canonical expected {expected_canon}, got {canon}"
+                    )
+                if 'id="high-intent-jsonld"' not in html and "application/ld+json" not in html:
+                    errors.append(f"for/{slug}/: missing JSON-LD")
+                if f'href="contact.html?service={primary}&intent={slug}"' not in html:
+                    errors.append(f"for/{slug}/: missing contextual contact CTA")
+                sm_path = ROOT / "sitemap.xml"
+                if sm_path.is_file():
+                    sm = sm_path.read_text(encoding="utf-8")
+                    if expected_canon not in sm:
+                        errors.append(f"for/{slug}/: missing from sitemap.xml")
+
+        analytics_text = (
+            analytics_js.read_text(encoding="utf-8") if analytics_js.is_file() else ""
+        )
+        for event in (
+            "high_intent_page_view",
+            "high_intent_cta_click",
+            "high_intent_project_click",
+        ):
+            if event not in analytics_text:
+                errors.append(f"js/analytics.js: missing {event}")
+
+        contact_text = (ROOT / "js" / "contact.js").read_text(encoding="utf-8")
+        for slug in hi_slugs:
+            if f"'{slug}'" not in contact_text and f'"{slug}"' not in contact_text:
+                errors.append(
+                    f"js/contact.js: KNOWN_INTENTS missing high-intent slug '{slug}'"
+                )
+            if f"'{slug}'" not in analytics_text and f'"{slug}"' not in analytics_text:
+                errors.append(
+                    f"js/analytics.js: FOR_PRIMARY missing high-intent slug '{slug}'"
+                )
+            page = next(p for p in hi_pages if p.get("slug") == slug)
+            primary = page.get("primaryService") or ""
+            if primary and f"'{slug}': '{primary}'" not in analytics_text.replace('"', "'"):
+                # tolerate either quote style after normalize
+                norm = analytics_text.replace('"', "'")
+                if f"'{slug}': '{primary}'" not in norm:
+                    errors.append(
+                        f"js/analytics.js: FOR_PRIMARY['{slug}'] should be '{primary}'"
+                    )
+
     # Generated detail pages: analytics + CTA hygiene
+    for_dirs = (
+        sorted([d for d in (ROOT / "for").iterdir() if d.is_dir()])
+        if (ROOT / "for").is_dir()
+        else []
+    )
     for kind, dirs in (
         ("project", project_dirs),
         ("service", service_dirs),
         ("article", article_dirs),
+        ("for", for_dirs),
     ):
         for d in dirs:
             rel = f"{kind}/{d.name}/index.html"
@@ -660,6 +785,11 @@ def main() -> int:
             expected_public.add(f"{BASE}/service/{d.name}/")
         for d in article_dirs:
             expected_public.add(f"{BASE}/article/{d.name}/")
+        for_root = ROOT / "for"
+        if for_root.is_dir():
+            for d in sorted(for_root.iterdir()):
+                if d.is_dir() and (d / "index.html").is_file():
+                    expected_public.add(f"{BASE}/for/{d.name}/")
         for url in sorted(expected_public):
             if url not in raw_sitemap:
                 warnings.append(f"SEO: public page missing from sitemap: {url}")
@@ -673,10 +803,16 @@ def main() -> int:
         ("project", project_dirs),
         ("service", service_dirs),
         ("article", article_dirs),
+        (
+            "for",
+            sorted([d for d in (ROOT / "for").iterdir() if d.is_dir()])
+            if (ROOT / "for").is_dir()
+            else [],
+        ),
     ):
         for d in dirs:
             key = f"/{kind}/{d.name}/"
-            inbound[key] += 1  # listing page reachability
+            inbound[key] += 1  # listing / service soft-link reachability
             if inbound[key] <= 1:
                 warnings.append(f"SEO: {kind}/{d.name} has weak internal inbound links")
 

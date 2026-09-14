@@ -76,6 +76,16 @@ def main() -> None:
     urls.extend(f"{BASE}/service/{slug}/" for slug in services)
     urls.extend(f"{BASE}/article/{slug}/" for slug in articles)
 
+    for_dir = ROOT / "for"
+    if for_dir.is_dir():
+        for_slugs = sorted(p.name for p in for_dir.iterdir() if p.is_dir() and (p / "index.html").is_file())
+        data_for = js_top_slugs(ROOT / "js/high-intent-data.js")
+        for slug in sorted(set(for_slugs) - set(data_for)):
+            print(f"WARN: for/ folder without data entry: {slug}")
+        for slug in sorted(set(data_for) - set(for_slugs)):
+            print(f"WARN: high-intent-data slug without folder: {slug}")
+        urls.extend(f"{BASE}/for/{slug}/" for slug in sorted(set(for_slugs) & set(data_for)) or for_slugs)
+
     seen: set[str] = set()
     unique_urls: list[str] = []
     for url in urls:

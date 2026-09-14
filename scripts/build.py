@@ -6,8 +6,9 @@ Steps:
   2. generate articles
   3. generate projects
   4. generate services
-  5. generate sitemap
-  6. validate generated site
+  5. generate high-intent pages
+  6. generate sitemap
+  7. validate generated site
 
 Usage:
   python3 scripts/build.py
@@ -41,6 +42,7 @@ def main() -> None:
     run("generate articles", "build-content.py")
     run("generate projects", "build-projects.py")
     run("generate services", "build-services.py")
+    run("generate high-intent pages", "build-high-intent.py")
     run("generate sitemap", "generate-sitemap.py")
     run("validate site", "validate-site.py")
     print("\n✓ Build succeeded", flush=True)
