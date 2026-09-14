@@ -79,7 +79,20 @@ def main() -> None:
     for_dir = ROOT / "solutions"
     if for_dir.is_dir():
         for_slugs = sorted(p.name for p in for_dir.iterdir() if p.is_dir() and (p / "index.html").is_file())
-        data_for = js_top_slugs(ROOT / "js/high-intent-data.js")
+        try:
+            import sys
+
+            sys.path.insert(0, str(ROOT / "scripts"))
+            from render_high_intent import load_high_intent_pages
+
+            data_for = [
+                p.get("slug")
+                for p in load_high_intent_pages()
+                if p.get("slug")
+            ]
+        except Exception as exc:  # noqa: BLE001
+            print(f"WARN: failed to load high-intent pages: {exc}")
+            data_for = []
         for slug in sorted(set(for_slugs) - set(data_for)):
             print(f"WARN: solutions/ folder without data entry: {slug}")
         for slug in sorted(set(data_for) - set(for_slugs)):

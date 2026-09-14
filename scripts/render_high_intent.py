@@ -112,11 +112,27 @@ def _json_ld(page: dict[str, Any], canonical: str, page_desc: str) -> str:
     )
 
 
+def _project_entries(page: dict[str, Any]) -> list[dict[str, str]]:
+    entries: list[dict[str, str]] = []
+    for item in page.get("projects") or []:
+        if isinstance(item, str):
+            entries.append({"slug": item, "why": ""})
+        elif isinstance(item, dict) and item.get("slug"):
+            entries.append(
+                {
+                    "slug": str(item["slug"]),
+                    "why": str(item.get("why") or "").strip(),
+                }
+            )
+    return entries
+
+
 def _project_card(
     slug: str,
     projects_by: dict[str, dict[str, Any]],
     intent: str,
     primary_service: str,
+    why: str = "",
 ) -> str:
     live = projects_by.get(slug) or {}
     name = live.get("name") or slug
@@ -128,6 +144,12 @@ def _project_card(
     if slug == "moniaz":
         shot = f"assets/images/home/projects/{slug}-s1.webp"
     pixel = f"assets/images/home/projects/{slug}-pixel.webp"
+    why_html = (
+        f'<p class="hi-case__why"><span class="hi-case__why-label">چرا مرتبط است:</span> '
+        f"{escape_html(why)}</p>"
+        if why
+        else ""
+    )
     return (
         f'<a class="sd-case" href="/project/{_attr(slug)}/" '
         f'data-cta="high-intent-project" data-cta-location="high-intent-page" '
@@ -141,6 +163,7 @@ def _project_card(
         f'<div class="sd-case__body">'
         f'<div class="sd-case__meta">{escape_html(meta)}</div>'
         f'<h3 class="sd-case__title">{escape_html(title)}</h3>'
+        f"{why_html}"
         f'<span class="sd-case__cta">مطالعه تجربه {escape_html(name)}</span>'
         f"</div></a>"
     )
@@ -165,7 +188,8 @@ def render_high_intent(
         if primary
         else "contact.html"
     )
-    first_project = (page.get("projects") or [None])[0]
+    project_entries = _project_entries(page)
+    first_project = project_entries[0]["slug"] if project_entries else None
     hero_image = (
         f"assets/images/home/projects/{first_project}-shot.webp"
         if first_project
@@ -175,6 +199,7 @@ def render_high_intent(
         hero_image = "assets/images/home/projects/moniaz-s1.webp"
     og_image = abs_url(hero_image)
     ld = _json_ld(page, canonical, page_desc)
+    cta_label = (page.get("cta") or {}).get("primary") or "شروع یک پروژه"
 
     situation = page.get("situation") or {}
     sit_points = "".join(
@@ -211,8 +236,8 @@ def render_high_intent(
         for item in (outcomes.get("items") or [])
     )
     cases_html = "".join(
-        _project_card(ps, projects_by, slug, primary)
-        for ps in (page.get("projects") or [])
+        _project_card(entry["slug"], projects_by, slug, primary, entry.get("why") or "")
+        for entry in project_entries
     )
 
     article_cards: list[str] = []
@@ -292,7 +317,7 @@ def render_high_intent(
   <div class="top-bar">
     <div class="container top-bar__inner">
       <p class="top-bar__text">برای شروع پروژه جدید آماده‌ایم — درباره ایده‌تان با ما صحبت کنید</p>
-      <a href="{contact_href}" class="top-bar__btn" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">شروع یک پروژه</a>
+      <a href="{contact_href}" class="top-bar__btn" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta_label)}</a>
     </div>
   </div>
 
@@ -311,7 +336,7 @@ def render_high_intent(
         <a href="contact.html" class="home-header__link">تماس با ما</a>
       </nav>
       <div class="home-header__actions">
-        <a href="{contact_href}" class="btn btn--primary btn--header" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">شروع یک پروژه</a>
+        <a href="{contact_href}" class="btn btn--primary btn--header" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta_label)}</a>
         <button class="home-header__toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="main-nav">
           <span></span><span></span><span></span>
         </button>
@@ -337,7 +362,7 @@ def render_high_intent(
           </h1>
           <p class="sd-hero__lead">{escape_html(hero.get("lead") or page_desc)}</p>
           <div class="sd-hero__actions">
-            <a href="{contact_href}" class="btn btn--primary btn--lg" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta.get("primary") or "شروع یک پروژه")}</a>
+            <a href="{contact_href}" class="btn btn--primary btn--lg" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta_label)}</a>
             <a href="#cases" class="btn btn--outline btn--lg">دیدن نمونه‌کارهای مرتبط</a>
           </div>
         </div>
@@ -461,7 +486,7 @@ def render_high_intent(
           <h2 class="home-final-cta__title">{escape_html(cta.get("title") or "")}</h2>
           <p class="home-final-cta__desc">{escape_html(cta.get("body") or "")}</p>
           <div class="home-final-cta__actions">
-            <a href="{contact_href}" class="btn btn--primary btn--lg" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta.get("primary") or "شروع یک پروژه")}</a>
+            <a href="{contact_href}" class="btn btn--primary btn--lg" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta_label)}</a>
             <a href="/service/{_attr(primary)}/" class="btn btn--outline btn--lg" data-cta="view-service" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}">مشاهده خدمت {escape_html(primary_label)}</a>
           </div>
         </article>
@@ -501,7 +526,7 @@ def render_high_intent(
         <div class="home-footer__newsletter-col">
           <h3 class="home-footer__heading">پروژه بعدی شما</h3>
           <p class="home-footer__newsletter-desc">ایده، محصول نیمه‌کاره یا بازطراحی — مسیر را با هم مشخص می‌کنیم.</p>
-          <a class="btn btn--primary" href="{contact_href}" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">شروع یک پروژه</a>
+          <a class="btn btn--primary" href="{contact_href}" data-cta="high-intent-cta" data-cta-location="high-intent-page" data-service-slug="{_attr(primary)}" data-fit-intent="{_attr(slug)}" data-recommended-service="{_attr(primary)}">{escape_html(cta_label)}</a>
         </div>
       </div>
       <div class="home-footer__bottom">

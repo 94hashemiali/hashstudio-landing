@@ -120,6 +120,18 @@
   font-weight: 600;
 }
 
+.hi-case__why {
+  margin: 0.65rem 0 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-ink-soft, #3a3a3a);
+}
+
+.hi-case__why-label {
+  font-weight: 700;
+  color: inherit;
+}
+
 @media (max-width: 720px) {
   .hi-page .sd-hero__grid {
     gap: 1.5rem;
