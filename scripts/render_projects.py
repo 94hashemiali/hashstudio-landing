@@ -146,9 +146,16 @@ def render_project(
     name = project.get("name") or ""
     title = project.get("title") or ""
     lead = project.get("lead") or ""
-    page_title = f"{name} | پروژه طراحی و توسعه | استودیو هش"
+    industry = str(project.get("industry") or "").strip()
+    page_title = (
+        f"{name} | کیس‌استادی {industry} | استودیو هش"
+        if industry
+        else f"{name} | کیس‌استادی محصول دیجیتال | استودیو هش"
+    )
     summary = project.get("summary") or {}
     page_desc = lead or (summary.get("body") or "")
+    if len(page_desc) > 170:
+        page_desc = page_desc[:167].rstrip() + "…"
     canonical = project_url(slug)
     images = project.get("images") or {}
     hero_src = images.get("hero") or ""
@@ -330,6 +337,7 @@ def render_project(
         f'<span class="pd-related__industry">{escape_html(item.get("industry") or "")}</span>'
         f'<h3 class="pd-related__title">{escape_html(item.get("name") or "")}</h3>'
         f'<p class="pd-related__lead">{escape_html(item.get("lead") or "")}</p>'
+        f'<span class="pd-related__cta">مطالعه تجربه {escape_html(item.get("name") or "")}</span>'
         f"</div></a>"
         for item in related
     )

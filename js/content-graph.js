@@ -104,7 +104,12 @@
     zeissqom: { articles: ['technical-seo-js'] },
     visionsam: { articles: ['content-seo-funnel', 'technical-seo-js'] },
     shefaei: { articles: ['content-seo-funnel'] },
-    tfec: { articles: ['product-metrics', 'enterprise-ai'] }
+    tfec: { articles: ['product-metrics', 'enterprise-ai'] },
+    madanicamp: { articles: ['modern-ui-2026', 'digital-product-guide'] },
+    zivanplus: { articles: ['modern-ui-2026', 'design-system-scale'] },
+    azinpart: { articles: ['nextjs-scale-seo', 'content-seo-funnel'] },
+    abryadak: { articles: ['modern-ui-2026', 'content-seo-funnel'] },
+    dgservice: { articles: ['mvp-scope', 'product-validation', 'edge-caching'] }
   };
 
   var SERVICES = {

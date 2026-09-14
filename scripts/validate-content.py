@@ -130,29 +130,49 @@ def main() -> int:
 
     # project → articles
     proj_block = re.search(r"var PROJECTS = \{(.*?)\n  \};", graph_js, re.S)
+    graph_project_slugs: set[str] = set()
     if proj_block:
         for project, arts in re.findall(
-            r"'([a-z0-9-]+)':\s*\{\s*articles:\s*\[([^\]]*)\]",
+            r"['\"]?([a-z0-9-]+)['\"]?:\s*\{\s*articles:\s*\[([^\]]*)\]",
             proj_block.group(1),
         ):
+            graph_project_slugs.add(project)
             if project not in project_set:
                 errors.append(f"content-graph unknown project: {project}")
-            for slug in re.findall(r"'([a-z0-9-]+)'", arts):
+            for slug in re.findall(r"['\"]([a-z0-9-]+)['\"]", arts):
                 if slug not in article_set:
                     errors.append(f"content-graph project {project} → missing article {slug}")
+    for slug in sorted(project_set - graph_project_slugs):
+        warnings.append(f"project missing content-graph articles entry: {slug}")
 
     # service → articles
     svc_block = re.search(r"var SERVICES = \{(.*?)\n  \};", graph_js, re.S)
     if svc_block:
         for service, arts in re.findall(
-            r"'([a-z0-9-]+)':\s*\{\s*articles:\s*\[([^\]]*)\]",
+            r"['\"]?([a-z0-9-]+)['\"]?:\s*\{\s*articles:\s*\[([^\]]*)\]",
             svc_block.group(1),
         ):
             if service not in service_set:
                 errors.append(f"content-graph unknown service: {service}")
-            for slug in re.findall(r"'([a-z0-9-]+)'", arts):
+            for slug in re.findall(r"['\"]([a-z0-9-]+)['\"]", arts):
                 if slug not in article_set:
                     errors.append(f"content-graph service {service} → missing article {slug}")
+
+    # service seo fields
+    for slug in sorted(service_set):
+        # crude check: seo block near slug in services-data
+        pass
+    services_js = (ROOT / "js/services-data.js").read_text(encoding="utf-8")
+    for slug in sorted(service_set):
+        if f"slug: '{slug}'" not in services_js and f'slug: "{slug}"' not in services_js:
+            continue
+        # find seo after this slug
+        m = re.search(
+            rf"slug:\s*['\"]{re.escape(slug)}['\"][\s\S]{{0,400}}?seo:\s*\{{",
+            services_js,
+        )
+        if not m:
+            warnings.append(f"service {slug}: missing seo {{ title, description, primaryIntent }}")
 
     mark = "✓" if not errors else "✗"
     print(f"✓ {len(project_set)} projects validated")

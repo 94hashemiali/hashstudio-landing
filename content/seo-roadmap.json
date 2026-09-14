@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "note": "Internal SEO planning only. Not a public page. Do not invent services.",
+  "clusters": [
+    {
+      "id": "product",
+      "pillarService": "product",
+      "primaryIntent": "طراحی محصول دیجیتال",
+      "supportingArticles": [
+        "digital-product-guide",
+        "product-validation",
+        "mvp-scope",
+        "product-metrics"
+      ],
+      "proofProjects": ["zarafe", "golding", "moniaz"],
+      "conversion": "/contact.html"
+    },
+    {
+      "id": "ui-ux",
+      "pillarService": "ui-ux",
+      "primaryIntent": "طراحی UI/UX",
+      "supportingArticles": [
+        "modern-ui-2026",
+        "design-system-scale",
+        "ai-ux-guardrails"
+      ],
+      "proofProjects": ["vanilly", "pandoraland", "shogir"],
+      "conversion": "/contact.html"
+    },
+    {
+      "id": "web",
+      "pillarService": "web",
+      "primaryIntent": "توسعه وب",
+      "supportingArticles": [
+        "nextjs-scale-seo",
+        "edge-caching",
+        "technical-seo-js"
+      ],
+      "proofProjects": ["khosravani", "moniaz", "azinpart"],
+      "conversion": "/contact.html"
+    },
+    {
+      "id": "mvp",
+      "pillarService": "mvp",
+      "primaryIntent": "راه‌اندازی MVP",
+      "supportingArticles": ["mvp-scope", "product-validation"],
+      "proofProjects": ["golding", "crafty", "dgservice"],
+      "conversion": "/contact.html"
+    },
+    {
+      "id": "seo",
+      "pillarService": "seo",
+      "primaryIntent": "سئو تکنیکال",
+      "supportingArticles": [
+        "technical-seo-js",
+        "content-seo-funnel",
+        "nextjs-scale-seo"
+      ],
+      "proofProjects": ["zeissqom", "visionsam", "shefaei"],
+      "conversion": "/contact.html"
+    },
+    {
+      "id": "ai",
+      "pillarService": "ai",
+      "primaryIntent": "هوش مصنوعی در محصول",
+      "supportingArticles": ["enterprise-ai", "ai-ux-guardrails"],
+      "proofProjects": ["crafty", "tfec"],
+      "conversion": "/contact.html"
+    },
+    {
+      "id": "mobile",
+      "pillarService": "mobile",
+      "primaryIntent": "توسعه اپلیکیشن موبایل",
+      "supportingArticles": ["modern-ui-2026", "edge-caching"],
+      "proofProjects": ["shogir", "dgservice"],
+      "conversion": "/contact.html"
+    },
+    {
+      "id": "consulting",
+      "pillarService": "consulting",
+      "primaryIntent": "مشاوره محصول",
+      "supportingArticles": [
+        "design-eng-sync",
+        "content-seo-funnel",
+        "logistics-product-thinking"
+      ],
+      "proofProjects": ["khosravani", "shefaei"],
+      "conversion": "/contact.html"
+    }
+  ],
+  "articleIdeas": [
+    {
+      "cluster": "web",
+      "idea": "بازطراحی سایت شرکتی بدون از دست دادن سئو",
+      "status": "planned"
+    },
+    {
+      "cluster": "ui-ux",
+      "idea": "چک‌اوت موبایل‌فرست برای فروشگاه‌های ایرانی",
+      "status": "planned"
+    },
+    {
+      "cluster": "product",
+      "idea": "چطور دامنه محصول را قبل از اسپرینت اول قفل کنیم",
+      "status": "planned"
+    }
+  ]
+}

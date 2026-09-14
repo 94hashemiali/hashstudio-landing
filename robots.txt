@@ -4,5 +4,7 @@ Allow: /
 # Prefer clean URLs; compatibility shells are noindex in HTML too
 Disallow: /project.html
 Disallow: /service.html
+Disallow: /article.html
+Disallow: /content/
 
 Sitemap: https://hashstudio.ir/sitemap.xml

@@ -5,6 +5,12 @@
     {
       slug: 'product',
       name: 'طراحی محصول',
+      seo: {
+        title: "طراحی محصول دیجیتال | از کشف مسئله تا MVP | استودیو هش",
+        description: "طراحی محصول دیجیتال در استودیو هش: شفاف‌سازی مسئله، نقشه دامنه، فرضیه‌محوری و آماده‌سازی مسیر ساخت — نه فقط رابط زیبا.",
+        primaryIntent: "طراحی محصول دیجیتال",
+        secondaryIntents: ["طراحی MVP","استراتژی محصول","نقشه راه محصول"]
+      },
       theme: 'product',
       heroFlip: false,
       statsLayout: 'grid',
@@ -83,6 +89,12 @@
     {
       slug: 'ui-ux',
       name: 'طراحی UI/UX',
+      seo: {
+        title: "طراحی UI/UX برای محصولات دیجیتال | استودیو هش",
+        description: "طراحی تجربه و رابط کاربری: وایر، پروتوتایپ، دیزاین‌سیستم و جریان‌هایی که تبدیل را بالا می‌برند و ناوبری را ساده نگه می‌دارند.",
+        primaryIntent: "طراحی UI/UX",
+        secondaryIntents: ["طراحی رابط کاربری","تجربه کاربری","دیزاین سیستم"]
+      },
       theme: 'ui-ux',
       heroFlip: true,
       statsLayout: 'grid',
@@ -160,6 +172,12 @@
     {
       slug: 'web',
       name: 'توسعه وب مدرن',
+      seo: {
+        title: "توسعه وب مدرن با React و Next.js | استودیو هش",
+        description: "توسعه وب مقیاس‌پذیر با فرانت چابک و بک پایدار — سرعت، سئوی تکنیکال و آمادگی برای رشد ترافیک واقعی.",
+        primaryIntent: "توسعه وب",
+        secondaryIntents: ["طراحی سایت شرکتی","توسعه فرانت‌اند","Next.js"]
+      },
       theme: 'web',
       heroFlip: false,
       statsLayout: 'row',
@@ -240,6 +258,12 @@
     {
       slug: 'mobile',
       name: 'توسعه اپ موبایل',
+      seo: {
+        title: "توسعه اپلیکیشن موبایل | React Native و Flutter | استودیو هش",
+        description: "ساخت اپ موبایل کراس‌پلتفرم با تمرکز روی عملکرد، پرداخت، اعلان و تجربه لمسی روان برای اندروید و iOS.",
+        primaryIntent: "توسعه اپلیکیشن موبایل",
+        secondaryIntents: ["اپ React Native","اپ Flutter","پرداخت درون‌برنامه"]
+      },
       theme: 'mobile',
       heroFlip: true,
       statsLayout: 'grid',
@@ -319,6 +343,12 @@
     {
       slug: 'mvp',
       name: 'راه‌اندازی MVP',
+      seo: {
+        title: "راه‌اندازی MVP برای استارتاپ‌ها | استودیو هش",
+        description: "MVP یعنی برش درست محصول برای یادگیری بازار — دامنه محدود، هزینه کنترل‌شده و مسیر لانچ در چند اسپرینت.",
+        primaryIntent: "راه‌اندازی MVP",
+        secondaryIntents: ["ساخت MVP","لانچ استارتاپ","اعتبارسنجی ایده"]
+      },
       theme: 'mvp',
       heroFlip: false,
       statsLayout: 'row',
@@ -398,6 +428,12 @@
     {
       slug: 'ai',
       name: 'هوش مصنوعی',
+      seo: {
+        title: "یکپارچه‌سازی هوش مصنوعی در محصول | استودیو هش",
+        description: "اتصال مدل‌های زبانی و قابلیت‌های AI به جریان واقعی کاربر با کنترل هزینه، حریم داده و گاردریل تجربه.",
+        primaryIntent: "هوش مصنوعی در محصول",
+        secondaryIntents: ["چت‌بات سازمانی","RAG","UX برای AI"]
+      },
       theme: 'ai',
       heroFlip: true,
       statsLayout: 'grid',
@@ -477,6 +513,12 @@
     {
       slug: 'seo',
       name: 'دیجیتال مارکتینگ و سئو',
+      seo: {
+        title: "سئو تکنیکال و رشد ارگانیک | استودیو هش",
+        description: "سئوی تکنیکال روی کد، تحقیق کلمه کلیدی و هم‌راستایی محتوا با قیف تبدیل — ترافیک بدون صفحه درست هدر می‌رود.",
+        primaryIntent: "سئو تکنیکال",
+        secondaryIntents: ["سئو سایت","رشد ارگانیک","سئو جاوااسکریپت"]
+      },
       theme: 'seo',
       heroFlip: false,
       statsLayout: 'row',
@@ -555,6 +597,12 @@
     {
       slug: 'consulting',
       name: 'مشاوره محصول',
+      seo: {
+        title: "مشاوره محصول و بهینه‌سازی قیف تبدیل | استودیو هش",
+        description: "مشاوره محصول برای فعال‌سازی، ریزش، مدل درآمد و اولویت اسپرینت — تصمیم سخت درباره آنچه این فصل ساخته نشود.",
+        primaryIntent: "مشاوره محصول",
+        secondaryIntents: ["بهینه‌سازی قیف","تحلیل ریزش","اولویت‌بندی محصول"]
+      },
       theme: 'consulting',
       heroFlip: true,
       statsLayout: 'grid',

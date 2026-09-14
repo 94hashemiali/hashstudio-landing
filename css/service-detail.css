@@ -627,6 +627,14 @@
   font-weight: 700;
 }
 
+.sd-case__cta {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-brand, #0d47a1);
+}
+
 @media (max-width: 64rem) {
   .sd-articles {
     grid-template-columns: 1fr 1fr;

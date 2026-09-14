@@ -92,6 +92,15 @@ window.HASH_ANALYTICS_PROVIDER = {
 
 If no provider is set, tracking is a silent no-op.
 
+## SEO growth (Phase 11)
+
+- Service pages use optional `seo.title` / `seo.description` / `seo.primaryIntent` from `js/services-data.js`.
+- Relationships stay in `js/content-graph.js` (service ↔ article ↔ project).
+- Internal planning file (not public): `content/seo-roadmap.json`.
+- Homepage ships `Organization` + `WebSite` JSON-LD.
+- `robots.txt` disallows legacy `project.html` / `service.html` / `article.html`.
+- Site validation warns on duplicate titles/descriptions, sitemap gaps, and weak inbound links.
+
 ## Deploy
 
 Run `npm run build` before deploy. Repo root is the static site.

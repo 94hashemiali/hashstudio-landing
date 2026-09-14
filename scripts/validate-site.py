@@ -179,6 +179,8 @@ def validate_detail_page(
         errors.append(f"{rel}: missing CreativeWork JSON-LD")
     if kind == "service" and '"@type":"Service"' not in html.replace(" ", ""):
         errors.append(f"{rel}: missing Service JSON-LD")
+    if kind == "service" and '"@type":"FAQPage"' not in html.replace(" ", "") and "faq-item" in html:
+        warnings.append(f"{rel}: has FAQ UI but missing FAQPage JSON-LD")
     if "BreadcrumbList" not in html:
         errors.append(f"{rel}: missing BreadcrumbList JSON-LD")
     # Body text: require some Persian content beyond chrome
@@ -470,6 +472,128 @@ def main() -> int:
                     errors.append(f"{rel}: missing start-project CTA")
                 if re.search(r'id="project-root"[^>]*\bhidden\b', html):
                     errors.append(f"{rel}: #project-root is hidden")
+
+    # --- SEO quality (warnings preferred; hard errors only for clear breakage) ---
+    title_map: dict[str, list[str]] = defaultdict(list)
+    desc_map: dict[str, list[str]] = defaultdict(list)
+    public_paths: set[str] = set()
+    inbound: dict[str, int] = defaultdict(int)
+
+    listing_seeds = {
+        "/",
+        "/index.html",
+        "/projects.html",
+        "/services.html",
+        "/blog.html",
+        "/about.html",
+        "/contact.html",
+    }
+    for seed in listing_seeds:
+        inbound[seed] += 1
+
+    for path in ROOT.rglob("*.html"):
+        if any(part.startswith(".") for part in path.parts):
+            continue
+        rel = str(path.relative_to(ROOT)).replace("\\", "/")
+        if rel in {"project.html", "service.html", "article.html", "404.html"}:
+            continue
+        html = path.read_text(encoding="utf-8")
+        t = title(html)
+        d = meta_desc(html)
+        if t:
+            title_map[t].append(rel)
+        if d:
+            desc_map[d].append(rel)
+
+        # path key for inbound graph
+        if rel == "index.html":
+            key = "/"
+        elif rel.endswith("/index.html"):
+            key = "/" + rel[: -len("index.html")]
+        else:
+            key = "/" + rel
+        public_paths.add(key)
+
+        for href in HREF_RE.findall(html):
+            if href.startswith(("http://", "https://", "mailto:", "tel:")):
+                continue
+            if href.startswith("#"):
+                continue
+            clean = href.split("?")[0].split("#")[0]
+            if clean.startswith("/"):
+                target = clean if clean.endswith("/") or clean.endswith(".html") else clean + "/"
+            else:
+                # resolve relative against site root when base href=/
+                target = "/" + clean.lstrip("./")
+            if target.endswith("index.html"):
+                target = target[: -len("index.html")]
+            if not target.endswith("/") and not target.endswith(".html"):
+                target += "/"
+            inbound[target] += 1
+
+    for t, files in sorted(title_map.items()):
+        if len(files) > 1:
+            warnings.append(f"SEO: duplicate title ({len(files)}): {t[:80]} → {', '.join(files[:4])}")
+    for d, files in sorted(desc_map.items()):
+        if len(files) > 1:
+            warnings.append(
+                f"SEO: duplicate meta description ({len(files)}): {d[:60]} → {', '.join(files[:4])}"
+            )
+
+    # sitemap coverage
+    sitemap = ROOT / "sitemap.xml"
+    if sitemap.is_file():
+        raw_sitemap = sitemap.read_text(encoding="utf-8")
+        expected_public = {
+            f"{BASE}/",
+            f"{BASE}/projects.html",
+            f"{BASE}/services.html",
+            f"{BASE}/about.html",
+            f"{BASE}/blog.html",
+            f"{BASE}/contact.html",
+        }
+        for d in project_dirs:
+            expected_public.add(f"{BASE}/project/{d.name}/")
+        for d in service_dirs:
+            expected_public.add(f"{BASE}/service/{d.name}/")
+        for d in article_dirs:
+            expected_public.add(f"{BASE}/article/{d.name}/")
+        for url in sorted(expected_public):
+            if url not in raw_sitemap:
+                warnings.append(f"SEO: public page missing from sitemap: {url}")
+        if "project.html?slug=" in raw_sitemap or "service.html?slug=" in raw_sitemap:
+            errors.append("SEO: sitemap contains legacy query URLs")
+    else:
+        warnings.append("SEO: sitemap.xml missing")
+
+    # orphan-ish detail pages: listing always counts once; warn if no other inbound
+    for kind, dirs in (
+        ("project", project_dirs),
+        ("service", service_dirs),
+        ("article", article_dirs),
+    ):
+        for d in dirs:
+            key = f"/{kind}/{d.name}/"
+            inbound[key] += 1  # listing page reachability
+            if inbound[key] <= 1:
+                warnings.append(f"SEO: {kind}/{d.name} has weak internal inbound links")
+
+    # homepage site-level schema
+    home = (ROOT / "index.html").read_text(encoding="utf-8")
+    if "WebSite" not in home:
+        warnings.append("SEO: index.html missing WebSite JSON-LD")
+    if "Organization" not in home:
+        warnings.append("SEO: index.html missing Organization JSON-LD")
+
+    robots = ROOT / "robots.txt"
+    if robots.is_file():
+        rtxt = robots.read_text(encoding="utf-8")
+        if "Sitemap:" not in rtxt:
+            warnings.append("SEO: robots.txt missing Sitemap directive")
+        if "article.html" not in rtxt:
+            warnings.append("SEO: robots.txt should Disallow /article.html")
+    else:
+        warnings.append("SEO: robots.txt missing")
 
     # Friendly summary
     err_mark = "✓" if not errors else "✗"

@@ -22,17 +22,30 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "استودیو هش",
-    "url": "https://hashstudio.ir/",
-    "logo": "https://hashstudio.ir/assets/images/home/logo.png",
-    "email": "info@hashstudio.ir",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "تهران",
-      "addressCountry": "IR"
-    },
-    "sameAs": ["https://www.instagram.com/hashstudio.ir/"]
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://hashstudio.ir/#organization",
+        "name": "استودیو هش",
+        "url": "https://hashstudio.ir/",
+        "logo": "https://hashstudio.ir/assets/images/home/logo.png",
+        "email": "info@hashstudio.ir",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "تهران",
+          "addressCountry": "IR"
+        },
+        "sameAs": ["https://www.instagram.com/hashstudio.ir/"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://hashstudio.ir/#website",
+        "name": "استودیو هش",
+        "url": "https://hashstudio.ir/",
+        "inLanguage": "fa-IR",
+        "publisher": { "@id": "https://hashstudio.ir/#organization" }
+      }
+    ]
   }
   </script>
   <link rel="stylesheet" href="css/tokens.css">

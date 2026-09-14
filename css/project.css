@@ -727,6 +727,14 @@
   overflow: hidden;
 }
 
+.pd-related__cta {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
 /* Next project */
 .pd-next {
   padding-block: 1rem 3rem;

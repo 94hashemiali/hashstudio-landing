@@ -102,10 +102,11 @@ def resolve_cases(svc: dict[str, Any], projects: list[dict[str, Any]]) -> list[d
 
 
 def _json_ld(svc: dict[str, Any], canonical: str, page_desc: str) -> str:
-    graph = [
+    name = svc.get("name") or ""
+    graph: list[dict[str, Any]] = [
         {
             "@type": "Service",
-            "name": svc.get("name") or "",
+            "name": name,
             "description": page_desc,
             "url": canonical,
             "provider": {
@@ -129,12 +130,31 @@ def _json_ld(svc: dict[str, Any], canonical: str, page_desc: str) -> str:
                 {
                     "@type": "ListItem",
                     "position": 3,
-                    "name": svc.get("name") or "",
+                    "name": name,
                     "item": canonical,
                 },
             ],
         },
     ]
+    faqs = svc.get("faqs") or []
+    if faqs:
+        graph.append(
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": item.get("q") or "",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": item.get("a") or "",
+                        },
+                    }
+                    for item in faqs
+                    if item.get("q") and item.get("a")
+                ],
+            }
+        )
     return json.dumps(
         {"@context": "https://schema.org", "@graph": graph},
         ensure_ascii=False,
@@ -173,8 +193,9 @@ def render_service(
 ) -> str:
     slug = svc["slug"]
     name = svc.get("name") or ""
-    page_title = f"{name} | خدمات | استودیو هش"
-    page_desc = svc.get("lead") or ""
+    seo = svc.get("seo") or {}
+    page_title = (seo.get("title") or "").strip() or f"{name} | خدمات | استودیو هش"
+    page_desc = (seo.get("description") or "").strip() or (svc.get("lead") or "")
     canonical = service_url(slug)
     hero_image = svc.get("heroImage") or "assets/images/home/logo.png"
     og_image = abs_url(hero_image)
@@ -235,7 +256,8 @@ def render_service(
                 f'<span class="sd-case__tag">{escape_html(t)}</span>'
                 for t in (item.get("tags") or [])
             )
-            + "</div></div></a>"
+            + f'</div><span class="sd-case__cta">مطالعه تجربه {escape_html((item.get("title") or "").split("—")[0].strip() or item.get("slug") or "")}</span>'
+            + "</div></a>"
         )
         for item in cases
     )
