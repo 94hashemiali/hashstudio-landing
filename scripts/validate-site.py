@@ -485,6 +485,35 @@ def main() -> int:
             errors.append("index.html: projects-data.js must load before service-fit.js")
         if index_html.find("js/analytics.js") > sf_pos or index_html.find("js/analytics.js") < 0:
             errors.append("index.html: analytics.js must load before service-fit.js")
+
+    # Phase 17 — intentional motion
+    motion_css = ROOT / "css" / "home-motion.css"
+    motion_js = ROOT / "js" / "motion.js"
+    if "css/home-motion.css" not in index_html:
+        errors.append("index.html: must load css/home-motion.css")
+    if "js/motion.js" not in index_html:
+        errors.append("index.html: must load js/motion.js")
+    if 'data-hs-reveal' not in index_html:
+        errors.append("index.html: missing data-hs-reveal motion markers")
+    if not motion_css.is_file():
+        errors.append("css/home-motion.css missing")
+    else:
+        motion_css_text = motion_css.read_text(encoding="utf-8")
+        if "prefers-reduced-motion" not in motion_css_text:
+            errors.append("css/home-motion.css: missing prefers-reduced-motion rules")
+        if motion_css.stat().st_size >= 32768:
+            errors.append("css/home-motion.css: must stay under 32KB (host trunc risk)")
+    if not motion_js.is_file():
+        errors.append("js/motion.js missing")
+    else:
+        motion_js_text = motion_js.read_text(encoding="utf-8")
+        if "IntersectionObserver" not in motion_js_text:
+            errors.append("js/motion.js: missing IntersectionObserver reveal")
+        if "prefers-reduced-motion" not in motion_js_text:
+            errors.append("js/motion.js: must honor prefers-reduced-motion")
+        if "hs-motion-off" not in motion_js_text and "forceVisible" not in motion_js_text:
+            errors.append("js/motion.js: missing reduced-motion / no-IO visible fallback")
+
     if not fit_js.is_file():
         errors.append("js/service-fit.js missing")
     else:

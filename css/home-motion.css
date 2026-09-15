@@ -1,0 +1,239 @@
+/* Phase 17 — intentional homepage motion (vanilla, <32KB) */
+
+/* --- Reveal base --- */
+[data-hs-reveal].hs-reveal-ready {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition:
+    opacity 0.42s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 0.42s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  will-change: opacity, transform;
+}
+
+[data-hs-reveal].hs-reveal-ready.is-visible,
+.hs-motion-off [data-hs-reveal],
+.hs-motion-off [data-hs-reveal].hs-reveal-ready {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+[data-hs-reveal][data-hs-delay="1"].hs-reveal-ready { transition-delay: 0.06s; }
+[data-hs-reveal][data-hs-delay="2"].hs-reveal-ready { transition-delay: 0.12s; }
+[data-hs-reveal][data-hs-delay="3"].hs-reveal-ready { transition-delay: 0.18s; }
+[data-hs-reveal][data-hs-delay="4"].hs-reveal-ready { transition-delay: 0.24s; }
+[data-hs-reveal][data-hs-delay="5"].hs-reveal-ready { transition-delay: 0.3s; }
+
+.hs-motion-off [data-hs-reveal].hs-reveal-ready {
+  transition: none;
+  transition-delay: 0s;
+}
+
+/* --- Hero entrance (load stagger) --- */
+.home-hero [data-hs-reveal].hs-reveal-ready {
+  transform: translateY(0.75rem);
+}
+
+.home-hero__visual[data-hs-reveal].hs-reveal-ready {
+  transform: translateY(1.25rem) scale(0.98);
+}
+
+.home-hero__visual[data-hs-reveal].hs-reveal-ready.is-visible {
+  transform: none;
+}
+
+/* --- Stagger children inside grids --- */
+[data-hs-stagger] > .hs-reveal-ready {
+  opacity: 0;
+  transform: translateY(0.85rem);
+  transition:
+    opacity 0.4s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 0.4s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+[data-hs-stagger].is-visible > .hs-reveal-ready,
+[data-hs-stagger].is-visible > [data-hs-reveal].hs-reveal-ready,
+.hs-motion-off [data-hs-stagger] > .hs-reveal-ready {
+  opacity: 1;
+  transform: none;
+}
+
+[data-hs-stagger].is-visible > :nth-child(1).hs-reveal-ready { transition-delay: 0.04s; }
+[data-hs-stagger].is-visible > :nth-child(2).hs-reveal-ready { transition-delay: 0.1s; }
+[data-hs-stagger].is-visible > :nth-child(3).hs-reveal-ready { transition-delay: 0.16s; }
+[data-hs-stagger].is-visible > :nth-child(4).hs-reveal-ready { transition-delay: 0.22s; }
+[data-hs-stagger].is-visible > :nth-child(5).hs-reveal-ready { transition-delay: 0.28s; }
+[data-hs-stagger].is-visible > :nth-child(6).hs-reveal-ready { transition-delay: 0.34s; }
+
+/* Drop enter delays after reveal so hover/active stay snappy */
+[data-hs-stagger] > .hs-reveal-ready.is-visible {
+  transition-delay: 0s;
+}
+
+.hs-motion-off [data-hs-stagger] > .hs-reveal-ready {
+  transition: none;
+  transition-delay: 0s;
+}
+
+/* Mark stagger children without needing data-hs-reveal on each */
+/* Stagger children get .hs-reveal-ready from motion.js */
+
+/* --- Service Fit micro --- */
+.home-fit__option {
+  transition:
+    transform 0.18s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    border-color var(--transition, 0.2s ease),
+    background-color var(--transition, 0.2s ease),
+    box-shadow var(--transition, 0.2s ease);
+}
+
+.home-fit__option.is-pressing {
+  transform: scale(0.97);
+}
+
+.home-fit__result:not([hidden]) {
+  animation: hs-fit-in 0.38s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+.home-fit__result.is-refreshing {
+  animation: none;
+  opacity: 0;
+  transform: translateY(0.5rem);
+}
+
+.home-fit__result.is-entering {
+  animation: hs-fit-in 0.38s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+@keyframes hs-fit-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.65rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Portfolio presence --- */
+.portfolio-featured {
+  transition:
+    transform 0.28s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    box-shadow 0.28s ease;
+}
+
+.portfolio-featured:hover,
+.portfolio-featured:focus-visible {
+  transform: translateY(-3px);
+}
+
+.portfolio-featured .site-preview__shot,
+.project-card .site-preview__shot {
+  transition: opacity 0.35s ease, transform 0.4s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.portfolio-featured:hover .site-preview__shot,
+.portfolio-featured:focus-visible .site-preview__shot,
+.project-card:hover .site-preview__shot,
+.project-card:focus-visible .site-preview__shot {
+  transform: scale(1.02);
+}
+
+.project-card {
+  transition:
+    transform 0.28s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    box-shadow 0.28s ease;
+}
+
+.project-card:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* --- Process sequential --- */
+.process-steps[data-hs-stagger] > .process-step.hs-reveal-ready {
+  opacity: 0;
+  transform: translateY(0.75rem);
+}
+
+.process-steps[data-hs-stagger].is-visible > .process-step.hs-reveal-ready {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- CTA / button press (sitewide on home chrome) --- */
+.btn {
+  transition:
+    background-color var(--transition, 0.2s ease),
+    border-color var(--transition, 0.2s ease),
+    color var(--transition, 0.2s ease),
+    transform 0.16s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    box-shadow var(--transition, 0.2s ease);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--primary:active {
+  transform: scale(0.97);
+}
+
+.top-bar__btn:active {
+  transform: scale(0.97);
+}
+
+/* --- Soft hero visual drift (desktop only, capped) --- */
+@media (min-width: 901px) {
+  .home-hero__visual[data-hs-parallax] img {
+    transition: transform 0.15s linear;
+    will-change: transform;
+  }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  [data-hs-reveal].hs-reveal-ready,
+  [data-hs-stagger] > .hs-reveal-ready,
+  .process-steps[data-hs-stagger] > .process-step.hs-reveal-ready {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0s;
+  }
+
+  .home-fit__option.is-pressing {
+    transform: none;
+  }
+
+  .home-fit__result:not([hidden]),
+  .home-fit__result.is-entering,
+  .home-fit__result.is-refreshing {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .portfolio-featured:hover,
+  .portfolio-featured:focus-visible,
+  .project-card:hover,
+  .project-card:active,
+  .btn:active,
+  .btn--primary:active,
+  .top-bar__btn:active {
+    transform: none;
+  }
+
+  .portfolio-featured:hover .site-preview__shot,
+  .portfolio-featured:focus-visible .site-preview__shot,
+  .project-card:hover .site-preview__shot,
+  .project-card:focus-visible .site-preview__shot {
+    transform: none;
+  }
+
+  .home-hero__visual[data-hs-parallax] img {
+    transform: none !important;
+    transition: none;
+    will-change: auto;
+  }
+}

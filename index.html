@@ -54,6 +54,7 @@
   <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" href="css/home-sections.css">
   <link rel="stylesheet" href="css/home-responsive.css">
+  <link rel="stylesheet" href="css/home-motion.css">
 </head>
 <body class="home-page">
 
@@ -101,22 +102,22 @@
     <section class="home-hero">
       <div class="container home-hero__grid">
         <div class="home-hero__content">
-          <span class="badge badge--hero">
+          <span class="badge badge--hero" data-hs-reveal data-hs-delay="1">
             <span class="badge__dot" aria-hidden="true"></span>
             استودیوی محصول دیجیتال
           </span>
-          <h1 class="home-hero__title">
+          <h1 class="home-hero__title" data-hs-reveal data-hs-delay="2">
             مسئله واقعی را به<br>
             <span>محصول دیجیتال قابل‌ساخت</span> تبدیل می‌کنیم.
           </h1>
-          <p class="home-hero__desc">
+          <p class="home-hero__desc" data-hs-reveal data-hs-delay="3">
             برای استارتاپ‌ها و تیم‌هایی که محصول می‌سازند یا بازطراحی می‌کنند: کشف مسئله، طراحی تجربه، و مهندسی در یک تیم — تا خروجی فقط فایل دیزاین نباشد.
           </p>
-          <div class="home-hero__actions">
+          <div class="home-hero__actions" data-hs-reveal data-hs-delay="4">
             <a href="contact.html" class="btn btn--primary btn--lg" data-cta="start-project" data-cta-location="hero">شروع یک پروژه</a>
             <a href="projects.html" class="btn btn--outline btn--lg" data-cta="view-projects" data-cta-location="hero">دیدن پروژه‌ها</a>
           </div>
-          <div class="home-hero__proof">
+          <div class="home-hero__proof" data-hs-reveal data-hs-delay="5">
             <div class="home-hero__avatars" aria-hidden="true">
               <img src="assets/images/home/avatar-1.webp" alt="" width="34" height="34">
               <img src="assets/images/home/avatar-2.webp" alt="" width="34" height="34">
@@ -125,7 +126,7 @@
             <p class="home-hero__proof-text">۱۷ کیس‌استادی منتشرشده<br>فین‌تک، آموزش، فروشگاه و بیشتر</p>
           </div>
         </div>
-        <div class="home-hero__visual">
+        <div class="home-hero__visual" data-hs-reveal data-hs-delay="1" data-hs-parallax>
           <img src="assets/images/home/hero.webp" alt="ایلاستریشن جزیره شناور استودیو هش" width="560" height="520" fetchpriority="high" decoding="async">
         </div>
       </div>
@@ -152,14 +153,14 @@
 
 
     <!-- Who we help -->
-    <section class="home-section home-section--white home-audience" id="fit" aria-labelledby="audience-title">
+    <section class="home-section home-section--white home-audience" id="fit" aria-labelledby="audience-title" data-hs-reveal>
       <div class="container">
         <header class="section-head section-head--start">
           <span class="badge badge--section">مناسب کیست؟</span>
           <h2 class="section-head__title" id="audience-title">استودیو هش برای چه تیم‌هایی کار می‌کند؟</h2>
           <p class="section-head__desc">اگر یکی از این موقعیت‌ها را دارید، مسیر روشنی برای همکاری داریم.</p>
         </header>
-        <div class="home-audience__grid">
+        <div class="home-audience__grid" data-hs-stagger>
           <article class="home-audience__card">
             <h3 class="home-audience__title">استارتاپ در شروع محصول</h3>
             <p class="home-audience__desc">ایده یا فرضیه دارید و می‌خواهید دامنه MVP و مسیر ساخت روشن شود.</p>
@@ -181,7 +182,7 @@
     </section>
 
     <!-- Service Fit — consultation shortcut -->
-    <section class="home-section home-section--cream home-fit" id="service-fit" aria-labelledby="service-fit-title" data-service-fit>
+    <section class="home-section home-section--cream home-fit" id="service-fit" aria-labelledby="service-fit-title" data-service-fit data-hs-reveal>
       <div class="container">
         <header class="section-head section-head--start">
           <span class="badge badge--section">اگر مسیر هنوز روشن نیست</span>
@@ -189,7 +190,7 @@
           <p class="section-head__desc">یک انتخاب کافی است؛ مسیر مناسب را بر اساس مسئله‌تان پیشنهاد می‌دهیم.</p>
         </header>
 
-        <div class="home-fit__chooser" role="group" aria-label="انتخاب وضعیت فعلی">
+        <div class="home-fit__chooser" role="group" aria-label="انتخاب وضعیت فعلی" data-hs-stagger>
           <button type="button" class="home-fit__option" data-cta="service-fit-select" data-cta-location="home-fit" data-fit-intent="idea" aria-pressed="false">
             <span class="home-fit__option-label">ایده یا محصول جدید دارم</span>
             <span class="home-fit__option-hint">محصول جدید / MVP</span>
@@ -232,7 +233,7 @@
     </section>
 
     <!-- Portfolio — featured + supporting projects -->
-    <section class="home-section home-section--white portfolio" id="portfolio">
+    <section class="home-section home-section--white portfolio" id="portfolio" data-hs-reveal>
       <div class="container">
         <div class="section-head portfolio__head">
           <span class="portfolio__badge">اثبات توانایی</span>
@@ -240,7 +241,7 @@
           <p class="section-head__desc">هر کیس‌استادی: صنعت، مسئله، نقش استودیو و نشانه خروجی — نه فقط گالری تصویر.</p>
         </div>
 
-        <div id="home-portfolio-featured">
+        <div id="home-portfolio-featured" data-hs-reveal data-hs-delay="1">
           <a href="/project/zarafe/" class="portfolio-featured" data-cta="view-project" data-cta-location="home-portfolio" data-project-slug="zarafe">
             <div class="portfolio-featured__visual">
               <div class="site-preview">
@@ -270,7 +271,7 @@
             </div>
           </a>
         </div>
-        <div class="portfolio-grid" id="home-portfolio-grid">
+        <div class="portfolio-grid" id="home-portfolio-grid" data-hs-stagger>
           <a href="/project/khosravani/" class="project-card" data-cta="view-project" data-cta-location="home-portfolio" data-project-slug="khosravani">
             <div class="project-card__visual project-card__visual--navy">
               <div class="site-preview">
@@ -357,7 +358,7 @@
 
     <!-- Services -->
     <!-- Services — desgin/services-section.svg (1440×880) -->
-    <section class="home-section home-section--white home-services" id="services">
+    <section class="home-section home-section--white home-services" id="services" data-hs-reveal>
       <div class="container">
         <header class="services-head">
           <span class="services-head__badge">چه می‌سازیم</span>
@@ -365,7 +366,7 @@
           <p class="services-head__desc">خطوط خدمت واقعی استودیو — هر کدام به کیس‌استادی و مسیر تماس وصل است.</p>
         </header>
 
-        <div class="services-featured">
+        <div class="services-featured" data-hs-stagger>
           <article class="service-featured">
             <div class="service-featured__icon" aria-hidden="true">
               <img src="assets/icons/services/web-dev.svg" alt="" width="62" height="62">
@@ -390,7 +391,7 @@
           </article>
         </div>
 
-        <div class="services-grid">
+        <div class="services-grid" data-hs-stagger>
           <a href="/service/mvp/" class="service-mini" data-cta="view-service" data-cta-location="home-services" data-service-slug="mvp">
             <div class="service-mini__icon" aria-hidden="true">
               <img src="assets/icons/services/mvp.svg" alt="" width="30" height="30">
@@ -451,7 +452,7 @@
 
     <!-- Process -->
     <!-- Process — decision path (compressed from agency checklist) -->
-    <section class="home-section home-section--cream process" id="process">
+    <section class="home-section home-section--cream process" id="process" data-hs-reveal>
       <div class="container">
         <div class="section-head process__head">
           <span class="process__badge">اگر پروژه را بسپارید</span>
@@ -459,7 +460,7 @@
           <p class="section-head__desc">مسیر واقعی همکاری — از فهم مسئله تا بهبود بعد از لانچ.</p>
         </div>
 
-        <div class="process-steps process-steps--five">
+        <div class="process-steps process-steps--five" data-hs-stagger>
           <article class="process-step is-active">
             <div class="process-step__rail">
               <div class="process-step__circle">۰۱</div>
@@ -510,10 +511,10 @@
     </section>
 
     <!-- Stats — studio metrics -->
-    <section class="home-stats" aria-label="شاخص‌های استودیو هش">
+    <section class="home-stats" aria-label="شاخص‌های استودیو هش" data-hs-reveal>
       <div class="container">
         <p class="home-stats__caption">آنچه در سایت قابل‌مشاهده است</p>
-        <div class="home-stats__grid">
+        <div class="home-stats__grid" data-hs-stagger>
           <div class="home-stats__item">
             <div class="home-stats__value">۱۷</div>
             <div class="home-stats__label">کیس‌استادی</div>
@@ -535,10 +536,10 @@
     </section>
 
     <!-- Why us -->
-    <section class="home-section home-section--white home-why-us" id="why-us">
+    <section class="home-section home-section--white home-why-us" id="why-us" data-hs-reveal>
       <div class="container">
         <div class="why-us-layout">
-          <div class="why-us-grid">
+          <div class="why-us-grid" data-hs-stagger>
             <article class="why-us-item">
               <span class="why-us-item__num">۰۱</span>
               <div class="why-us-item__body">
@@ -646,14 +647,14 @@
     </section>
 
     <!-- Leadership -->
-    <section class="home-section home-section--cream home-team" id="team">
+    <section class="home-section home-section--cream home-team" id="team" data-hs-reveal>
       <div class="container">
         <div class="section-head">
           <span class="badge badge--section">رهبری استودیو</span>
           <h2 class="section-head__title">هسته‌ای که مسیر محصول را نگه می‌دارد</h2>
           <p class="section-head__desc">تیم هر پروژه بر اساس دامنه جمع می‌شود. این‌جا هستهٔ تصمیم‌گیری استودیو است.</p>
         </div>
-        <div class="home-team-grid home-team-grid--lead">
+        <div class="home-team-grid home-team-grid--lead" data-hs-stagger>
           <article class="home-team-card">
             <img class="home-team-card__avatar" src="assets/images/home/team-ceo.webp" alt="محمدعلی هاشمی" width="78" height="78">
             <h3 class="home-team-card__name">محمدعلی هاشمی</h3>
@@ -776,13 +777,13 @@
     </section>
 
     <!-- FAQ -->
-    <section class="home-section home-section--cream faq-section" id="faq">
+    <section class="home-section home-section--cream faq-section" id="faq" data-hs-reveal>
       <div class="container">
         <div class="section-head">
           <span class="badge badge--section">پاسخ به سؤالات</span>
           <h2 class="section-head__title">شاید این سؤال شما هم باشد</h2>
         </div>
-        <div class="faq-list">
+        <div class="faq-list" data-hs-stagger>
           <details class="faq-item" open>
             <summary class="faq-item__question">
               <span class="faq-item__label">ساخت یک MVP چقدر زمان می‌برد؟</span>
@@ -831,7 +832,7 @@
 
     <!-- Final CTA -->
 
-    <section class="home-final-cta">
+    <section class="home-final-cta" data-hs-reveal>
       <div class="container">
         <article class="home-final-cta__card">
           <h2 class="home-final-cta__title">مسئله‌تان را بگویید؛ مسیر ساخت را با هم مشخص می‌کنیم.</h2>
@@ -903,6 +904,7 @@
   <script src="js/studio-info.js"></script>
   <script src="js/analytics.js"></script>
   <script src="js/service-fit.js"></script>
+  <script src="js/motion.js"></script>
   <script src="js/home.js"></script>
   <script src="js/studio-chrome.js"></script>
   <script src="js/main.js"></script>

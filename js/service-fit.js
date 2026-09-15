@@ -279,16 +279,37 @@
           b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
           b.classList.toggle('is-selected', b === btn);
         });
-        renderFitResult(intent);
+        btn.classList.add('is-pressing');
+        global.setTimeout(function () {
+          btn.classList.remove('is-pressing');
+        }, 180);
+
         var result = document.getElementById('service-fit-result');
-        if (result) {
-          var reduce = false;
-          try {
-            reduce = global.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          } catch (err) {}
-          try {
-            result.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
-          } catch (err2) {}
+        var reduce = false;
+        try {
+          reduce = global.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        } catch (err) {}
+
+        if (result && !reduce) {
+          result.classList.remove('is-entering');
+          result.classList.add('is-refreshing');
+        }
+
+        try {
+          renderFitResult(intent);
+        } finally {
+          if (result) {
+            result.classList.remove('is-refreshing');
+            if (!reduce) {
+              void result.offsetWidth;
+              result.classList.add('is-entering');
+            } else {
+              result.classList.remove('is-entering');
+            }
+            try {
+              result.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
+            } catch (err2) {}
+          }
         }
       });
     });

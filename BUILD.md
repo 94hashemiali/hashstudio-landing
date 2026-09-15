@@ -133,6 +133,15 @@ If no provider is set, tracking is a silent no-op.
 - Service Fit may link a matching `/solutions/<slug>/` without replacing service/project proof.
 - Funnel events: `lead_context_applied`, `contact_context_viewed`, `contact_project_type_prefilled`, `contact_form_completed` (plus existing start/email).
 
+## Intentional motion (Phase 17)
+
+- Homepage-only polish: `css/home-motion.css` + `js/motion.js` (vanilla; no GSAP/Framer).
+- IO reveal via `[data-hs-reveal]` / `[data-hs-stagger]`; hero load stagger; Service Fit press + result enter; portfolio lift; process sequential; button `:active` press.
+- Always honors `prefers-reduced-motion: reduce` (instant show / no parallax). If IO missing, forces visible (no stuck `opacity: 0`).
+- Project pages keep existing `.pd-reveal` in `project.js` — do not double-observe.
+- Keep `home-motion.css` under 32KB (host trunc risk). Live motion only after `npm run verify:deploy` is green.
+
 ## Deploy
 
 Run `npm run build` before deploy. Repo root is the static site.
+After host upload, run `npm run verify:deploy` (byte-size + critical assets).
