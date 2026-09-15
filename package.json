@@ -15,6 +15,9 @@
     "sitemap": "python3 scripts/generate-sitemap.py",
     "validate": "python3 scripts/validate-site.py",
     "validate:content": "python3 scripts/validate-content.py",
+    "check:host-limits": "python3 scripts/check-host-limits.py",
+    "build:projects-index": "node scripts/build-projects-index.js",
+    "pack:deploy": "python3 scripts/pack-deploy.py",
     "verify:deploy": "python3 scripts/verify-deploy.py"
   }
 }

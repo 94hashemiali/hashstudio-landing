@@ -35,8 +35,7 @@ CRITICAL = [
     "css/project.css",
     "css/article.css",
     "css/service-detail.css",
-    "js/projects-data.js",
-    "js/articles-data.js",
+    "js/projects-index.js",
     "js/articles-index.js",
     "js/home.js",
     "js/main.js",
@@ -50,6 +49,12 @@ CRITICAL = [
     "blog.html",
     "contact.html",
     "about.html",
+]
+
+# Large datasets: homepage works without them; warn on mismatch (SFTP binary only)
+LARGE_OPTIONAL = [
+    "js/projects-data.js",
+    "js/articles-data.js",
 ]
 
 
@@ -87,6 +92,26 @@ def main() -> int:
     skipped = 0
 
     print(f"Verifying deploy against {base}\n")
+
+    # Local trunc-risk preview (small-host)
+    print("Local trunc-risk (hard limit 32768):")
+    for rel in (
+        "index.html",
+        "css/home.css",
+        "css/home-sections.css",
+        "css/home-responsive.css",
+        "css/home-motion.css",
+        "js/projects-index.js",
+        "js/home.js",
+        "js/motion.js",
+    ):
+        lp = ROOT / rel
+        if not lp.is_file():
+            continue
+        sz = lp.stat().st_size
+        mark = "OK" if sz < 32768 else "RISK"
+        print(f"  {mark:4} {sz:6}  {rel}")
+    print()
 
     for rel in CRITICAL:
         local_path = ROOT / rel
@@ -128,6 +153,31 @@ def main() -> int:
             ok += 1
             print(f"OK    {rel}: {live_size} bytes")
 
+    print("\nLarge optional (warn only — SFTP binary):")
+    for rel in LARGE_OPTIONAL:
+        local_path = ROOT / rel
+        if not local_path.is_file():
+            continue
+        local_size = local_path.stat().st_size
+        url = f"{base}/{rel}"
+        live_size, err = fetch_size(url)
+        if err or live_size is None:
+            warnings.append(f"{rel}: fetch failed ({err})")
+            print(f"WARN  {rel}: fetch failed ({err})")
+            continue
+        if live_size in TRUNC_HINTS and live_size != local_size:
+            warnings.append(
+                f"{rel}: live={live_size} local={local_size} — trunc/stale; upload binary"
+            )
+            print(f"WARN  {rel}: live={live_size} local={local_size} (trunc?)")
+            continue
+        if live_size < local_size - args.tolerance:
+            warnings.append(f"{rel}: live={live_size} local={local_size}")
+            print(f"WARN  {rel}: live={live_size} local={local_size}")
+            continue
+        ok += 1
+        print(f"OK    {rel}: {live_size} bytes")
+
     print()
     print(f"✓ {ok} files match")
     if skipped:
@@ -141,8 +191,9 @@ def main() -> int:
 
     if errors:
         print(
-            "\nRe-upload the FAIL files in binary mode (FTP/rsync/scp), "
-            "then re-run: npm run verify:deploy"
+            "\nSmall-host tip: File Manager often truncates at 32768 bytes.\n"
+            "Re-upload FAIL files via SFTP/FTP **binary** from dist-deploy/ "
+            "(npm run pack:deploy), then: npm run verify:deploy"
         )
         return 1
     return 0

@@ -141,7 +141,21 @@ If no provider is set, tracking is a silent no-op.
 - Project pages keep existing `.pd-reveal` in `project.js` — do not double-observe.
 - Keep `home-motion.css` under 32KB (host trunc risk). Live motion only after `npm run verify:deploy` is green.
 
+## Small-host deploy (Phase 18A)
+
+Cheap shared hosts often **truncate at 32768 bytes** (File Manager / bad FTP ASCII).
+
+| Rule | Detail |
+|------|--------|
+| Hard limit | Homepage-critical `.html/.css/.js` must be **&lt;32KB** — `npm run check:host-limits` |
+| Home data | `js/projects-index.js` (slim). Full `js/projects-data.js` only on `projects.html` / build |
+| Pack | `npm run pack:deploy` → `dist-deploy/` (no `desgin/`, no extracted dumps, skip PNG if `.webp` sibling) |
+| Upload | **SFTP or FTP binary** — never File Manager for files &gt;20KB |
+| Batch order | `index.html` → CSS trio + `home-motion.css` → `js/projects-index.js` + home scripts → webps → (optional) full `projects-data.js` |
+| Verify | `npm run verify:deploy` until green |
+
 ## Deploy
 
-Run `npm run build` before deploy. Repo root is the static site.
-After host upload, run `npm run verify:deploy` (byte-size + critical assets).
+Run `npm run build` before deploy (includes projects-index + host-limits).
+Prefer uploading from `dist-deploy/` after `npm run pack:deploy`.
+After host upload, run `npm run verify:deploy`.

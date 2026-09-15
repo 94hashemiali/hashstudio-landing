@@ -312,7 +312,7 @@ def main() -> int:
         errors.append(f"service folder not in services-data.js: service/{slug}/")
 
     html_files = sorted(ROOT.rglob("*.html"))
-    skip_parts = {"node_modules", ".git"}
+    skip_parts = {"node_modules", ".git", "dist-deploy", ".cache"}
     checked = 0
 
     for path in html_files:
@@ -478,13 +478,22 @@ def main() -> int:
         warnings.append("index.html: missing Who we help section (#fit) before Service Fit")
     if "js/service-fit.js" not in index_html:
         errors.append("index.html: must load js/service-fit.js")
-    # Script order: projects-data + analytics before service-fit
-    if "js/service-fit.js" in index_html:
+    # Script order: projects-index (or full data) + analytics before service-fit
+    projects_script = None
+    if "js/projects-index.js" in index_html:
+        projects_script = "js/projects-index.js"
+    elif "js/projects-data.js" in index_html:
+        projects_script = "js/projects-data.js"
+    else:
+        errors.append("index.html: must load js/projects-index.js (or projects-data.js)")
+    if "js/service-fit.js" in index_html and projects_script:
         sf_pos = index_html.find("js/service-fit.js")
-        if index_html.find("js/projects-data.js") > sf_pos or index_html.find("js/projects-data.js") < 0:
-            errors.append("index.html: projects-data.js must load before service-fit.js")
+        if index_html.find(projects_script) > sf_pos or index_html.find(projects_script) < 0:
+            errors.append(f"index.html: {projects_script} must load before service-fit.js")
         if index_html.find("js/analytics.js") > sf_pos or index_html.find("js/analytics.js") < 0:
             errors.append("index.html: analytics.js must load before service-fit.js")
+    if not (ROOT / "js" / "projects-index.js").is_file():
+        errors.append("js/projects-index.js missing (run npm run build:projects-index)")
 
     # Phase 17 — intentional motion
     motion_css = ROOT / "css" / "home-motion.css"
@@ -864,6 +873,8 @@ def main() -> int:
     for path in ROOT.rglob("*.html"):
         if any(part.startswith(".") for part in path.parts):
             continue
+        if "dist-deploy" in path.parts or "node_modules" in path.parts:
+            continue
         rel = str(path.relative_to(ROOT)).replace("\\", "/")
         if rel in {"project.html", "service.html", "article.html", "404.html"}:
             continue
@@ -975,6 +986,27 @@ def main() -> int:
             warnings.append("SEO: robots.txt should Disallow /article.html")
     else:
         warnings.append("SEO: robots.txt missing")
+
+    # Phase 18A — small-host trunc limits (homepage-critical)
+    import subprocess
+
+    host_script = ROOT / "scripts" / "check-host-limits.py"
+    if host_script.is_file():
+        host_result = subprocess.run(
+            [sys.executable, str(host_script)],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        if host_result.returncode != 0:
+            for line in (host_result.stdout or "").splitlines():
+                if line.startswith("ERROR:"):
+                    errors.append(line.replace("ERROR: ", "host-limits: ", 1))
+            if not any("host-limits:" in e for e in errors):
+                errors.append("host-limits: check-host-limits.py failed")
+        for line in (host_result.stdout or "").splitlines():
+            if line.startswith("WARN:"):
+                warnings.append(line.replace("WARN: ", "host-limits: ", 1))
 
     # Friendly summary
     err_mark = "✓" if not errors else "✗"

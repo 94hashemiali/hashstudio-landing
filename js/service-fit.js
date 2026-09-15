@@ -1,6 +1,6 @@
 /**
  * Homepage Service Fit — one question → one primary recommendation.
- * Progressive enhancement; no deps. Uses HASH_PROJECTS for proof lines.
+ * Progressive enhancement; no deps. Uses HASH_PROJECTS (full or projects-index slim).
  */
 (function (global) {
   'use strict';

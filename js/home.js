@@ -157,6 +157,34 @@
   }
 
   function initTechTabs() {
+    var TECH = [
+      { name: 'React', cat: 'frontend' },
+      { name: 'Next.js', cat: 'frontend' },
+      { name: 'Vue.js', cat: 'frontend' },
+      { name: 'TypeScript', cat: 'frontend' },
+      { name: 'Node.js', cat: 'backend' },
+      { name: 'Python', cat: 'backend' },
+      { name: 'Django', cat: 'backend' },
+      { name: 'PostgreSQL', cat: 'backend' },
+      { name: 'Docker', cat: 'infra' },
+      { name: 'Flutter', cat: 'mobile' },
+      { name: 'React Native', cat: 'mobile' },
+      { name: 'Figma', cat: 'design' }
+    ];
+
+    var grid = document.getElementById('tech-grid');
+    if (grid && !grid.children.length) {
+      grid.innerHTML = TECH.map(function (item) {
+        return (
+          '<div class="tech-card" data-tech-categories="' +
+          escapeHtml(item.cat) +
+          '"><span class="tech-card__name">' +
+          escapeHtml(item.name) +
+          '</span></div>'
+        );
+      }).join('');
+    }
+
     var tabButtons = document.querySelectorAll('[data-tech-tab]');
     var cards = document.querySelectorAll('[data-tech-categories]');
     if (!tabButtons.length || !cards.length) return;
@@ -190,8 +218,55 @@
     activate(initial ? initial.getAttribute('data-tech-tab') : 'frontend');
   }
 
+  function renderTestimonials() {
+    var host = document.getElementById('home-testimonials');
+    if (!host) return;
+    var items = [
+      {
+        text: 'درس محصول: کمک‌آموزشی دیجیتال وقتی می‌برد که لحظهٔ گیر کردن را کوتاه کند.',
+        label: 'نشر دیجیتال آموزشی',
+        href: '/project/moniaz/',
+        img: 'assets/images/home/projects/moniaz-pixel.webp'
+      },
+      {
+        text: 'درس محصول: در معامله خرد فلز، شفافیت کارمزد از جلوهٔ بصری مهم‌تر است.',
+        label: 'فین‌تک طلا',
+        href: '/project/zarafe/',
+        img: 'assets/images/home/projects/zarafe-pixel.webp'
+      },
+      {
+        text: 'درس محصول: سوپراپ محلی فقط وقتی می‌ماند که چند خدمت در یک جریان مرورگر جمع شود.',
+        label: 'سوپراپ قشم',
+        href: '/project/shogir/',
+        img: 'assets/images/home/projects/shogir-pixel.webp'
+      }
+    ];
+    host.innerHTML = items
+      .map(function (item, i) {
+        var featured = i === 0 ? ' testimonial-card--featured' : '';
+        return (
+          '<article class="testimonial-card' +
+          featured +
+          '"><span class="testimonial-card__quote-icon" aria-hidden="true"></span>' +
+          '<blockquote class="testimonial-card__text">' +
+          escapeHtml(item.text) +
+          '</blockquote><footer class="testimonial-card__author">' +
+          '<img src="' +
+          escapeHtml(item.img) +
+          '" alt="" width="55" height="55">' +
+          '<div><a href="' +
+          escapeHtml(item.href) +
+          '">' +
+          escapeHtml(item.label) +
+          '</a></div></footer></article>'
+        );
+      })
+      .join('');
+  }
+
   renderPortfolio();
   initTechTabs();
+  renderTestimonials();
   renderBlogPreview();
 
   function renderBlogPreview() {

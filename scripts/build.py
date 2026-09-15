@@ -41,10 +41,20 @@ def main() -> None:
     run("validate content", "validate-content.py")
     run("generate articles", "build-content.py")
     run("generate projects", "build-projects.py")
+    print("\n==> generate projects-index", flush=True)
+    result = subprocess.run(
+        ["node", str(ROOT / "scripts" / "build-projects-index.js")],
+        cwd=ROOT,
+    )
+    if result.returncode != 0:
+        print("\nBUILD FAILED at: generate projects-index", flush=True)
+        sys.exit(result.returncode)
+    print("OK: generate projects-index", flush=True)
     run("generate services", "build-services.py")
     run("generate high-intent pages", "build-high-intent.py")
     run("generate sitemap", "generate-sitemap.py")
     run("validate site", "validate-site.py")
+    run("check host limits", "check-host-limits.py")
     print("\n✓ Build succeeded", flush=True)
 
 
