@@ -303,6 +303,8 @@ def render_high_intent(
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/home-sections.css">
+  <link rel="stylesheet" href="css/home-responsive.css">
   <link rel="stylesheet" href="css/services.css">
   <link rel="stylesheet" href="css/service-detail.css">
   <link rel="stylesheet" href="css/high-intent.css">

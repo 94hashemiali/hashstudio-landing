@@ -402,6 +402,8 @@ def render_article(
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/home-sections.css">
+  <link rel="stylesheet" href="css/home-responsive.css">
   <link rel="stylesheet" href="css/article.css">
   <script type="application/ld+json" id="article-jsonld">{ld}</script>
 </head>

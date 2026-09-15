@@ -462,6 +462,8 @@ def render_project(
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/home-sections.css">
+  <link rel="stylesheet" href="css/home-responsive.css">
   <link rel="stylesheet" href="css/project.css">
   <script type="application/ld+json" id="project-jsonld">{ld}</script>
 </head>
